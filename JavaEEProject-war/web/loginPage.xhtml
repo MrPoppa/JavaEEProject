@@ -15,10 +15,11 @@ and open the template in the editor.
             <ui:define name="content">
                 <h:form>
                     <p:outputLabel>User Name: </p:outputLabel>
-                    <p:inputText value=""/>
+                    <p:inputText/>
                     <p:outputLabel>Password: </p:outputLabel>
-                    <p:inputText id="password" value=""/>
-                    <p:commandButton value="Login"/>
+                    <p:inputText id="password"/>
+                    <p:commandButton value="Login"
+                                     action="registerStudent"/>
                 </h:form>
             </ui:define>
         </ui:composition>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="templates/template.xhtml">
+            <ui:define name="header">
+                <h:form>
+                    <p:commandButton class="navigationButton" value="Register Course" action="registerCourse">
+                    </p:commandButton>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <h:panelGrid id="registerForm">
+                        <p:outputLabel>First Name: </p:outputLabel>
+                        <p:inputText id="firstName" value="#{student.firstName}" required="true">
+                        </p:inputText>
+                        <p:outputLabel>Last Name: </p:outputLabel>
+                        <p:inputText id="lastName" value="#{student.lastName}">
+                        </p:inputText>
+                        <p:outputLabel>Age: </p:outputLabel>
+                        <p:selectOneMenu id="age" value="#{student.age}">
+                            <f:selectItems value="#{dropdownData.numbers}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel>Gender: </p:outputLabel>
+                        <p:selectOneRadio id="Gender" value="#{student.gender}">
+                            <f:selectItem itemLabel="Male" itemValue="Male"/>
+                            <f:selectItem itemLabel="Female" itemValue="Female"/>
+                        </p:selectOneRadio>
+                        <p:outputLabel>Street Name: </p:outputLabel>
+                        <p:inputText value="#{student.contactInformation.streetName}">
+                        </p:inputText>
+                        <p:outputLabel>Zip code: </p:outputLabel>
+                        <p:inputText id="zipCode" value="#{student.contactInformation.zipCode}">
+                        </p:inputText>
+                        <p:outputLabel>City: </p:outputLabel>
+                        <p:selectOneMenu id="city" value="#{student.contactInformation.city}">
+                            <f:selectItem itemLabel="" itemValue=""/>
+                            <f:selectItems value="#{dropdownData.cities}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel>Phone number </p:outputLabel>
+                        <p:inputText id="phoneNumber" value="#{student.contactInformation.phoneNumber}">
+                        </p:inputText>
+                        <p:outputLabel>E-mail: </p:outputLabel>
+                        <p:inputText id="emailAddress" value="#{student.contactInformation.emailAddress}">
+                        </p:inputText>
+                        <p:commandButton class="actionButton" 
+                                         value="Add Student"
+                                         update="registerForm"
+                                         />
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
