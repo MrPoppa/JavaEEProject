@@ -10,18 +10,29 @@ import javax.faces.bean.ManagedBean;
  */
 @ManagedBean
 public class DropdownData {
+
     private final List<Integer> numbers = new ArrayList<>();
     private final List<String> cities = new ArrayList<>();
 
     public DropdownData() {
-         for(int i = 0; i < 136; ++i) {
+        for (int i = 0; i < 136; ++i) {
             numbers.add(i);
-         }
+        }
+
+        cities.add("Vänersborg");
+        cities.add("Göteborg");
+        cities.add("Malmö");
+        cities.add("Boxholm");
+        cities.add("Luleå");
+
     }
 
     public List<Integer> getNumbers() {
         return numbers;
     }
 
+    public List<String> getCities() {
+        return cities;
+    }
     
 }

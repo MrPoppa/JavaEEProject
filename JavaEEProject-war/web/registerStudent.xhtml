@@ -44,8 +44,10 @@ and open the template in the editor.
                         <p:inputText id="zipCode" value="#{student.contactInformation.zipCode}">
                         </p:inputText>
                         <p:outputLabel>City: </p:outputLabel>
-                        <p:inputText id="city" value="#{student.contactInformation.city}">
-                        </p:inputText>
+                        <p:selectOneMenu id="city" value="#{student.contactInformation.city}">
+                            <f:selectItem itemLabel="" itemValue=""/>
+                            <f:selectItems value="#{dropdownData.cities}"/>
+                        </p:selectOneMenu>
                         <p:outputLabel>Phone number </p:outputLabel>
                         <p:inputText id="phoneNumber" value="#{student.contactInformation.phoneNumber}">
                         </p:inputText>
