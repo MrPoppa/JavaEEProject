@@ -5,7 +5,9 @@
 /build/
 /dist/
 /private/
-private.properties
-private.xml
-/private.properties
-/private.xml
+JavaEEProject-war/nbproject/private/private.xml
+JavaEEProject-ejb/nbproject/private/private.xml
+JavaEEProject-war/nbproject/private/private.properties
+JavaEEProject-ejb/nbproject/private/private.properties
+nbproject/private/private.properties
+nbproject/private/private.xml
