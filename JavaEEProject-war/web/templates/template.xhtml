@@ -9,7 +9,29 @@
     <h:head>
         <title>Facelet template</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
+    <div id="page">
+        
+        <div id="header">
+            <ui:insert name="header">
+                <ui:include src="header.xhtml"/>
+            </ui:insert>
+        </div>
+        
+        <div id="content">
+            <ui:insert name="content">
+                <ui:include src="content.xhtml"/>
+            </ui:insert>
+        </div>
+        
+        <div id="footer">
+            <ui:insert name="footer">
+                <ui:include src="footer.xhtml"/>
+            </ui:insert>
+        </div>
+        
+    </div>
     <h:body>
     </h:body>
 </html>

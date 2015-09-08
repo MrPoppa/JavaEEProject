@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+
+        <ui:composition template="templates/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <p:outputLabel>User Name: </p:outputLabel>
+                    <p:inputText value=""/>
+                    <p:outputLabel>Password: </p:outputLabel>
+                    <p:inputText id="password" value=""/>
+                    <p:commandButton value="Login"/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
