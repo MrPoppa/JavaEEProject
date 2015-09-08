@@ -4,8 +4,8 @@
 /JavaEEProject-war/build/
 /build/
 /dist/
-/private/
 JavaEEProject-war/nbproject/private/private.xml
+JavaEEProject-war/nbproject/private/faces-config.NavData
 JavaEEProject-ejb/nbproject/private/private.xml
 JavaEEProject-war/nbproject/private/private.properties
 JavaEEProject-ejb/nbproject/private/private.properties
