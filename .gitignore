@@ -4,4 +4,5 @@
 /JavaEEProject-war/build/
 /build/
 /dist/
+/private/
 private.properties
