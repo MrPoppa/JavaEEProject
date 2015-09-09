@@ -42,4 +42,23 @@
         </navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <description>
+            navigation
+        </description>
+        <from-view-id>
+           /registerStudent.xhtml
+        </from-view-id>
+        <navigation-case>
+            <from-action>
+                registerCourse
+            </from-action>
+            <redirect>
+            </redirect>
+            <to-view-id>
+                /registerCourse.xhtml
+            </to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
 </faces-config>

@@ -1,5 +1,6 @@
 package com.rappandpoppa.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -19,9 +20,9 @@ public class Course {
     private String period;
     private int maxNumberOfStudents;
     private Teacher mainTeacher;
-    private List<Student> courseStudents;
+    private List<Student> courseStudents = new ArrayList<>();
     private AttendanceList attendanceList;
-    private List<Date> lectureDates;
+    private List<Date> lectureDates = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -109,5 +110,13 @@ public class Course {
 
     public void removeLectureDate(Date lectureDate) {
         lectureDates.remove(lectureDate);
+    }
+
+    public List<Date> getLectureDates() {
+        return lectureDates;
+    }
+
+    public void setLectureDates(List<Date> lectureDates) {
+        this.lectureDates = lectureDates;
     }
 }

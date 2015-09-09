@@ -1,6 +1,7 @@
 package com.rappandpoppa.model;
 
 import com.rappandpoppa.model.origin.Employee;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 
@@ -11,7 +12,7 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class Teacher extends Employee {
 
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 
     public List<Course> getCourses() {
         return courses;
