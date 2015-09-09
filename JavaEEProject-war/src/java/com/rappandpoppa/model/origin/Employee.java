@@ -1,5 +1,6 @@
 package com.rappandpoppa.model.origin;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public abstract class Employee extends Person {
 
     private String salary;
     private Date hired;
-    private List<Date> sickDays;
+    private List<Date> sickDays = new ArrayList<>();
     private String userName;
     private String password;
 

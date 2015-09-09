@@ -1,9 +1,9 @@
 package com.rappandpoppa.model;
 
 import com.rappandpoppa.model.origin.Person;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
 /**
  *
@@ -12,9 +12,9 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 public class Student extends Person {
 
-    private List<Course> courses;
-    private List<String> imageResources;
-    private List<String> fileResources;
+    private List<Course> courses = new ArrayList<>();
+    private List<String> imageResources = new ArrayList<>();
+    private List<String> fileResources = new ArrayList<>();
 
     public List<Course> getCourses() {
         return courses;

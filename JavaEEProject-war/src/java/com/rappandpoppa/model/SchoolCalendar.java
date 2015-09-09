@@ -1,5 +1,6 @@
 package com.rappandpoppa.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -11,7 +12,7 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class SchoolCalendar {
 
-    private List<Date> lectureFreeDays;
+    private List<Date> lectureFreeDays = new ArrayList<>();
 
     public List<Date> getLectureFreeDays() {
         return lectureFreeDays;
