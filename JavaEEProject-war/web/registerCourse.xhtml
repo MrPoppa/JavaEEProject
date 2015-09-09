@@ -28,7 +28,15 @@ and open the template in the editor.
                         <p:outputLabel>Level: </p:outputLabel>
                         <p:selectOneMenu id="level" value="#{course.level}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
-                            <f:selectItems value="#{dropdownData.levelNumbers}"/>
+                            <f:selectItems value="#{dropdownData.levels}"/>
+                        </p:selectOneMenu>
+                        <p:selectOneMenu id="language" value="#{course.language}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.languages}"/>
+                        </p:selectOneMenu>
+                        <p:selectOneMenu id="period" value="#{course.period}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.periods}"/>
                         </p:selectOneMenu>
                     </h:panelGrid>
                 </h:form>

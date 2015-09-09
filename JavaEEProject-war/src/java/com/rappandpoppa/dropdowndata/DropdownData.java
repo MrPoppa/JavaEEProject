@@ -12,22 +12,32 @@ import javax.faces.bean.ManagedBean;
 public class DropdownData {
 
     private final List<Integer> ageNumbers = new ArrayList<>();
-    private final List<Integer> levelNumbers = new ArrayList<>();
+    private final List<String> levels = new ArrayList<>();
     private final List<String> cities = new ArrayList<>();
+    private final List<String> languages = new ArrayList<>();
+    private final List<String> periods = new ArrayList<>();
 
     public DropdownData() {
         for (int i = 0; i < 136; ++i) {
             ageNumbers.add(i);
         }
-        for (int i = 0; i < 5; ++i) {
-            levelNumbers.add(i);
-        }
+        levels.add("Beginner");
+        levels.add("Novice");
+        levels.add("Advanced");
+        levels.add("Expert");
 
         cities.add("Vänersborg");
         cities.add("Göteborg");
         cities.add("Malmö");
         cities.add("Boxholm");
         cities.add("Luleå");
+
+        languages.add("English");
+        languages.add("Swedish");
+        languages.add("Finnish");
+
+        periods.add("Spring");
+        periods.add("Fall");
 
     }
 
@@ -39,8 +49,17 @@ public class DropdownData {
         return cities;
     }
 
-    public List<Integer> getLevelNumbers() {
-        return levelNumbers;
+    public List<String> getLevels() {
+        return levels;
     }
-    
+
+
+    public List<String> getLanguages() {
+        return languages;
+    }
+
+    public List<String> getPeriods() {
+        return periods;
+    }
+
 }
