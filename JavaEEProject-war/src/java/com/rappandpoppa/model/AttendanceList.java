@@ -1,7 +1,11 @@
 package com.rappandpoppa.model;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.faces.bean.ManagedBean;
 
 /**
@@ -12,8 +16,8 @@ import javax.faces.bean.ManagedBean;
 public class AttendanceList {
 
     private Long id;
-    private List<Student> studentsPresent = new ArrayList<>();  /*Not necessary? Meh...maybe useful! :-) **/ /*Yeah, maybe!  :P**/
-    private List<Student> studentsAbsent= new ArrayList<>();
+    private Map<Date, List> studentsPresentByDate = new HashMap<>();
+    private List<Student> studentsPresent = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -23,21 +27,39 @@ public class AttendanceList {
         this.id = id;
     }
 
-    public List<Student> getStudentsPresent() {
-        return studentsPresent;
+    public Map<Date, List> getStudentsPresentByDate() {
+        return studentsPresentByDate;
     }
 
-    public void setStudentsPresent(List<Student> studentsPresent) {
-        this.studentsPresent = studentsPresent;
+    public void setStudentsPresentByDate(Map<Date, List> studentsPresentByDate) {
+        this.studentsPresentByDate = studentsPresentByDate;
     }
 
-    public List<Student> getStudentsAbsent() {
-        return studentsAbsent;
+    public void addPresentStudent(Student student, Date date) {
+        studentsPresent.clear();
+        studentsPresent = studentsPresentByDate.get(date);
+        if (!studentsPresent.contains(student)) {
+            studentsPresent.add(student);
+            studentsPresentByDate.put(date, studentsPresent);
+        }
     }
 
-    public void setStudentsAbsent(List<Student> studentsAbsent) {
-        this.studentsAbsent = studentsAbsent;
+    public void removePresentStudent(Student student, Date date) {
+        studentsPresent.clear();
+        studentsPresent = studentsPresentByDate.get(date);
+        if (studentsPresent.contains(student)) {
+            studentsPresent.remove(student);
+            studentsPresentByDate.put(date, studentsPresent);
+        }
     }
-    
-    
+
+    public void addListOfStudentsByDate(List<Student> studensPresent, Date date) {
+        studentsPresentByDate.put(date, studentsPresent);
+    }
+
+    public void removeListofStudentsByDate(Date date) {
+        studentsPresent = studentsPresentByDate.get(date);
+        studentsPresent.clear();
+        studentsPresentByDate.put(date, studentsPresent);
+    }
 }

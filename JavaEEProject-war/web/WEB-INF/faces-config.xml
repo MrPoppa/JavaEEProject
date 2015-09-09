@@ -28,7 +28,7 @@
             navigation
         </description>
         <from-view-id>
-           /registerStudent.xhtml
+            /registerStudent.xhtml
         </from-view-id>
         <navigation-case>
             <from-action>
@@ -47,7 +47,7 @@
             navigation
         </description>
         <from-view-id>
-           /registerStudent.xhtml
+            /registerStudent.xhtml
         </from-view-id>
         <navigation-case>
             <from-action>

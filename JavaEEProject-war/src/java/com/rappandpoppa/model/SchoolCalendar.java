@@ -12,21 +12,21 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class SchoolCalendar {
 
-    private List<Date> lectureFreeDays = new ArrayList<>();
+    private static List<Date> lectureFreeDays = new ArrayList<>();
 
-    public List<Date> getLectureFreeDays() {
+    public static List<Date> getLectureFreeDays() {
         return lectureFreeDays;
     }
 
-    public void setLectureFreeDays(List<Date> lectureFreeDays) {
-        this.lectureFreeDays = lectureFreeDays;
+    public static void setLectureFreeDays(List<Date> lectureFreeDays) {
+        lectureFreeDays = lectureFreeDays;
     }
 
-    public void addLectureFreeDate(Date date) {
+    public static void addLectureFreeDate(Date date) {
         lectureFreeDays.add(date);
     }
 
-    public void removeLectureFreeDate(Date date) {
+    public static void removeLectureFreeDate(Date date) {
         lectureFreeDays.remove(date);
     }
 }
