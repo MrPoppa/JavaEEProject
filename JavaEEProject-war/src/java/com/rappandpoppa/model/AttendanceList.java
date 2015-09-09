@@ -16,7 +16,7 @@ import javax.faces.bean.ManagedBean;
 public class AttendanceList {
 
     private Long id;
-    private Map<Date, List> studentsPresentByDate = new HashMap<>();
+    private Map<Date, List<Student>> studentsPresentByDate = new HashMap<>();
     private List<Student> studentsPresent = new ArrayList<>();
 
     public Long getId() {
@@ -27,12 +27,20 @@ public class AttendanceList {
         this.id = id;
     }
 
-    public Map<Date, List> getStudentsPresentByDate() {
+    public Map<Date, List<Student>> getStudentsPresentByDate() {
         return studentsPresentByDate;
     }
 
-    public void setStudentsPresentByDate(Map<Date, List> studentsPresentByDate) {
+    public void setStudentsPresentByDate(Map<Date, List<Student>> studentsPresentByDate) {
         this.studentsPresentByDate = studentsPresentByDate;
+    }
+
+    public List<Student> getStudentsPresent() {
+        return studentsPresent;
+    }
+
+    public void setStudentsPresent(List<Student> studentsPresent) {
+        this.studentsPresent = studentsPresent;
     }
 
     public void addPresentStudent(Student student, Date date) {
