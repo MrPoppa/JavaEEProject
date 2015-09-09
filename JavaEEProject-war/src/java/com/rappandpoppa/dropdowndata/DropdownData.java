@@ -11,12 +11,16 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class DropdownData {
 
-    private final List<Integer> numbers = new ArrayList<>();
+    private final List<Integer> ageNumbers = new ArrayList<>();
+    private final List<Integer> levelNumbers = new ArrayList<>();
     private final List<String> cities = new ArrayList<>();
 
     public DropdownData() {
         for (int i = 0; i < 136; ++i) {
-            numbers.add(i);
+            ageNumbers.add(i);
+        }
+        for (int i = 0; i < 5; ++i) {
+            levelNumbers.add(i);
         }
 
         cities.add("Vänersborg");
@@ -27,12 +31,16 @@ public class DropdownData {
 
     }
 
-    public List<Integer> getNumbers() {
-        return numbers;
+    public List<Integer> getAgeNumbers() {
+        return ageNumbers;
     }
 
     public List<String> getCities() {
         return cities;
+    }
+
+    public List<Integer> getLevelNumbers() {
+        return levelNumbers;
     }
     
 }

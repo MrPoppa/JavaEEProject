@@ -8,7 +8,8 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="header">
@@ -17,10 +18,21 @@ and open the template in the editor.
                     </p:commandButton>
                 </h:form>
             </ui:define>
-        
-        <ui:composition template="templates/template.xhtml">
+
             <ui:define name="content">
-                
+                <h:form>
+                    <h:panelGrid class="registrationForm">
+                        <p:outputLabel>Course name: </p:outputLabel>
+                        <p:inputText id="courseName" value="#{course.name}">
+                        </p:inputText>
+                        <p:outputLabel>Level: </p:outputLabel>
+                        <p:selectOneMenu id="level" value="#{course.level}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.levelNumbers}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </h:form>
+
             </ui:define>
         </ui:composition>
     </h:body>
