@@ -13,31 +13,35 @@ and open the template in the editor.
     <h:body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <h:form>
-                    <h:panelGrid class="registrationForm">
+                <h:form class="regForm">
+                    <h:panelGrid class="regGrid" id="registerCourseForm">
                         <p:outputLabel>Course name: </p:outputLabel>
-                        <p:inputText id="courseName" value="#{course.name}">
+                        <p:inputText class="regInputText" id="courseName" value="#{course.name}">
                         </p:inputText>
                         <p:outputLabel>Level: </p:outputLabel>
-                        <p:selectOneMenu id="level" value="#{course.level}">
+                        <p:selectOneMenu class="regOneMenu" id="level" value="#{course.level}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.levels}"/>
                         </p:selectOneMenu>
                         <p:outputLabel>Language: </p:outputLabel>
-                        <p:selectOneMenu id="language" value="#{course.language}">
+                        <p:selectOneMenu class="regOneMenu" id="language" value="#{course.language}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.languages}"/>
                         </p:selectOneMenu>
                         <p:outputLabel>Period: </p:outputLabel>
-                        <p:selectOneMenu id="period" value="#{course.period}">
+                        <p:selectOneMenu class="regOneMenu" id="period" value="#{course.period}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.periods}"/>
                         </p:selectOneMenu>
                         <p:outputLabel>Amount of students: </p:outputLabel>
-                        <p:selectOneMenu id="maxNumberOfStudents" value="#{course.maxNumberOfStudents}">
+                        <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" value="#{course.maxNumberOfStudents}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
                         </p:selectOneMenu>
+                        <p:commandButton class="actionButton" 
+                                         value="Add Course"
+                                         update="registerCourseForm"
+                                         />
                     </h:panelGrid>
                 </h:form>
 
