@@ -2,6 +2,13 @@
     Created on : Sep 8, 2015, 9:57:21 AM
     Author     : Benjamin
 */
+body {
+    background-color: #382F2A;    
+}
+
+.textLabels {
+    color: #cccccc;
+}
 
 #header {
     position: relative;
@@ -23,5 +30,6 @@
     border: none;
     margin: 0px;
     margin-bottom: 25px;
-    background-color: #ffcc00
+    color: #ffffff;
+    background-color: #943B03
 }
