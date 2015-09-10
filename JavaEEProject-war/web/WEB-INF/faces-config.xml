@@ -13,7 +13,7 @@
         </from-view-id>
         <navigation-case>
             <from-action>
-                registerStudent
+                login
             </from-action>
             <redirect>
             </redirect>
@@ -28,7 +28,7 @@
             navigation
         </description>
         <from-view-id>
-           /registerStudent.xhtml
+           *
         </from-view-id>
         <navigation-case>
             <from-action>
@@ -47,7 +47,7 @@
             navigation
         </description>
         <from-view-id>
-           /registerCourse.xhtml
+           *
         </from-view-id>
         <navigation-case>
             <from-action>

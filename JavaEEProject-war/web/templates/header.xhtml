@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <body>
         <ui:composition>
+            <h:form>
+                <p:commandButton class="navigationButton" value="Register Student" action="registerStudent">
+                </p:commandButton>
+                <p:commandButton class="navigationButton" value="Register Course" action="registerCourse">
+                </p:commandButton>
+            </h:form>
         </ui:composition>
     </body>
 </html>
