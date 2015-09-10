@@ -18,3 +18,10 @@
 
 #infoContainer {
 }
+
+.navigationButton {
+    border: none;
+    margin: 0px;
+    margin-bottom: 25px;
+    background-color: #ffcc00
+}
