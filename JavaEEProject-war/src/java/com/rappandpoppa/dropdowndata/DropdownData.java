@@ -17,15 +17,20 @@ public class DropdownData {
     private final List<String> cities = new ArrayList<>();
     private final List<String> languages = new ArrayList<>();
     private final List<String> periods = new ArrayList<>();
+    private final List<String> teachers = new ArrayList<>();
 
     public DropdownData() {
         for (int i = 0; i < 136; ++i) {
             ageNumbers.add(i);
         }
-        
+
         maxStudentNumbers.add(28);
         maxStudentNumbers.add(30);
         maxStudentNumbers.add(32);
+        
+        teachers.add("Hamid");
+        teachers.add("Martin");
+        teachers.add("Johan");
 
         levels.add("Beginner");
         levels.add("Novice");
@@ -44,7 +49,7 @@ public class DropdownData {
 
         periods.add("Spring");
         periods.add("Fall");
-        
+
     }
 
     public List<Integer> getAgeNumbers() {
@@ -71,4 +76,7 @@ public class DropdownData {
         return periods;
     }
 
+    public List<String> getTeachers() {
+        return teachers;
+    }
 }

@@ -38,6 +38,11 @@ and open the template in the editor.
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="mainTeacher" value="#{course.mainTeacher}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.teachers}"/>
+                        </p:selectOneMenu>
                         <p:commandButton class="actionButton" 
                                          value="Add Course"
                                          update="registerCourseForm"
