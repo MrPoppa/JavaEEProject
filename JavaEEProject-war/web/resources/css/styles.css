@@ -3,11 +3,9 @@
     Author     : Benjamin
 */
 body {
-    background-color: #382F2A;    
 }
 
 .textLabels {
-    color: #cccccc;
 }
 
 #header {
@@ -30,6 +28,4 @@ body {
     border: none;
     margin: 0px;
     margin-bottom: 25px;
-    color: #ffffff;
-    background-color: #943B03
 }
