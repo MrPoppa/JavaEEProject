@@ -12,16 +12,30 @@ import javax.faces.bean.ManagedBean;
 public class DropdownData {
 
     private final List<Integer> ageNumbers = new ArrayList<>();
-    private final List<Integer> levelNumbers = new ArrayList<>();
+    private final List<Integer> maxStudentNumbers = new ArrayList<>();
+    private final List<String> levels = new ArrayList<>();
     private final List<String> cities = new ArrayList<>();
+    private final List<String> languages = new ArrayList<>();
+    private final List<String> periods = new ArrayList<>();
+    private final List<String> teachers = new ArrayList<>();
 
     public DropdownData() {
         for (int i = 0; i < 136; ++i) {
             ageNumbers.add(i);
         }
-        for (int i = 0; i < 5; ++i) {
-            levelNumbers.add(i);
-        }
+
+        maxStudentNumbers.add(28);
+        maxStudentNumbers.add(30);
+        maxStudentNumbers.add(32);
+        
+        teachers.add("Hamid");
+        teachers.add("Martin");
+        teachers.add("Johan");
+
+        levels.add("Beginner");
+        levels.add("Novice");
+        levels.add("Advanced");
+        levels.add("Expert");
 
         cities.add("Vänersborg");
         cities.add("Göteborg");
@@ -29,18 +43,40 @@ public class DropdownData {
         cities.add("Boxholm");
         cities.add("Luleå");
 
+        languages.add("English");
+        languages.add("Swedish");
+        languages.add("Finnish");
+
+        periods.add("Spring");
+        periods.add("Fall");
+
     }
 
     public List<Integer> getAgeNumbers() {
         return ageNumbers;
     }
 
+    public List<Integer> getMaxStudentNumbers() {
+        return maxStudentNumbers;
+    }
+
     public List<String> getCities() {
         return cities;
     }
 
-    public List<Integer> getLevelNumbers() {
-        return levelNumbers;
+    public List<String> getLevels() {
+        return levels;
     }
-    
+
+    public List<String> getLanguages() {
+        return languages;
+    }
+
+    public List<String> getPeriods() {
+        return periods;
+    }
+
+    public List<String> getTeachers() {
+        return teachers;
+    }
 }

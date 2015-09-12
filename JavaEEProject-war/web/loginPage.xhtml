@@ -14,12 +14,12 @@ and open the template in the editor.
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <p:outputLabel>User Name: </p:outputLabel>
+                    <p:outputLabel class="textLabels">User Name: </p:outputLabel>
                     <p:inputText/>
-                    <p:outputLabel>Password: </p:outputLabel>
+                    <p:outputLabel class="textLabels">Password: </p:outputLabel>
                     <p:inputText id="password"/>
                     <p:commandButton value="Login"
-                                     action="registerStudent"/>
+                                     action="login"/>
                 </h:form>
             </ui:define>
         </ui:composition>

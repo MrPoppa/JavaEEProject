@@ -2,6 +2,11 @@
     Created on : Sep 8, 2015, 9:57:21 AM
     Author     : Benjamin
 */
+body {
+}
+
+.textLabels {
+}
 
 #header {
     position: relative;
@@ -17,4 +22,10 @@
 }
 
 #infoContainer {
+}
+
+.navigationButton {
+    border: none;
+    margin: 0px;
+    margin-bottom: 25px;
 }

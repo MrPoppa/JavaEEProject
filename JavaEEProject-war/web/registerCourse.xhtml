@@ -12,24 +12,41 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="templates/template.xhtml">
-            <ui:define name="header">
-                <h:form>
-                    <p:commandButton class="navigationButton" value="Register Student" action="registerStudent">
-                    </p:commandButton>
-                </h:form>
-            </ui:define>
-
             <ui:define name="content">
-                <h:form>
-                    <h:panelGrid class="registrationForm">
-                        <p:outputLabel>Course name: </p:outputLabel>
-                        <p:inputText id="courseName" value="#{course.name}">
+                <h:form class="regForm">
+                    <h:panelGrid class="regGrid" id="registerCourseForm">
+                        <p:outputLabel class="textLabels">Course name: </p:outputLabel>
+                        <p:inputText class="regInputText" id="courseName" value="#{course.name}">
                         </p:inputText>
-                        <p:outputLabel>Level: </p:outputLabel>
-                        <p:selectOneMenu id="level" value="#{course.level}">
+                        <p:outputLabel class="textLabels">Level: </p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="level" value="#{course.level}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
-                            <f:selectItems value="#{dropdownData.levelNumbers}"/>
+                            <f:selectItems value="#{dropdownData.levels}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel class="textLabels">Language: </p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="language" value="#{course.language}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.languages}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel class="textLabels">Period: </p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="period" value="#{course.period}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.periods}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel class="textLabels">Amount of students: </p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" value="#{course.maxNumberOfStudents}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="mainTeacher" value="#{course.mainTeacher}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.teachers}"/>
+                        </p:selectOneMenu>
+                        <p:commandButton class="actionButton" 
+                                         value="Add Course"
+                                         update="registerCourseForm"
+                                         />
                     </h:panelGrid>
                 </h:form>
 
