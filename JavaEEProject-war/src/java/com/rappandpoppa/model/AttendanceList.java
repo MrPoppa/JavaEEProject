@@ -1,11 +1,9 @@
 package com.rappandpoppa.model;
 
+import com.rappandpoppa.archive.AttendanceListArchive;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javax.faces.bean.ManagedBean;
 
 /**
@@ -16,7 +14,7 @@ import javax.faces.bean.ManagedBean;
 public class AttendanceList {
 
     private Long id;
-    private Map<Date, List<Student>> studentsPresentByDate = new HashMap<>();
+    private Date date;
     private List<Student> studentsPresent = new ArrayList<>();
 
     public Long getId() {
@@ -27,14 +25,14 @@ public class AttendanceList {
         this.id = id;
     }
 
-    public Map<Date, List<Student>> getStudentsPresentByDate() {
-        return studentsPresentByDate;
+    public Date getDate() {
+        return date;
     }
 
-    public void setStudentsPresentByDate(Map<Date, List<Student>> studentsPresentByDate) {
-        this.studentsPresentByDate = studentsPresentByDate;
+    public void setDate(Date date) {
+        this.date = date;
     }
-
+    
     public List<Student> getStudentsPresent() {
         return studentsPresent;
     }
@@ -45,29 +43,23 @@ public class AttendanceList {
 
     public void addPresentStudent(Student student, Date date) {
         studentsPresent.clear();
-        studentsPresent = studentsPresentByDate.get(date);
+        studentsPresent = AttendanceListArchive.getAttendanceLists().get(date).getStudentsPresent();
         if (!studentsPresent.contains(student)) {
             studentsPresent.add(student);
-            studentsPresentByDate.put(date, studentsPresent);
+            AttendanceListArchive.addAttendanceList(this);
         }
     }
 
     public void removePresentStudent(Student student, Date date) {
         studentsPresent.clear();
-        studentsPresent = studentsPresentByDate.get(date);
+        studentsPresent = AttendanceListArchive.getAttendanceLists().get(date).getStudentsPresent();
         if (studentsPresent.contains(student)) {
             studentsPresent.remove(student);
-            studentsPresentByDate.put(date, studentsPresent);
+            AttendanceListArchive.addAttendanceList(this);
         }
     }
-
-    public void addListOfStudentsByDate(List<Student> studensPresent, Date date) {
-        studentsPresentByDate.put(date, studentsPresent);
-    }
-
-    public void removeListofStudentsByDate(Date date) {
-        studentsPresent = studentsPresentByDate.get(date);
-        studentsPresent.clear();
-        studentsPresentByDate.put(date, studentsPresent);
+    
+    public void removeAttendanceList() {
+        AttendanceListArchive.removeAttendanceList(this);
     }
 }
