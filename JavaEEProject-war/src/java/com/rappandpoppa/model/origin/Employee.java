@@ -12,7 +12,6 @@ public abstract class Employee extends Person {
 
     private String salary;
     private Date hired;
-    private List<Date> sickDays = new ArrayList<>();
     private String userName;
     private String password;
 
@@ -30,14 +29,6 @@ public abstract class Employee extends Person {
 
     public void setHired(Date hired) {
         this.hired = hired;
-    }
-
-    public List<Date> getSickDays() {
-        return sickDays;
-    }
-
-    public void setSickDays(List<Date> sickDays) {
-        this.sickDays = sickDays;
     }
 
     public String getUserName() {
