@@ -1,6 +1,6 @@
 package com.rappandpoppa.model.origin;
 
-import com.rappandpoppa.model.ContactInformation;
+import com.rappandpoppa.model.ContactInformationMB;
 import javax.faces.bean.ManagedProperty;
 
 /**
@@ -15,7 +15,7 @@ public abstract class Person {
     private int age;
     private String gender;
     @ManagedProperty(value = "#{contactInformation}")  /* The point of this being? **/
-    private ContactInformation contactInformation;
+    private ContactInformationMB contactInformation;
 
     public Long getId() {
         return id;
@@ -57,11 +57,11 @@ public abstract class Person {
         this.gender = gender;
     }
 
-    public ContactInformation getContactInformation() {
+    public ContactInformationMB getContactInformation() {
         return contactInformation;
     }
 
-    public void setContactInformation(ContactInformation contactInformation) {
+    public void setContactInformation(ContactInformationMB contactInformation) {
         this.contactInformation = contactInformation;
     }
 }

@@ -8,7 +8,7 @@ import javax.faces.bean.ManagedBean;
  * @author Anders
  */
 @ManagedBean
-public class Admin extends Employee{
+public class AdminMB extends Employee{
     
     
 }

@@ -11,11 +11,11 @@ import javax.faces.bean.ManagedBean;
  * @author Anders
  */
 @ManagedBean
-public class AttendanceList {
+public class AttendanceListMB {
 
     private Long id;
     private Date date;
-    private List<Student> studentsPresent = new ArrayList<>();
+    private List<StudentMB> studentsPresent = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -33,15 +33,15 @@ public class AttendanceList {
         this.date = date;
     }
     
-    public List<Student> getStudentsPresent() {
+    public List<StudentMB> getStudentsPresent() {
         return studentsPresent;
     }
 
-    public void setStudentsPresent(List<Student> studentsPresent) {
+    public void setStudentsPresent(List<StudentMB> studentsPresent) {
         this.studentsPresent = studentsPresent;
     }
 
-    public void addPresentStudent(Student student, Date date) {
+    public void addPresentStudent(StudentMB student, Date date) {
         studentsPresent.clear();
         studentsPresent = AttendanceListArchive.getAttendanceLists().get(date).getStudentsPresent();
         if (!studentsPresent.contains(student)) {
@@ -50,7 +50,7 @@ public class AttendanceList {
         }
     }
 
-    public void removePresentStudent(Student student, Date date) {
+    public void removePresentStudent(StudentMB student, Date date) {
         studentsPresent.clear();
         studentsPresent = AttendanceListArchive.getAttendanceLists().get(date).getStudentsPresent();
         if (studentsPresent.contains(student)) {

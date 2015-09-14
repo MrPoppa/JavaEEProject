@@ -7,7 +7,7 @@ import javax.faces.bean.ManagedBean;
  * @author Anders
  */
 @ManagedBean(name="contactInformation")
-public class ContactInformation {
+public class ContactInformationMB {
 
     private String streetName;
     private String zipCode;

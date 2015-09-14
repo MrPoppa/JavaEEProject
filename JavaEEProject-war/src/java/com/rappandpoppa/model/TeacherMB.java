@@ -10,15 +10,15 @@ import javax.faces.bean.ManagedBean;
  * @author Anders
  */
 @ManagedBean
-public class Teacher extends Employee {
+public class TeacherMB extends Employee {
 
-    private List<Course> courses = new ArrayList<>();
+    private List<CourseMB> courses = new ArrayList<>();
 
-    public List<Course> getCourses() {
+    public List<CourseMB> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(List<CourseMB> courses) {
         this.courses = courses;
     }
 }

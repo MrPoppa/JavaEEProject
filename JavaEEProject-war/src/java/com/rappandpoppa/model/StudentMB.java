@@ -10,17 +10,17 @@ import javax.faces.bean.ManagedBean;
  * @author Anders
  */
 @ManagedBean
-public class Student extends Person {
+public class StudentMB extends Person {
 
-    private List<Course> courses = new ArrayList<>();
+    private List<CourseMB> courses = new ArrayList<>();
     private List<String> imageResources = new ArrayList<>();
     private List<String> fileResources = new ArrayList<>();
 
-    public List<Course> getCourses() {
+    public List<CourseMB> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(List<CourseMB> courses) {
         this.courses = courses;
     }
 
@@ -40,11 +40,11 @@ public class Student extends Person {
         this.fileResources = fileResources;
     }
 
-    public void addCourse(Course course) {
+    public void addCourse(CourseMB course) {
         courses.add(course);
     }
 
-    public void removeCourse(Course course) {
+    public void removeCourse(CourseMB course) {
         courses.remove(course);
     }
 

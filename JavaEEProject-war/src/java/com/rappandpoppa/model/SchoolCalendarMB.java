@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedBean;
  * @author Anders
  */
 @ManagedBean
-public class SchoolCalendar {
+public class SchoolCalendarMB {
 
     private static List<Date> lectureFreeDays = new ArrayList<>();
 

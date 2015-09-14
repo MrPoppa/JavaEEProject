@@ -16,30 +16,30 @@ and open the template in the editor.
                 <h:form class="regForm">
                     <h:panelGrid class="regGrid" id="registerCourseForm">
                         <p:outputLabel class="textLabels">Course name: </p:outputLabel>
-                        <p:inputText class="regInputText" id="courseName" value="#{course.name}">
+                        <p:inputText class="regInputText" id="courseName" value="#{courseMB.name}">
                         </p:inputText>
                         <p:outputLabel class="textLabels">Level: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="level" value="#{course.level}">
+                        <p:selectOneMenu class="regOneMenu" id="level" value="#{courseMB.level}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.levels}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Language: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="language" value="#{course.language}">
+                        <p:selectOneMenu class="regOneMenu" id="language" value="#{courseMB.language}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.languages}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Period: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="period" value="#{course.period}">
+                        <p:selectOneMenu class="regOneMenu" id="period" value="#{courseMB.period}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.periods}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Amount of students: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" value="#{course.maxNumberOfStudents}">
+                        <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" value="#{courseMB.maxNumberOfStudents}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="mainTeacher" value="#{course.mainTeacher}">
+                        <p:selectOneMenu class="regOneMenu" id="mainTeacher" value="#{courseMB.mainTeacher}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.teachers}"/>
                         </p:selectOneMenu>

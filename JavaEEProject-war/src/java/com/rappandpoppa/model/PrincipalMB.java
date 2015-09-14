@@ -8,6 +8,6 @@ import javax.faces.bean.ManagedBean;
  * @author Anders
  */
 @ManagedBean
-public class Principal extends Employee {
+public class PrincipalMB extends Employee {
         
 }

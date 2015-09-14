@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedBean;
  * @author Anders
  */
 @ManagedBean
-public class Course {
+public class CourseMB {
 
     private Long id;
     private String name;
@@ -19,9 +19,9 @@ public class Course {
     private String language;
     private String period;
     private int maxNumberOfStudents;
-    private Teacher mainTeacher;
-    private List<Student> courseStudents = new ArrayList<>();
-    private AttendanceList attendanceList;
+    private TeacherMB mainTeacher;
+    private List<StudentMB> courseStudents = new ArrayList<>();
+    private AttendanceListMB attendanceList;
     private List<Date> lectureDates = new ArrayList<>();
 
     public Long getId() {
@@ -80,27 +80,27 @@ public class Course {
         this.maxNumberOfStudents = maxNumberOfStudents;
     }
 
-    public Teacher getMainTeacher() {
+    public TeacherMB getMainTeacher() {
         return mainTeacher;
     }
 
-    public void setMainTeacher(Teacher mainTeacher) {
+    public void setMainTeacher(TeacherMB mainTeacher) {
         this.mainTeacher = mainTeacher;
     }
 
-    public List<Student> getCourseStudents() {
+    public List<StudentMB> getCourseStudents() {
         return courseStudents;
     }
 
-    public void setCourseStudents(List<Student> courseStudents) {
+    public void setCourseStudents(List<StudentMB> courseStudents) {
         this.courseStudents = courseStudents;
     }
 
-    public AttendanceList getAttendanceList() {
+    public AttendanceListMB getAttendanceList() {
         return attendanceList;
     }
 
-    public void setAttendanceList(AttendanceList attendanceList) {
+    public void setAttendanceList(AttendanceListMB attendanceList) {
         this.attendanceList = attendanceList;
     }
 
