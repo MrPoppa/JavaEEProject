@@ -1,8 +1,11 @@
 package com.rappandpoppa.model;
 
+import com.rappandpoppa.beans.StudentFacadeLocal;
+import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.model.origin.Person;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 
 /**
@@ -15,6 +18,10 @@ public class StudentMB extends Person {
     private List<CourseMB> courses = new ArrayList<>();
     private List<String> imageResources = new ArrayList<>();
     private List<String> fileResources = new ArrayList<>();
+    private Student student = new Student();
+    
+    @EJB
+    StudentFacadeLocal studentFacade;
 
     public List<CourseMB> getCourses() {
         return courses;
@@ -62,6 +69,14 @@ public class StudentMB extends Person {
 
     public void removeFile(String fileResource) {
         fileResources.remove(fileResource);
+    }
+    
+    public void addStudent() {
+        student.setFirstName(this.getFirstName());
+        student.setAge(this.getAge());
+        student.setLastName(this.getLastName());
+        student.setGender(this.getGender());
+        this.studentFacade.create(student);
     }
 
 }
