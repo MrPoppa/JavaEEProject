@@ -7,6 +7,7 @@ package com.rappandpoppa.entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,8 +56,8 @@ public class Student implements Serializable {
     @Size(max = 255)
     @Column(name = "gender")
     private String gender;
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @JoinColumn(name = "contact_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Contactinformation contactinformation;
 
     public Student() {
@@ -115,8 +116,8 @@ public class Student implements Serializable {
         return contactinformation;
     }
 
-    public void setContactinformation(Contactinformation contactinformation) {
-        this.contactinformation = contactinformation;
+    public void setContactinformation(Contactinformation contact) {
+        this.contactinformation = contact;
     }
 
     @Override
