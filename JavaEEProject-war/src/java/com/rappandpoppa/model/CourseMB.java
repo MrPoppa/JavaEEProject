@@ -1,8 +1,11 @@
 package com.rappandpoppa.model;
 
+import com.rappandpoppa.beans.CourseFacadeLocal;
+import com.rappandpoppa.entities.Course;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 
 /**
@@ -13,7 +16,7 @@ import javax.faces.bean.ManagedBean;
 public class CourseMB {
 
     private Long id;
-    private String name;
+    private String courseName;
     private String courseCode;
     private String level;
     private String language;
@@ -23,6 +26,9 @@ public class CourseMB {
     private List<StudentMB> courseStudents = new ArrayList<>();
     private AttendanceListMB attendanceList;
     private List<Date> lectureDates = new ArrayList<>();
+    
+    @EJB
+    CourseFacadeLocal courseFacadeLocal;
 
     public Long getId() {
         return id;
@@ -32,12 +38,12 @@ public class CourseMB {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public String getCourseCode() {
@@ -118,5 +124,16 @@ public class CourseMB {
 
     public void setLectureDates(List<Date> lectureDates) {
         this.lectureDates = lectureDates;
+    }
+    
+    public void addCourse() {
+        Course createdCourse = new Course();
+        createdCourse.setCourseName(this.courseName);
+        createdCourse.setCourseCode(this.courseCode);
+        createdCourse.setCourseLanguage(this.language);
+        createdCourse.setCoursePeriod(this.period);
+        createdCourse.setCourseLevel(this.level);
+        createdCourse.setMaxNumberOfStudents(this.maxNumberOfStudents);
+        courseFacadeLocal.create(createdCourse);
     }
 }

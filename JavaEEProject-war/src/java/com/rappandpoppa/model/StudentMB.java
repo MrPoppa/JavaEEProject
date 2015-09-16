@@ -91,5 +91,21 @@ public class StudentMB extends Person {
         student.setContactinformation(contact);
         studentFacade.create(student);
     }
+    
+    public void viewStudent() {
+        Student foundStudent = studentFacade.find(this.getId());
+        this.setFirstName(foundStudent.getFirstName());
+        this.setLastName(foundStudent.getLastName());
+        this.setAge(foundStudent.getAge());
+        this.setGender(foundStudent.getGender());
+        Contactinformation contact = foundStudent.getContactinformation();
+        ContactInformationMB contactMB = this.getContactInformation();
+        contactMB.setCity(contact.getCity());
+        contactMB.setEmailAddress(contact.getEmailAddress());
+        contactMB.setPhoneNumber(contact.getPhoneNumber());
+        contactMB.setStreetName(contact.getStreetName());
+        contactMB.setZipCode(contact.getZipCode());
+        this.setContactInformation(contactMB);
+    }
 
 }

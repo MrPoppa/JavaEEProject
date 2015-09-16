@@ -138,5 +138,5 @@ public class Contactinformation implements Serializable {
     public String toString() {
         return "com.rappandpoppa.entities.Contactinformation[ id=" + id + " ]";
     }
-    
+
 }

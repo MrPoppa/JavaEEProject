@@ -35,7 +35,6 @@ public class DropdownData {
         levels.add("Beginner");
         levels.add("Novice");
         levels.add("Advanced");
-        levels.add("Expert");
 
         cities.add("Vänersborg");
         cities.add("Göteborg");

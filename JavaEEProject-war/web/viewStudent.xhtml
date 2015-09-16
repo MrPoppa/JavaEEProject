@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="templates/template.xhtml">
+            <ui:define name="content">
+                <h:form class="regForm">
+                    <p:inputText class="regInputText" value="#{studentMB.id}"/>
+                    <p:commandButton class="actionButton" value="Search" action="#{studentMB.viewStudent()}" update="studentView">
+                    </p:commandButton>
+                    <h:dataTable id="studentView" value="#{studentMB}" var="student">
+                        <h:column>
+                            <p:outputLabel value="#{student.firstName}"/>
+                        </h:column>
+                        <h:column>
+                            <p:outputLabel value="#{student.lastName}"/>
+                        </h:column>
+                        <h:column>
+                            <p:outputLabel value="#{student.age}"/>
+                        </h:column>
+                        <h:column>
+                            <p:outputLabel value="#{student.gender}"/>
+                        </h:column>
+                        <h:column>
+                            <p:outputLabel value="#{student.contactInformation.getCity()}"/>
+                        </h:column>
+                        <h:column>
+                            <p:outputLabel value="#{student.contactInformation.getEmailAddress()}"/>
+                        </h:column>
+                        <h:column>
+                            <p:outputLabel value="#{student.contactInformation.getPhoneNumber()}"/>
+                        </h:column>
+                        <h:column>
+                            <p:outputLabel value="#{student.contactInformation.getStreetName()}"/>
+                        </h:column>
+                        <h:column>
+                            <p:outputLabel value="#{student.contactInformation.getZipCode()}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
