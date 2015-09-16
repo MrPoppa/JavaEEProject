@@ -16,7 +16,7 @@ and open the template in the editor.
                 <h:form class="regForm">
                     <h:panelGrid class="regGrid" id="registerCourseForm">
                         <p:outputLabel class="textLabels">Course name: </p:outputLabel>
-                        <p:inputText class="regInputText" id="courseName" value="#{courseMB.name}">
+                        <p:inputText class="regInputText" id="courseName" value="#{courseMB.courseName}">
                         </p:inputText>
                         <p:outputLabel class="textLabels">Level: </p:outputLabel>
                         <p:selectOneMenu class="regOneMenu" id="level" value="#{courseMB.level}">
@@ -39,13 +39,10 @@ and open the template in the editor.
                             <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="mainTeacher" value="#{courseMB.mainTeacher}">
-                            <f:selectItem itemLabel=" " itemValue=" "/>
-                            <f:selectItems value="#{dropdownData.teachers}"/>
-                        </p:selectOneMenu>
                         <p:commandButton class="actionButton" 
                                          value="Add Course"
                                          update="registerCourseForm"
+                                         action="#{courseMB.addCourse()}"
                                          />
                     </h:panelGrid>
                 </h:form>

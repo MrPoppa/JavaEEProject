@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedProperty;
  */
 public abstract class Person {
 
-    private Long id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private int age;
@@ -17,11 +17,11 @@ public abstract class Person {
     @ManagedProperty(value = "#{contactInformation}")  /* The point of this being? **/
     private ContactInformationMB contactInformation;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
