@@ -10,6 +10,7 @@ body {
 
 #header {
     position: relative;
+    border-bottom: solid 3px black;
 }
 
 #content {
@@ -28,4 +29,12 @@ body {
     border: none;
     margin: 0px;
     margin-bottom: 25px;
+}
+
+.regForm {
+    margin: auto;
+    width: 250px;
+}
+
+.viewTable {
 }

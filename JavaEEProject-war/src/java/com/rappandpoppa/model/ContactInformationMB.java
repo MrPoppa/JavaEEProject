@@ -1,12 +1,14 @@
 package com.rappandpoppa.model;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author Anders
  */
 @ManagedBean(name="contactInformation")
+@ViewScoped
 public class ContactInformationMB {
 
     private String streetName;

@@ -9,20 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author Anders
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class StudentMB extends Person {
 
     private List<CourseMB> courses = new ArrayList<>();
     private List<String> imageResources = new ArrayList<>();
     private List<String> fileResources = new ArrayList<>();
-    
+    private final List<StudentMB> students = new ArrayList<>();
+
     @EJB
     StudentFacadeLocal studentFacade;
     @EJB
@@ -75,7 +76,11 @@ public class StudentMB extends Person {
     public void removeFile(String fileResource) {
         fileResources.remove(fileResource);
     }
-    
+
+    public List<StudentMB> getStudents() {
+        return students;
+    }
+
     public void addStudent() {
         Student student = new Student();
         student.setFirstName(this.getFirstName());
@@ -91,21 +96,41 @@ public class StudentMB extends Person {
         student.setContactinformation(contact);
         studentFacade.create(student);
     }
-    
+
     public void viewStudent() {
-        Student foundStudent = studentFacade.find(this.getId());
-        this.setFirstName(foundStudent.getFirstName());
-        this.setLastName(foundStudent.getLastName());
-        this.setAge(foundStudent.getAge());
-        this.setGender(foundStudent.getGender());
-        Contactinformation contact = foundStudent.getContactinformation();
-        ContactInformationMB contactMB = this.getContactInformation();
-        contactMB.setCity(contact.getCity());
-        contactMB.setEmailAddress(contact.getEmailAddress());
-        contactMB.setPhoneNumber(contact.getPhoneNumber());
-        contactMB.setStreetName(contact.getStreetName());
-        contactMB.setZipCode(contact.getZipCode());
-        this.setContactInformation(contactMB);
+        students.clear();
+        Student foundStudent = studentFacade.findByFirstName(this.getFirstName());
+        if (foundStudent != null) {
+            this.setFirstName(foundStudent.getFirstName());
+            this.setLastName(foundStudent.getLastName());
+            this.setAge(foundStudent.getAge());
+            this.setGender(foundStudent.getGender());
+            this.getContactInformation().setCity(foundStudent.getContactinformation().getCity());
+            this.getContactInformation().setEmailAddress(foundStudent.getContactinformation().getEmailAddress());
+            this.getContactInformation().setPhoneNumber(foundStudent.getContactinformation().getPhoneNumber());
+            this.getContactInformation().setStreetName(foundStudent.getContactinformation().getStreetName());
+            this.getContactInformation().setZipCode(foundStudent.getContactinformation().getZipCode());
+            students.add(this);
+        }
     }
 
+    public void viewAllStudents() {
+        students.clear();
+        List <Student> foundStudents = studentFacade.findAll();
+        for (Student foundStudent: foundStudents) {
+            StudentMB studentMB = new StudentMB();
+            studentMB.setFirstName(foundStudent.getFirstName());
+            studentMB.setLastName(foundStudent.getLastName());
+            studentMB.setAge(foundStudent.getAge());
+            studentMB.setGender(foundStudent.getGender());
+            ContactInformationMB contactMB = new ContactInformationMB();
+            contactMB.setCity(foundStudent.getContactinformation().getCity());
+            contactMB.setEmailAddress(foundStudent.getContactinformation().getEmailAddress());
+            contactMB.setPhoneNumber(foundStudent.getContactinformation().getPhoneNumber());
+            contactMB.setStreetName(foundStudent.getContactinformation().getStreetName());
+            contactMB.setZipCode(foundStudent.getContactinformation().getZipCode());
+            studentMB.setContactInformation(contactMB);
+            students.add(studentMB);
+        }
+    }
 }
