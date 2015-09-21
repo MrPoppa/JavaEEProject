@@ -80,14 +80,15 @@ dateHired DATE,
 PRIMARY KEY (id)
 )
 
-CREATE TABLE AttendanceLists(
+CREATE TABLE AttendanceList(
 id INTEGER NOT NULL AUTO_INCREMENT,
 attendanceDate DATE,
-PRIMARY KEY (id)
+PRIMARY KEY (id),
 )
 
-CREATE TABLE AttendanceList(
+CREATE TABLE Student_Attendance (
 student_id INTEGER,
-attendanceList_id INTEGER,
-
+attendance_id INTEGER,
+CONSTRAINT fk_student_attendance FOREIGN KEY (student_id) REFERENCES Student(id),
+CONSTRAINT fk_attendance FOREIGN KEY (attendance_id) REFERENCES AttendanceList(id)
 )
