@@ -4,21 +4,18 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    <body>
+       <body>
         <ui:composition>
             <h:form>
-                <!--<p:growl id="header-menu"/>-->
                 <p:menubar>
                     <p:menuitem value="Home" icon="ui-icon-document"/>
                     <p:submenu label="Courses" icon="ui-icon-document">
                         <p:menuitem value="Register" url="registerCourse.xhtml"/>
-                        <p:menuitem value="List All" url="viewCourses"/>
-                        <p:menuitem value="Search" url="viewCourses"/>
+                        <p:menuitem value="List/Search" url="viewCourses.xhtml"/>
                     </p:submenu>
                     <p:submenu label="Student" icon="ui-icon-document">
                         <p:menuitem value="Register" url="registerStudent.xhtml"/>
-                        <p:menuitem value="List All" url="listOfStudents.xhtml"/>
-                        <p:menuitem value="Search" url="viewStudent.xhtml"/>
+                        <p:menuitem value="List/Search" url="viewStudents.xhtml"/>
                     </p:submenu>
                     <p:submenu label="Profile">
                         <p:menuitem value="Me" url="listOfStudents.xhtml"/>
@@ -27,12 +24,6 @@
                     </p:submenu>
                     <p:menuitem value="Logout" url="logout.xhtml" />
                 </p:menubar>
-                <!--                    <p:commandButton class="navigationButton" value="Register Student" action="registerStudent">
-                                    </p:commandButton>
-                                    <p:commandButton class="navigationButton" value="Register Course" action="registerCourse">
-                                    </p:commandButton>
-                                    <p:commandButton class="navigationButton" value="View Student" action="viewStudent">
-                                    </p:commandButton>-->
             </h:form>
         </ui:composition>
     </body>
