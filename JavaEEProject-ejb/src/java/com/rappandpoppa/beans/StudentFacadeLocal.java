@@ -23,6 +23,8 @@ public interface StudentFacadeLocal {
     void remove(Student student);
 
     Student find(Object id);
+    
+    Student findByFirstName(Object firstName);
 
     List<Student> findAll();
 
