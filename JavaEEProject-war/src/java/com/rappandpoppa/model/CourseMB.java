@@ -26,9 +26,11 @@ public class CourseMB {
     private List<StudentMB> courseStudents = new ArrayList<>();
     private AttendanceListMB attendanceList;
     private List<Date> lectureDates = new ArrayList<>();
-    
+
+    private List<CourseMB> courses = new ArrayList<>();
+
     @EJB
-    CourseFacadeLocal courseFacadeLocal;
+    CourseFacadeLocal courseFacade;
 
     public Long getId() {
         return id;
@@ -125,7 +127,11 @@ public class CourseMB {
     public void setLectureDates(List<Date> lectureDates) {
         this.lectureDates = lectureDates;
     }
-    
+
+    public List<CourseMB> getCourses() {
+        return courses;
+    }
+
     public void addCourse() {
         Course createdCourse = new Course();
         createdCourse.setCourseName(this.courseName);
@@ -134,6 +140,27 @@ public class CourseMB {
         createdCourse.setCoursePeriod(this.period);
         createdCourse.setCourseLevel(this.level);
         createdCourse.setMaxNumberOfStudents(this.maxNumberOfStudents);
-        courseFacadeLocal.create(createdCourse);
+        courseFacade.create(createdCourse);
     }
+
+    public List<Course> viewAllCourses() {
+        return this.courseFacade.findAll();
+    }
+
+//    public List<CourseMB> viewAllCourses() {
+//        courses.clear();
+//        List<Course> foundCourses = courseFacade.findAll();
+//        for (Course foundCourse : foundCourses) {
+//            CourseMB courseMB = new CourseMB();
+//            courseMB.setCourseName(foundCourse.getCourseName());
+//            courseMB.setCourseCode(foundCourse.getCourseCode());
+//            courseMB.setLevel(foundCourse.getCourseLevel());
+//            courseMB.setLanguage(foundCourse.getCourseLanguage());
+//            courseMB.setPeriod(foundCourse.getCoursePeriod());
+//            courseMB.setMaxNumberOfStudents(foundCourse.getMaxNumberOfStudents());
+////            courseMB.setMainTeacher(foundCourse.getTeacher());
+//            courses.add(courseMB);
+//        }
+//        return courses;
+//    }
 }
