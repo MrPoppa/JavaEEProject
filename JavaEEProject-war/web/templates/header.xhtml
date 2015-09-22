@@ -10,19 +10,23 @@
                 <p:menubar>
                     <p:menuitem value="Home" icon="ui-icon-document"/>
                     <p:submenu label="Courses" icon="ui-icon-document">
-                        <p:menuitem value="Register" url="registerCourse.xhtml"/>
-                        <p:menuitem value="List/Search" url="viewCourses.xhtml"/>
+                        <p:menuitem value="Register" action="registerCourse"/>
+                        <p:menuitem value="List/Search" action="viewCourse"/>
                     </p:submenu>
                     <p:submenu label="Student" icon="ui-icon-document">
-                        <p:menuitem value="Register" url="registerStudent.xhtml"/>
-                        <p:menuitem value="List/Search" url="viewStudents.xhtml"/>
+                        <p:menuitem value="Register" action="registerStudent"/>
+                        <p:menuitem value="List/Search" action="viewStudent"/>
                     </p:submenu>
                     <p:submenu label="Profile">
-                        <p:menuitem value="Me" url="myProfile.xhtml"/>
-                        <p:menuitem value="My courses" url="myCourses.xhtml"/>
-                        <p:menuitem value="AttendanceLists" url="attendanceLists.xhtml"/>
+                        <p:menuitem value="Me" action="myProfile"/>
+                        <p:menuitem value="My courses" action="myCourses"/>
+                        <p:menuitem value="AttendanceLists" action="attendanceLists"/>
                     </p:submenu>
-                    <p:menuitem value="Logout" url="logout.xhtml" />
+                    <p:submenu label="Attendance">
+                        <p:menuitem value="Lists" action="attendanceLists"/>
+                        <p:menuitem value="Statistics" action="statistics"/>
+                    </p:submenu>
+                    <p:menuitem value="Logout" action="logout"/>
                 </p:menubar>
             </h:form>
         </ui:composition>
