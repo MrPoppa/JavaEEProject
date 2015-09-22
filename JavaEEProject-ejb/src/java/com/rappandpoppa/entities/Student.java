@@ -63,7 +63,7 @@ public class Student implements Serializable {
     private String gender;
     @JoinColumn(name = "contact_id", referencedColumnName = "id")
     @OneToOne(cascade = CascadeType.PERSIST)
-    private Contactinformation contactinformation;
+    private Contactinformation contactInformation;
 
     public Student() {
     }
@@ -117,12 +117,12 @@ public class Student implements Serializable {
         this.gender = gender;
     }
 
-    public Contactinformation getContactinformation() {
-        return contactinformation;
+    public Contactinformation getContactInformation() {
+        return contactInformation;
     }
 
-    public void setContactinformation(Contactinformation contact) {
-        this.contactinformation = contact;
+    public void setContactInformation(Contactinformation contact) {
+        this.contactInformation = contact;
     }
 
     @Override

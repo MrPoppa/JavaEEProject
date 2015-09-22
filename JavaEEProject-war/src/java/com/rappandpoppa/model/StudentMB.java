@@ -22,7 +22,7 @@ public class StudentMB extends Person {
     private List<CourseMB> courses = new ArrayList<>();
     private List<String> imageResources = new ArrayList<>();
     private List<String> fileResources = new ArrayList<>();
-    private final List<StudentMB> students = new ArrayList<>();
+    private final List<Student> students = new ArrayList<>();
 
     @EJB
     StudentFacadeLocal studentFacade;
@@ -77,7 +77,7 @@ public class StudentMB extends Person {
         fileResources.remove(fileResource);
     }
 
-    public List<StudentMB> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
@@ -93,7 +93,7 @@ public class StudentMB extends Person {
         contact.setPhoneNumber(this.getContactInformation().getPhoneNumber());
         contact.setStreetName(this.getContactInformation().getStreetName());
         contact.setZipCode(this.getContactInformation().getZipCode());
-        student.setContactinformation(contact);
+        student.setContactInformation(contact);
         studentFacade.create(student);
     }
 
@@ -101,36 +101,15 @@ public class StudentMB extends Person {
         students.clear();
         Student foundStudent = studentFacade.findByFirstName(this.getFirstName());
         if (foundStudent != null) {
-            this.setFirstName(foundStudent.getFirstName());
-            this.setLastName(foundStudent.getLastName());
-            this.setAge(foundStudent.getAge());
-            this.setGender(foundStudent.getGender());
-            this.getContactInformation().setCity(foundStudent.getContactinformation().getCity());
-            this.getContactInformation().setEmailAddress(foundStudent.getContactinformation().getEmailAddress());
-            this.getContactInformation().setPhoneNumber(foundStudent.getContactinformation().getPhoneNumber());
-            this.getContactInformation().setStreetName(foundStudent.getContactinformation().getStreetName());
-            this.getContactInformation().setZipCode(foundStudent.getContactinformation().getZipCode());
-            students.add(this);
+            students.add(studentFacade.findByFirstName(this.getFirstName()));
         }
     }
 
     public void viewAllStudents() {
         students.clear();
-        List <Student> foundStudents = studentFacade.findAll();
-        for (Student foundStudent: foundStudents) {
-            StudentMB studentMB = new StudentMB();
-            studentMB.setFirstName(foundStudent.getFirstName());
-            studentMB.setLastName(foundStudent.getLastName());
-            studentMB.setAge(foundStudent.getAge());
-            studentMB.setGender(foundStudent.getGender());
-            ContactInformationMB contactMB = new ContactInformationMB();
-            contactMB.setCity(foundStudent.getContactinformation().getCity());
-            contactMB.setEmailAddress(foundStudent.getContactinformation().getEmailAddress());
-            contactMB.setPhoneNumber(foundStudent.getContactinformation().getPhoneNumber());
-            contactMB.setStreetName(foundStudent.getContactinformation().getStreetName());
-            contactMB.setZipCode(foundStudent.getContactinformation().getZipCode());
-            studentMB.setContactInformation(contactMB);
-            students.add(studentMB);
+        List<Student> foundStudents = studentFacade.findAll();
+        for (Student foundStudent : foundStudents) {
+            students.add(foundStudent);
         }
     }
 }
