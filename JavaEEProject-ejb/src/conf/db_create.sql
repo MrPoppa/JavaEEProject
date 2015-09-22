@@ -19,24 +19,6 @@ PRIMARY KEY (id),
 CONSTRAINT fk_student_contact FOREIGN KEY (contact_id) REFERENCES Contactinformation(id)
 )
 
-CREATE TABLE Course(
-id INTEGER NOT NULL AUTO_INCREMENT,
-courseName VARCHAR(32),
-courseCode VARCHAR(16),
-courseLevel VARCHAR(16),
-courseLanguage VARCHAR(16),
-coursePeriod VARCHAR(16),
-maxNumberOfStudents INTEGER,
-PRIMARY KEY (id)
-)
-
-CREATE TABLE Course_Student (
-student_id INTEGER,
-course_id INTEGER,
-CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES Student(id),
-CONSTRAINT fk_course FOREIGN KEY (course_id) REFERENCES Course(id)
-)
-
 CREATE TABLE Teacher(
 id INTEGER NOT NULL AUTO_INCREMENT,
 firstName VARCHAR(32),
@@ -50,6 +32,26 @@ dateHired DATE,
 contact_id INTEGER,
 PRIMARY KEY (id),
 CONSTRAINT fk_teacher_contact FOREIGN KEY (contact_id) REFERENCES Contactinformation(id)
+)
+
+CREATE TABLE Course(
+id INTEGER NOT NULL AUTO_INCREMENT,
+courseName VARCHAR(32),
+courseCode VARCHAR(16),
+courseLevel VARCHAR(16),
+courseLanguage VARCHAR(16),
+coursePeriod VARCHAR(16),
+maxNumberOfStudents INTEGER,
+teacher_id INTEGER,
+PRIMARY KEY (id),
+CONSTRAINT fk_course_teacher FOREIGN KEY(teacher_id) REFERENCES teacher(id)
+)
+
+CREATE TABLE Course_Student (
+student_id INTEGER,
+course_id INTEGER,
+CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES Student(id),
+CONSTRAINT fk_course FOREIGN KEY (course_id) REFERENCES Course(id)
 )
 
 CREATE TABLE Principal(
@@ -82,8 +84,10 @@ PRIMARY KEY (id)
 
 CREATE TABLE AttendanceList(
 id INTEGER NOT NULL AUTO_INCREMENT,
+course_id INTEGER,
 attendanceDate DATE,
 PRIMARY KEY (id),
+CONSTRAINT fk_course_attendance FOREIGN KEY (course_id) REFERENCES AttendanceList(id)
 )
 
 CREATE TABLE Student_Attendance (
