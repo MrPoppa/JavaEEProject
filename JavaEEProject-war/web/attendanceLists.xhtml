@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,9 +14,44 @@
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <div class="regForm">
+                    <p:growl id="msgs" showDetail="true"/>
+                    <p:panel header="Attendance List" style="width:50%; margin-bottom:10px">
+                        <p:panelGrid columns="2" id="selectGrid">
+                            <p:outputLabel for="course" value="Course"/>
+                            <p:selectOneMenu id="course" value="#{teacherMB.chosenCourseName}" style="width:150px">
+                                <p:ajax listener="#{teacherMB.onCourseChange}" update="date"/>
+                                <f:selectItem itemLabel="Select Course" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{teacherMB.courses}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel for="date" value="Date"/>
+                            <p:selectOneMenu id="date" value="#{teacherMB.chosenDate}">
+                                <f:selectItem itemLabel="Select Date" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{teacherMB.courseDates}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel for="period-start" value="Period Start"/>
+                            <p:calendar id="period-start" value="#{teacherMB.periodStartDate}"/>
+                            <p:outputLabel for="period-end" value="Period End"/>
+                            <p:calendar id="period-end" value="#{teacherMB.periodEndDate}"/>
+                        </p:panelGrid>
+                        <p:separator/>
+                        <p:commandButton value="View Students" actionListener="#{teacherMB.viewAttendingStudentsByCourseDate()}" update="attendingStudentView"/>
+                    </p:panel>
 
-                    </div>
+                    <p:dataTable 
+                        class="viewAttendanceList" 
+                        id="attendingStudentView" 
+                        value="#{teacherMB.attendingStudentsByCourseDate}" 
+                        var="student"
+                        style="width:50%; margin:25%;"
+                        >
+                        <p:outputLabel value="#{teacherMB.chosenCourseName} + #{teacherMB.chosenDate}"/>
+                        <p:column headerText="First Name">
+                            <p:outputLabel value="#{student.firstName}"/>
+                        </p:column>
+                        <p:column headerText="Last Name">
+                            <p:outputLabel value="#{student.lastName}"/>
+                        </p:column>
+                    </p:dataTable>
                 </h:form>
             </ui:define>
         </ui:composition>
