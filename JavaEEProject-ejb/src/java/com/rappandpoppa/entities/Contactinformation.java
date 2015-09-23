@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.rappandpoppa.entities;
 
 import java.io.Serializable;
@@ -37,6 +32,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Contactinformation.findByPhoneNumber", query = "SELECT c FROM Contactinformation c WHERE c.phoneNumber = :phoneNumber"),
     @NamedQuery(name = "Contactinformation.findByEmailAddress", query = "SELECT c FROM Contactinformation c WHERE c.emailAddress = :emailAddress")})
 public class Contactinformation implements Serializable {
+    @OneToMany(mappedBy = "contactId")
+    private List<Principal> principalList;
+    @OneToMany(mappedBy = "contactId")
+    private List<Teacher> teacherList;
+    @OneToMany(mappedBy = "contactId")
+    private List<Student> studentList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -137,6 +138,33 @@ public class Contactinformation implements Serializable {
     @Override
     public String toString() {
         return "com.rappandpoppa.entities.Contactinformation[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Principal> getPrincipalList() {
+        return principalList;
+    }
+
+    public void setPrincipalList(List<Principal> principalList) {
+        this.principalList = principalList;
+    }
+
+    @XmlTransient
+    public List<Teacher> getTeacherList() {
+        return teacherList;
+    }
+
+    public void setTeacherList(List<Teacher> teacherList) {
+        this.teacherList = teacherList;
+    }
+
+    @XmlTransient
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
     }
 
 }
