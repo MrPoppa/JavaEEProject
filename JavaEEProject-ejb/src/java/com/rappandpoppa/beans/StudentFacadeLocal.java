@@ -25,6 +25,8 @@ public interface StudentFacadeLocal {
     Student find(Object id);
 
     List<Student> findAll();
+    
+    Student findByFirstName(Object fistName);
 
     List<Student> findRange(int[] range);
 

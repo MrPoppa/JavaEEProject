@@ -6,7 +6,6 @@
 package com.rappandpoppa.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,11 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,8 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Contactinformation.findByPhoneNumber", query = "SELECT c FROM Contactinformation c WHERE c.phoneNumber = :phoneNumber"),
     @NamedQuery(name = "Contactinformation.findByEmailAddress", query = "SELECT c FROM Contactinformation c WHERE c.emailAddress = :emailAddress")})
 public class Contactinformation implements Serializable {
-    @OneToMany(mappedBy = "contactId")
-    private List<Student> studentList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -139,15 +134,6 @@ public class Contactinformation implements Serializable {
     @Override
     public String toString() {
         return "com.rappandpoppa.entities.Contactinformation[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public List<Student> getStudentList() {
-        return studentList;
-    }
-
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
     }
 
 }
