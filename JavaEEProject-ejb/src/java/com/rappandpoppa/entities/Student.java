@@ -40,6 +40,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Student.findByAge", query = "SELECT s FROM Student s WHERE s.age = :age"),
     @NamedQuery(name = "Student.findByGender", query = "SELECT s FROM Student s WHERE s.gender = :gender")})
 public class Student implements Serializable {
+    @Column(name = "age")
+    private Integer age;
+    @ManyToMany(mappedBy = "studentList")
+    private List<Attendancelist> attendancelistList;
     @ManyToMany(mappedBy = "studentList")
     private List<Course> courseList;
     private static final long serialVersionUID = 1L;
@@ -54,10 +58,6 @@ public class Student implements Serializable {
     @Size(max = 255)
     @Column(name = "lastName")
     private String lastName;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "age")
-    private int age;
     @Size(max = 255)
     @Column(name = "gender")
     private String gender;
@@ -101,13 +101,6 @@ public class Student implements Serializable {
         this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     public String getGender() {
         return gender;
@@ -157,6 +150,23 @@ public class Student implements Serializable {
 
     public void setCourseList(List<Course> courseList) {
         this.courseList = courseList;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    @XmlTransient
+    public List<Attendancelist> getAttendancelistList() {
+        return attendancelistList;
+    }
+
+    public void setAttendancelistList(List<Attendancelist> attendancelistList) {
+        this.attendancelistList = attendancelistList;
     }
     
 }
