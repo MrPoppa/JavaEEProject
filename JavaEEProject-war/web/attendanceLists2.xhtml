@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <ui:composition template="templates/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <p:tabView style="margin-top:150px; margin-left: 15%; width:70%">
+                        <p:tab title="View by date">
+                            <p:panel header="Attendance List" style="width:50%; margin-bottom:10px; margin-top: 20px;" class="att-panel">
+                                <p:panelGrid columns="2" id="selectGrid2">
+                                    <p:outputLabel for="course-by-date" value="Course"/>
+                                    <p:selectOneMenu id="course-by-date" value="#{teacherMB.chosenCourseName}" style="width:150px">
+                                        <p:ajax listener="#{teacherMB.onCourseChange}" update="date"/>
+                                        <f:selectItem itemLabel="Select Course" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{teacherMB.courses}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="date" value="Date"/>
+                                    <p:selectOneMenu id="date" value="#{teacherMB.chosenDate}">
+                                        <f:selectItem itemLabel="Select Date" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{teacherMB.courseDates}"/>
+                                    </p:selectOneMenu>
+                                </p:panelGrid>
+                                <p:separator/>
+                                <p:commandButton value="Send" actionListener="#{teacherMB.viewAttendingStudentsByCourseDate()}" update="attendingStudentView1"/>
+                            </p:panel>
+                            <p:dataTable
+                                class="viewAttendanceList" 
+                                id="attendingStudentView1" 
+                                value="#{teacherMB.attendingStudentsByCourseDate}" 
+                                var="student"
+                                style="width:50%;"
+                                >
+                                <p:outputLabel value="#{teacherMB.chosenCourseName} + #{teacherMB.chosenDate}"/>
+                                <p:column headerText="First Name">
+                                    <p:outputLabel value="#{student.firstName}"/>
+                                </p:column>
+                                <p:column headerText="Last Name">
+                                    <p:outputLabel value="#{student.lastName}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab title="View by period">
+                            <p:panel header="Attendance List" style="width:50%; margin-bottom:10px" class="att-panel">
+                                <p:panelGrid columns="2" id="selectGrid">
+                                    <p:outputLabel for="course-by-period" value="Course"/>
+                                    <p:selectOneMenu id="course-by-period" value="#{teacherMB.chosenCourseName}" style="width:150px">
+                                        <p:ajax listener="#{teacherMB.onCourseChange}" update="date"/>
+                                        <f:selectItem itemLabel="Select Course" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{teacherMB.courses}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="period-start" value="Period Start"/>
+                                    <p:calendar id="period-start" value="#{teacherMB.periodStartDate}"/>
+                                    <p:outputLabel for="period-end" value="Period End"/>
+                                    <p:calendar id="period-end" value="#{teacherMB.periodEndDate}"/>
+                                </p:panelGrid>
+                                <p:separator/>
+                                <p:commandButton value="Send" actionListener="#{teacherMB.viewAttendingStudentsByCourseDate()}" update="attendingStudentView2"/>
+                            </p:panel>
+                            
+                            <p:dataTable 
+                                class="overall-attendance" 
+                                         style="width:50%"
+                                         id="overall-attendance-view" 
+                                         value="#{teacherMB.attendingStudentsByCourseDate}"
+                                         >
+                                <p:outputLabel value="Overall Attendance">
+                                    <p:column headerText="Overall Attendance">
+                                        <p:outputLabel value="50%"/>
+                                    </p:column>
+                                </p:outputLabel>
+                            </p:dataTable>
+                            
+                            <p:dataTable 
+                                class="viewAttendanceList" 
+                                id="attendingStudentView2" 
+                                value="#{teacherMB.attendingStudentsByCourseDate}" 
+                                var="student"
+                                style="width:50%; "
+                                >
+                                <p:outputLabel value="#{teacherMB.chosenCourseName} + #{teacherMB.chosenDate}"/>
+                                <p:column headerText="First Name">
+                                    <p:outputLabel value="#{student.firstName}"/>
+                                </p:column>
+                                <p:column headerText="Last Name">
+                                    <p:outputLabel value="#{student.lastName}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                    </p:tabView>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
