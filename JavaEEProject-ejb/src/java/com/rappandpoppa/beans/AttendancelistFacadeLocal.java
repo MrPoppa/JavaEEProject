@@ -6,6 +6,8 @@
 package com.rappandpoppa.beans;
 
 import com.rappandpoppa.entities.Attendancelist;
+import com.rappandpoppa.entities.Student;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +31,9 @@ public interface AttendancelistFacadeLocal {
     List<Attendancelist> findRange(int[] range);
 
     int count();
+    
+    List<Date> findAllDatesByCourse(long id);
+    
+    List<Student> findAllStudentsByCourseDate(Date date, long course_id);
     
 }
