@@ -25,6 +25,8 @@ public interface CourseFacadeLocal {
     Course find(Object id);
 
     List<Course> findAll();
+    
+    Course findByCourseName(Object courseName);
 
     List<Course> findRange(int[] range);
 

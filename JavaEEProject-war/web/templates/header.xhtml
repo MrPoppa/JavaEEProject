@@ -4,7 +4,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-       <body>
+    <body>
         <ui:composition>
             <h:form>
                 <p:menubar>
@@ -22,6 +22,7 @@
                         <p:menuitem value="My courses" action="myCourses"/>
                     </p:submenu>
                     <p:submenu label="Attendance">
+                        <p:menuitem value="Create list" action="createAttendanceList"/>
                         <p:menuitem value="Lists" action="attendanceLists"/>
                         <p:menuitem value="Statistics" action="statistics"/>
                     </p:submenu>

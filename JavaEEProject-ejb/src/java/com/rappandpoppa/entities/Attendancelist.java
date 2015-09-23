@@ -20,7 +20,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Anders
+ * @author Benjamin
  */
 @Entity
 @Table(name = "attendancelist")
@@ -53,11 +52,9 @@ public class Attendancelist implements Serializable {
         @JoinColumn(name = "student_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Student> studentList;
-    @OneToMany(mappedBy = "courseId")
-    private List<Attendancelist> attendancelistList;
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne
-    private Attendancelist courseId;
+    private Course course;
 
     public Attendancelist() {
     }
@@ -91,21 +88,12 @@ public class Attendancelist implements Serializable {
         this.studentList = studentList;
     }
 
-    @XmlTransient
-    public List<Attendancelist> getAttendancelistList() {
-        return attendancelistList;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setAttendancelistList(List<Attendancelist> attendancelistList) {
-        this.attendancelistList = attendancelistList;
-    }
-
-    public Attendancelist getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Attendancelist courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override

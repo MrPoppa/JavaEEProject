@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Anders
+ * @author Benjamin
  */
 @Local
 public interface AttendancelistFacadeLocal {

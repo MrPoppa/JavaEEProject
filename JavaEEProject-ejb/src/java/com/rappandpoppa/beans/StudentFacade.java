@@ -27,5 +27,11 @@ public class StudentFacade extends AbstractFacade<Student> implements StudentFac
     public StudentFacade() {
         super(Student.class);
     }
+
+    @Override
+    public Student findOneByFirstName(String firstName) {
+        return (Student) getEntityManager().createNamedQuery("Student.findByFirstName")
+                .setParameter("firstName", firstName).getSingleResult();
+    }
     
 }

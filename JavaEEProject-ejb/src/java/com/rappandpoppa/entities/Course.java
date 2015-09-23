@@ -5,7 +5,6 @@
  */
 package com.rappandpoppa.entities;
 
-import com.rappandpoppa.entities.Teacher;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -20,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,27 +42,25 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Course.findByCoursePeriod", query = "SELECT c FROM Course c WHERE c.coursePeriod = :coursePeriod"),
     @NamedQuery(name = "Course.findByMaxNumberOfStudents", query = "SELECT c FROM Course c WHERE c.maxNumberOfStudents = :maxNumberOfStudents")})
 public class Course implements Serializable {
-    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
-    @ManyToOne
-    private Teacher teacherId;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 255)
+    @Size(max = 32)
     @Column(name = "courseName")
     private String courseName;
-    @Size(max = 255)
+    @Size(max = 16)
     @Column(name = "courseCode")
     private String courseCode;
-    @Size(max = 255)
+    @Size(max = 16)
     @Column(name = "courseLevel")
     private String courseLevel;
-    @Size(max = 255)
+    @Size(max = 16)
     @Column(name = "courseLanguage")
     private String courseLanguage;
+    @Size(max = 16)
     @Column(name = "coursePeriod")
     private String coursePeriod;
     @Column(name = "maxNumberOfStudents")
@@ -72,6 +70,11 @@ public class Course implements Serializable {
         @JoinColumn(name = "student_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Student> studentList;
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+    @ManyToOne
+    private Teacher teacherId;
+    @OneToMany(mappedBy = "course")
+    private List<Attendancelist> attendancelistList;
 
     public Course() {
     }
@@ -145,6 +148,23 @@ public class Course implements Serializable {
         this.studentList = studentList;
     }
 
+    public Teacher getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Teacher teacherId) {
+        this.teacherId = teacherId;
+    }
+
+    @XmlTransient
+    public List<Attendancelist> getAttendancelistList() {
+        return attendancelistList;
+    }
+
+    public void setAttendancelistList(List<Attendancelist> attendancelistList) {
+        this.attendancelistList = attendancelistList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -168,14 +188,6 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "com.rappandpoppa.entities.Course[ id=" + id + " ]";
-    }
-
-    public Teacher getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(Teacher teacherId) {
-        this.teacherId = teacherId;
     }
     
 }

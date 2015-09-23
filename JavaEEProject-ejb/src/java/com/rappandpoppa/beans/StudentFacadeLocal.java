@@ -23,10 +23,10 @@ public interface StudentFacadeLocal {
     void remove(Student student);
 
     Student find(Object id);
-    
-    Student findByFirstName(Object firstName);
 
     List<Student> findAll();
+    
+    Student findOneByFirstName(String firstName);
 
     List<Student> findRange(int[] range);
 

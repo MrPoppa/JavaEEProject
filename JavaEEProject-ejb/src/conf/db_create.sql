@@ -86,13 +86,14 @@ CREATE TABLE AttendanceList(
 id INTEGER NOT NULL AUTO_INCREMENT,
 course_id INTEGER,
 attendanceDate DATE,
-PRIMARY KEY (id),
-CONSTRAINT fk_course_attendance FOREIGN KEY (course_id) REFERENCES AttendanceList(id)
+PRIMARY KEY (attendanceDate),
+CONSTRAINT fk_course_attendance FOREIGN KEY (course_id) REFERENCES Course(id)
 )
 
 CREATE TABLE Student_Attendance (
 student_id INTEGER,
 attendance_id INTEGER,
 CONSTRAINT fk_student_attendance FOREIGN KEY (student_id) REFERENCES Student(id),
-CONSTRAINT fk_attendance FOREIGN KEY (attendance_id) REFERENCES AttendanceList(id)
+CONSTRAINT fk_attendance FOREIGN KEY (attendance_id) REFERENCES AttendanceList(id),
+UNIQUE KEY `unique_index`(`student_id`, `attendance_id`)
 )
