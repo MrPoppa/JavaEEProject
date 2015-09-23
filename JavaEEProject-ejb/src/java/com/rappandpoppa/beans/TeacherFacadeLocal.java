@@ -5,6 +5,7 @@
  */
 package com.rappandpoppa.beans;
 
+import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Teacher;
 import java.util.List;
 import javax.ejb.Local;
@@ -29,5 +30,7 @@ public interface TeacherFacadeLocal {
     List<Teacher> findRange(int[] range);
 
     int count();
+    
+    List<Course> findTeacherCourses();
     
 }

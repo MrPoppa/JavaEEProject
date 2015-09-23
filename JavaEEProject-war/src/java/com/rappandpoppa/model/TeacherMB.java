@@ -1,11 +1,13 @@
 package com.rappandpoppa.model;
 
+import com.rappandpoppa.beans.TeacherFacadeLocal;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.model.origin.Employee;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
@@ -27,6 +29,9 @@ public class TeacherMB extends Employee {
     CourseMB courseMB;
     @Inject
     AttendanceListMB attendanceListMB;
+   
+    @EJB
+    TeacherFacadeLocal teacherFacade;
 
     public List<Course> getCourses() {
         return courses;
@@ -92,15 +97,15 @@ public class TeacherMB extends Employee {
     public void onCourseChange() {
         if (chosenCourseName != null && !chosenCourseName.equals("")) {
 //            Integer courseId = courseFacade.findIdByCourseName(chosenCourseName);
-            dates = attendanceListFacade.findAllDatesByCourse(courseMB.getId());
+            courseDates = attendanceListMB.attendanceFacade.findAllDatesByCourse(courseMB.getId());
         } else {
-            dates = new ArrayList<>();
+            courseDates = new ArrayList<>();
         }
     }
 
     public void getStudentsByCourseDate() {
         attendingStudentsByCourseDate.clear();
-        attendingStudentsByCourseDate = attendanceListMB.attendanceListFacade.findAllStudentsByCourseDate(chosenDate);
+        attendingStudentsByCourseDate = attendanceListMB.attendanceFacade.findAllStudentsByCourseDate(chosenDate);
     }
 
     public void viewAttendingStudentsByCourseDate() {
