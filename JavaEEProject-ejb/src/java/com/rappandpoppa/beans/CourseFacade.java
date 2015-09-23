@@ -27,5 +27,11 @@ public class CourseFacade extends AbstractFacade<Course> implements CourseFacade
     public CourseFacade() {
         super(Course.class);
     }
+
+    @Override
+    public Course findByCourseName(Object courseName) {
+        return (Course) getEntityManager().createNamedQuery("Course.findByCourseName")
+                .setParameter("courseName", courseName).getSingleResult();
+    }
     
 }

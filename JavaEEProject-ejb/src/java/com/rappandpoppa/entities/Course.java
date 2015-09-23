@@ -73,7 +73,7 @@ public class Course implements Serializable {
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     @ManyToOne
     private Teacher teacherId;
-    @OneToMany(mappedBy = "courseId")
+    @OneToMany(mappedBy = "course")
     private List<Attendancelist> attendancelistList;
 
     public Course() {

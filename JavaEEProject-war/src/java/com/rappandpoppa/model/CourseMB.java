@@ -146,6 +146,15 @@ public class CourseMB {
     public List<Course> viewAllCourses() {
         return this.courseFacade.findAll();
     }
+    
+    public List<String> getAllCourseNames() {
+        List<Course> coursesFound = courseFacade.findAll();
+        List<String> courseNames = new ArrayList<>();
+        for (Course course : coursesFound) {
+            courseNames.add(course.getCourseName());
+        }
+        return courseNames;
+    }
 
 //    public List<CourseMB> viewAllCourses() {
 //        courses.clear();

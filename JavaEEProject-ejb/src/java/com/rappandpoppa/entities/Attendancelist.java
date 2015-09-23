@@ -54,7 +54,7 @@ public class Attendancelist implements Serializable {
     private List<Student> studentList;
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne
-    private Course courseId;
+    private Course course;
 
     public Attendancelist() {
     }
@@ -88,12 +88,12 @@ public class Attendancelist implements Serializable {
         this.studentList = studentList;
     }
 
-    public Course getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override
