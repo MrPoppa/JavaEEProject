@@ -6,7 +6,7 @@
 package com.rappandpoppa.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,30 +14,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Benjamin
  */
 @Entity
-@Table(name = "student")
+@Table(name = "principal")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
-    @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"),
-    @NamedQuery(name = "Student.findByFirstName", query = "SELECT s FROM Student s WHERE s.firstName = :firstName"),
-    @NamedQuery(name = "Student.findByLastName", query = "SELECT s FROM Student s WHERE s.lastName = :lastName"),
-    @NamedQuery(name = "Student.findByGender", query = "SELECT s FROM Student s WHERE s.gender = :gender"),
-    @NamedQuery(name = "Student.findByAge", query = "SELECT s FROM Student s WHERE s.age = :age")})
-public class Student implements Serializable {
+    @NamedQuery(name = "Principal.findAll", query = "SELECT p FROM Principal p"),
+    @NamedQuery(name = "Principal.findById", query = "SELECT p FROM Principal p WHERE p.id = :id"),
+    @NamedQuery(name = "Principal.findByFirstName", query = "SELECT p FROM Principal p WHERE p.firstName = :firstName"),
+    @NamedQuery(name = "Principal.findByLastName", query = "SELECT p FROM Principal p WHERE p.lastName = :lastName"),
+    @NamedQuery(name = "Principal.findByGender", query = "SELECT p FROM Principal p WHERE p.gender = :gender"),
+    @NamedQuery(name = "Principal.findByAge", query = "SELECT p FROM Principal p WHERE p.age = :age"),
+    @NamedQuery(name = "Principal.findByUserName", query = "SELECT p FROM Principal p WHERE p.userName = :userName"),
+    @NamedQuery(name = "Principal.findByPassword", query = "SELECT p FROM Principal p WHERE p.password = :password"),
+    @NamedQuery(name = "Principal.findBySalary", query = "SELECT p FROM Principal p WHERE p.salary = :salary"),
+    @NamedQuery(name = "Principal.findByDateHired", query = "SELECT p FROM Principal p WHERE p.dateHired = :dateHired")})
+public class Principal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,18 +59,25 @@ public class Student implements Serializable {
     private String gender;
     @Column(name = "age")
     private Integer age;
-    @ManyToMany(mappedBy = "studentList")
-    private List<Attendancelist> attendancelistList;
-    @ManyToMany(mappedBy = "studentList")
-    private List<Course> courseList;
+    @Size(max = 16)
+    @Column(name = "userName")
+    private String userName;
+    @Size(max = 16)
+    @Column(name = "password")
+    private String password;
+    @Column(name = "salary")
+    private Integer salary;
+    @Column(name = "dateHired")
+    @Temporal(TemporalType.DATE)
+    private Date dateHired;
     @JoinColumn(name = "contact_id", referencedColumnName = "id")
     @ManyToOne
-    private Contactinformation contactInformation;
+    private Contactinformation contactId;
 
-    public Student() {
+    public Principal() {
     }
 
-    public Student(Integer id) {
+    public Principal(Integer id) {
         this.id = id;
     }
 
@@ -110,30 +121,44 @@ public class Student implements Serializable {
         this.age = age;
     }
 
-    @XmlTransient
-    public List<Attendancelist> getAttendancelistList() {
-        return attendancelistList;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setAttendancelistList(List<Attendancelist> attendancelistList) {
-        this.attendancelistList = attendancelistList;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    @XmlTransient
-    public List<Course> getCourseList() {
-        return courseList;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCourseList(List<Course> courseList) {
-        this.courseList = courseList;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Contactinformation getContactInformation() {
-        return contactInformation;
+    public Integer getSalary() {
+        return salary;
     }
 
-    public void setContactInformation(Contactinformation contactInformation) {
-        this.contactInformation = contactInformation;
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
+
+    public Date getDateHired() {
+        return dateHired;
+    }
+
+    public void setDateHired(Date dateHired) {
+        this.dateHired = dateHired;
+    }
+
+    public Contactinformation getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(Contactinformation contactId) {
+        this.contactId = contactId;
     }
 
     @Override
@@ -146,10 +171,10 @@ public class Student implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Student)) {
+        if (!(object instanceof Principal)) {
             return false;
         }
-        Student other = (Student) object;
+        Principal other = (Principal) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -158,7 +183,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rappandpoppa.entities.Student[ id=" + id + " ]";
+        return "com.rappandpoppa.entities.Principal[ id=" + id + " ]";
     }
     
 }

@@ -5,7 +5,7 @@
  */
 package com.rappandpoppa.beans;
 
-import com.rappandpoppa.entities.Student;
+import com.rappandpoppa.entities.Principal;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,21 +14,19 @@ import javax.ejb.Local;
  * @author Benjamin
  */
 @Local
-public interface StudentFacadeLocal {
+public interface PrincipalFacadeLocal {
 
-    void create(Student student);
+    void create(Principal principal);
 
-    void edit(Student student);
+    void edit(Principal principal);
 
-    void remove(Student student);
+    void remove(Principal principal);
 
-    Student find(Object id);
+    Principal find(Object id);
 
-    List<Student> findAll();
-    
-    Student findOneByFirstName(String firstName);
+    List<Principal> findAll();
 
-    List<Student> findRange(int[] range);
+    List<Principal> findRange(int[] range);
 
     int count();
     

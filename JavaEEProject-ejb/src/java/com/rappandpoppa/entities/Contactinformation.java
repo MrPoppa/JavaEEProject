@@ -6,6 +6,7 @@
 package com.rappandpoppa.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,21 +43,27 @@ public class Contactinformation implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 255)
+    @Size(max = 32)
     @Column(name = "streetName")
     private String streetName;
-    @Size(max = 255)
+    @Size(max = 16)
     @Column(name = "zipCode")
     private String zipCode;
-    @Size(max = 255)
+    @Size(max = 64)
     @Column(name = "city")
     private String city;
-    @Size(max = 255)
+    @Size(max = 16)
     @Column(name = "phoneNumber")
     private String phoneNumber;
-    @Size(max = 255)
+    @Size(max = 64)
     @Column(name = "emailAddress")
     private String emailAddress;
+    @OneToMany(mappedBy = "contactId")
+    private List<Principal> principalList;
+    @OneToMany(mappedBy = "contactId")
+    private List<Teacher> teacherList;
+    @OneToMany(mappedBy = "contactInformation")
+    private List<Student> studentList;
 
     public Contactinformation() {
     }
@@ -111,6 +120,33 @@ public class Contactinformation implements Serializable {
         this.emailAddress = emailAddress;
     }
 
+    @XmlTransient
+    public List<Principal> getPrincipalList() {
+        return principalList;
+    }
+
+    public void setPrincipalList(List<Principal> principalList) {
+        this.principalList = principalList;
+    }
+
+    @XmlTransient
+    public List<Teacher> getTeacherList() {
+        return teacherList;
+    }
+
+    public void setTeacherList(List<Teacher> teacherList) {
+        this.teacherList = teacherList;
+    }
+
+    @XmlTransient
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -135,5 +171,5 @@ public class Contactinformation implements Serializable {
     public String toString() {
         return "com.rappandpoppa.entities.Contactinformation[ id=" + id + " ]";
     }
-
+    
 }

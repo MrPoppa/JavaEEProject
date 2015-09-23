@@ -99,9 +99,9 @@ public class StudentMB extends Person {
 
     public void viewStudent() {
         students.clear();
-        Student foundStudent = studentFacade.findByFirstName(this.getFirstName());
+        Student foundStudent = studentFacade.findOneByFirstName(this.getFirstName());
         if (foundStudent != null) {
-            students.add(studentFacade.findByFirstName(this.getFirstName()));
+            students.add(studentFacade.findOneByFirstName(this.getFirstName()));
         }
     }
 

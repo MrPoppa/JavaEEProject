@@ -7,7 +7,6 @@ package com.rappandpoppa.beans;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 
 /**
  *
@@ -44,14 +43,6 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().createQuery(cq).getResultList();
     }
 
-    public T findByFirstName(Object firstName) {
-        try {
-            return (T) getEntityManager().createNamedQuery("Student.findByFirstName").setParameter("firstName", firstName).getSingleResult();
-        } catch (NoResultException NRE) {
-            return null;
-        }
-    }
-    
     public List<T> findRange(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));

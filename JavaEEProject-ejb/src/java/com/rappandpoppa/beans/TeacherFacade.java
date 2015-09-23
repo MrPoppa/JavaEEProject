@@ -5,7 +5,7 @@
  */
 package com.rappandpoppa.beans;
 
-import com.rappandpoppa.entities.Student;
+import com.rappandpoppa.entities.Teacher;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Benjamin
  */
 @Stateless
-public class StudentFacade extends AbstractFacade<Student> implements StudentFacadeLocal {
+public class TeacherFacade extends AbstractFacade<Teacher> implements TeacherFacadeLocal {
     @PersistenceContext(unitName = "JavaEEProject-ejbPU")
     private EntityManager em;
 
@@ -24,14 +24,8 @@ public class StudentFacade extends AbstractFacade<Student> implements StudentFac
         return em;
     }
 
-    public StudentFacade() {
-        super(Student.class);
-    }
-
-    @Override
-    public Student findOneByFirstName(String firstName) {
-        return (Student) getEntityManager().createNamedQuery("Student.findByFirstName")
-                .setParameter("firstName", firstName).getSingleResult();
+    public TeacherFacade() {
+        super(Teacher.class);
     }
     
 }

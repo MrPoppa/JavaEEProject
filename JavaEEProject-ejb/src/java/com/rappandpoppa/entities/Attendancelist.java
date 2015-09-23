@@ -20,7 +20,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,11 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Attendancelist.findById", query = "SELECT a FROM Attendancelist a WHERE a.id = :id"),
     @NamedQuery(name = "Attendancelist.findByAttendanceDate", query = "SELECT a FROM Attendancelist a WHERE a.attendanceDate = :attendanceDate")})
 public class Attendancelist implements Serializable {
-    @OneToMany(mappedBy = "courseId")
-    private List<Attendancelist> attendancelistList;
-    @JoinColumn(name = "course_id", referencedColumnName = "id")
-    @ManyToOne
-    private Attendancelist courseId;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,6 +52,9 @@ public class Attendancelist implements Serializable {
         @JoinColumn(name = "student_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Student> studentList;
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    @ManyToOne
+    private Course courseId;
 
     public Attendancelist() {
     }
@@ -91,6 +88,14 @@ public class Attendancelist implements Serializable {
         this.studentList = studentList;
     }
 
+    public Course getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Course courseId) {
+        this.courseId = courseId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -114,23 +119,6 @@ public class Attendancelist implements Serializable {
     @Override
     public String toString() {
         return "com.rappandpoppa.entities.Attendancelist[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public List<Attendancelist> getAttendancelistList() {
-        return attendancelistList;
-    }
-
-    public void setAttendancelistList(List<Attendancelist> attendancelistList) {
-        this.attendancelistList = attendancelistList;
-    }
-
-    public Attendancelist getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Attendancelist courseId) {
-        this.courseId = courseId;
     }
     
 }
