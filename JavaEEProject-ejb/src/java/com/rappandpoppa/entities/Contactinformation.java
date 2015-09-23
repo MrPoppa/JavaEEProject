@@ -15,7 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -58,12 +58,12 @@ public class Contactinformation implements Serializable {
     @Size(max = 64)
     @Column(name = "emailAddress")
     private String emailAddress;
-    @OneToMany(mappedBy = "contactId")
-    private List<Principal> principalList;
-    @OneToMany(mappedBy = "contactId")
-    private List<Teacher> teacherList;
-    @OneToMany(mappedBy = "contactInformation")
-    private List<Student> studentList;
+    @OneToOne(mappedBy = "contactId")
+    private Principal principal;
+    @OneToOne(mappedBy = "contactId")
+    private Teacher teacher;
+    @OneToOne(mappedBy = "contactInformation")
+    private Student student;
 
     public Contactinformation() {
     }
@@ -121,31 +121,32 @@ public class Contactinformation implements Serializable {
     }
 
     @XmlTransient
-    public List<Principal> getPrincipalList() {
-        return principalList;
+    public Principal getPrincipal() {
+        return principal;
     }
 
-    public void setPrincipalList(List<Principal> principalList) {
-        this.principalList = principalList;
-    }
-
-    @XmlTransient
-    public List<Teacher> getTeacherList() {
-        return teacherList;
-    }
-
-    public void setTeacherList(List<Teacher> teacherList) {
-        this.teacherList = teacherList;
+    public void setPrincipal(Principal principal) {
+        this.principal = principal;
     }
 
     @XmlTransient
-    public List<Student> getStudentList() {
-        return studentList;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
+
+    @XmlTransient
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
 
     @Override
     public int hashCode() {
