@@ -105,7 +105,7 @@ public class TeacherMB extends Employee {
 
     public void getStudentsByCourseDate() {
         attendingStudentsByCourseDate.clear();
-        attendingStudentsByCourseDate = attendanceListMB.attendanceFacade.findAllStudentsByCourseDate(chosenDate);
+        attendingStudentsByCourseDate = attendanceListMB.attendanceFacade.findAllStudentsByCourseDate(chosenDate, courseMB.getId());
     }
 
     public void viewAttendingStudentsByCourseDate() {
