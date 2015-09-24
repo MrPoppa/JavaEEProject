@@ -75,7 +75,7 @@
             <redirect>
             </redirect>
             <to-view-id>
-                /viewStudents.xhtml
+                /studentView.xhtml
             </to-view-id>
         </navigation-case>
     </navigation-rule>

@@ -22,7 +22,7 @@ public class StudentMB extends Person {
     private List<CourseMB> courses = new ArrayList<>();
     private List<String> imageResources = new ArrayList<>();
     private List<String> fileResources = new ArrayList<>();
-    private final List<Student> students = new ArrayList<>();
+    
 
     @EJB
     StudentFacadeLocal studentFacade;
@@ -77,9 +77,6 @@ public class StudentMB extends Person {
         fileResources.remove(fileResource);
     }
 
-    public List<Student> getStudents() {
-        return students;
-    }
 
     public void addStudent() {
         Student student = new Student();
@@ -97,19 +94,8 @@ public class StudentMB extends Person {
         studentFacade.create(student);
     }
 
-    public void viewStudent() {
-        students.clear();
-        Student foundStudent = studentFacade.findOneByFirstName(this.getFirstName());
-        if (foundStudent != null) {
-            students.add(studentFacade.findOneByFirstName(this.getFirstName()));
-        }
-    }
-
-    public void viewAllStudents() {
-        students.clear();
-        List<Student> foundStudents = studentFacade.findAll();
-        for (Student foundStudent : foundStudents) {
-            students.add(foundStudent);
-        }
+    @Override
+    public String toString() {
+        return this.getFirstName() +  " " + this.getLastName();
     }
 }
