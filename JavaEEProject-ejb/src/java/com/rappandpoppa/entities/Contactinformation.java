@@ -58,9 +58,9 @@ public class Contactinformation implements Serializable {
     @Size(max = 64)
     @Column(name = "emailAddress")
     private String emailAddress;
-    @OneToOne(mappedBy = "contactId")
+    @OneToOne(mappedBy = "contactInformation")
     private Principal principal;
-    @OneToOne(mappedBy = "contactId")
+    @OneToOne(mappedBy = "contactInformation")
     private Teacher teacher;
     @OneToOne(mappedBy = "contactInformation")
     private Student student;

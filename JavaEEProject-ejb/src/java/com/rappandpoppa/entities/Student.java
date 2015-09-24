@@ -159,7 +159,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return this.getFirstName() +  " " + this.getLastName();
+        return firstName +  " " + lastName;
     }
     
 }

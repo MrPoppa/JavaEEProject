@@ -8,15 +8,16 @@ package com.rappandpoppa.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -71,8 +72,8 @@ public class Principal implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateHired;
     @JoinColumn(name = "contact_id", referencedColumnName = "id")
-    @ManyToOne
-    private Contactinformation contactId;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Contactinformation contactInformation;
 
     public Principal() {
     }
@@ -153,12 +154,12 @@ public class Principal implements Serializable {
         this.dateHired = dateHired;
     }
 
-    public Contactinformation getContactId() {
-        return contactId;
+    public Contactinformation getContactInformation() {
+        return contactInformation;
     }
 
-    public void setContactId(Contactinformation contactId) {
-        this.contactId = contactId;
+    public void setContactInformation(Contactinformation contactInformation) {
+        this.contactInformation = contactInformation;
     }
 
     @Override
