@@ -34,15 +34,19 @@ and open the template in the editor.
                             <f:selectItems value="#{dropdownData.periods}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Amount of students: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" value="#{courseMB.maxNumberOfStudents}">
+                        <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" 
+                                         value="#{courseMB.maxNumberOfStudents}">
                             <f:selectItem itemLabel=" " itemValue=" "/>
                             <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="teacherForCourse" value="#{courseMB.mainTeacher}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{teacherController.teachers}"/>
+                        </p:selectOneMenu>
                         <p:commandButton class="actionButton" 
                                          value="Add Course"
-                                         update="registerCourseForm"
-                                         action="#{courseMB.addCourse()}"
+                                         action="#{courseMB.addCourse}"
                                          />
                     </h:panelGrid>
                 </h:form>

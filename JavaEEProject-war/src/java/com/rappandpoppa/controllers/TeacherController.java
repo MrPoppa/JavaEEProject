@@ -9,6 +9,7 @@ import com.rappandpoppa.beans.TeacherFacadeLocal;
 import com.rappandpoppa.entities.Contactinformation;
 import com.rappandpoppa.entities.Teacher;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 
@@ -81,5 +82,9 @@ public class TeacherController {
             teacherFacade.create(teacher3);
 
         }
+    }
+
+    public List<Teacher> getTeachers() {
+        return teacherFacade.findAll();
     }
 }

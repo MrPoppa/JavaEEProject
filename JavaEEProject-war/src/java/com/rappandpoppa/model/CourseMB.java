@@ -1,7 +1,9 @@
 package com.rappandpoppa.model;
 
 import com.rappandpoppa.beans.CourseFacadeLocal;
+import com.rappandpoppa.beans.TeacherFacadeLocal;
 import com.rappandpoppa.entities.Course;
+import com.rappandpoppa.entities.Teacher;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +24,7 @@ public class CourseMB {
     private String language;
     private String period;
     private int maxNumberOfStudents;
-    private TeacherMB mainTeacher;
+    private Teacher mainTeacher;
     private List<StudentMB> courseStudents = new ArrayList<>();
     private AttendanceListMB attendanceList;
     private List<Date> lectureDates = new ArrayList<>();
@@ -31,6 +33,7 @@ public class CourseMB {
 
     @EJB
     CourseFacadeLocal courseFacade;
+    TeacherFacadeLocal teacherFacade;
 
     public Long getId() {
         return id;
@@ -88,11 +91,11 @@ public class CourseMB {
         this.maxNumberOfStudents = maxNumberOfStudents;
     }
 
-    public TeacherMB getMainTeacher() {
+    public Teacher getMainTeacher() {
         return mainTeacher;
     }
 
-    public void setMainTeacher(TeacherMB mainTeacher) {
+    public void setMainTeacher(Teacher mainTeacher) {
         this.mainTeacher = mainTeacher;
     }
 
@@ -140,6 +143,7 @@ public class CourseMB {
         createdCourse.setCoursePeriod(this.period);
         createdCourse.setCourseLevel(this.level);
         createdCourse.setMaxNumberOfStudents(this.maxNumberOfStudents);
+        createdCourse.setTeacher(this.mainTeacher);
         courseFacade.create(createdCourse);
     }
 
