@@ -31,6 +31,4 @@ public interface TeacherFacadeLocal {
 
     int count();
     
-    List<Course> findTeacherCourses();
-    
 }

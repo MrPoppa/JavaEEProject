@@ -7,7 +7,6 @@ package com.rappandpoppa.beans;
 
 import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Student;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -44,10 +43,13 @@ public class AttendancelistFacade extends AbstractFacade<Attendancelist> impleme
 
     @Override
     public List<Student> findAllStudentsByCourseDate(Date attendanceDate, long course_id) {
+        Attendancelist attendancelist = (Attendancelist) em.createNamedQuery("Attendancelist.findByAttendanceDate")
+                .setParameter("attendanceDate", attendanceDate).getSingleResult();
+        
         List<Student> attendingStudents
-                = em.createNamedQuery("AttendanceList.findAllStudentsByCourseDate")
+                = em.createNamedQuery("Student.findAllStudentsByCourseDate")
                 .setParameter("course_id", course_id)
-                .setParameter("attendanceDate", attendanceDate)
+                .setParameter("attendancelistId", attendancelist.getId())
                 .getResultList();
 
         return attendingStudents;

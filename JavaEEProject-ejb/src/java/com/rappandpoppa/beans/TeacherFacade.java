@@ -5,10 +5,7 @@
  */
 package com.rappandpoppa.beans;
 
-import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Teacher;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,12 +27,6 @@ public class TeacherFacade extends AbstractFacade<Teacher> implements TeacherFac
 
     public TeacherFacade() {
         super(Teacher.class);
-    }
-
-    @Override
-    public List<Course> findTeacherCourses() {
-//        TODO: Write new query and stuff.
-        return new ArrayList<Course>();
     }
 
 }

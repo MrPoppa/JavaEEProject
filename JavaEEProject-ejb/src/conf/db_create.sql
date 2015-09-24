@@ -86,7 +86,7 @@ CREATE TABLE AttendanceList(
 id INTEGER NOT NULL AUTO_INCREMENT,
 course_id INTEGER,
 attendanceDate DATE,
-PRIMARY KEY (attendanceDate),
+PRIMARY KEY (id),
 CONSTRAINT fk_course_attendance FOREIGN KEY (course_id) REFERENCES Course(id)
 )
 

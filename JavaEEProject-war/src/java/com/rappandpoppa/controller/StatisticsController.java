@@ -1,6 +1,8 @@
 package com.rappandpoppa.controller;
 
+import com.rappandpoppa.beans.TeacherFacadeLocal;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -16,6 +18,9 @@ import org.primefaces.model.chart.LineChartModel;
 public class StatisticsController {
 
     private LineChartModel lineModel;
+    
+    @EJB
+    TeacherFacadeLocal teacherFacade;
 
     public LineChartModel getLineModel() {
         return lineModel;

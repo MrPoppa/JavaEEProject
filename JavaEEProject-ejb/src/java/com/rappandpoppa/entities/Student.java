@@ -37,8 +37,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Student.findByFirstName", query = "SELECT s FROM Student s WHERE s.firstName = :firstName"),
     @NamedQuery(name = "Student.findByLastName", query = "SELECT s FROM Student s WHERE s.lastName = :lastName"),
     @NamedQuery(name = "Student.findByGender", query = "SELECT s FROM Student s WHERE s.gender = :gender"),
-    @NamedQuery(name = "Student.findByAge", query = "SELECT s FROM Student s WHERE s.age = :age")})
+    @NamedQuery(name = "Student.findByAge", query = "SELECT s FROM Student s WHERE s.age = :age"),
+    @NamedQuery(name = "Student.findAllStudentsByCourseDate", 
+            query = "SELECT s FROM Student s "
+                    + "WHERE s.courseList = :course_id "
+                    + " AND s.attendancelistList = :attendance_id")
+})
 public class Student implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -161,5 +167,5 @@ public class Student implements Serializable {
     public String toString() {
         return "com.rappandpoppa.entities.Student[ id=" + id + " ]";
     }
-    
+
 }

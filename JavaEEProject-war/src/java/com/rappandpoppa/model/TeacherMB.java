@@ -1,5 +1,6 @@
 package com.rappandpoppa.model;
 
+import com.rappandpoppa.beans.AttendancelistFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
@@ -7,9 +8,9 @@ import com.rappandpoppa.model.origin.Employee;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.inject.Inject;
 
 /**
  *
@@ -18,23 +19,23 @@ import javax.inject.Inject;
 @ManagedBean
 public class TeacherMB extends Employee {
 
-    private List<Course> courses = new ArrayList<>();
+    private List<Course> courses;
     private String chosenCourseName;
     private Date chosenDate;
     private Date periodStartDate;
     private Date periodEndDate;
     private List<Date> courseDates;
     private List<Student> attendingStudentsByCourseDate;
-    @Inject
-    CourseMB courseMB;
-    @Inject
-    AttendanceListMB attendanceListMB;
-   
+
     @EJB
     TeacherFacadeLocal teacherFacade;
 
+    @EJB
+    AttendancelistFacadeLocal attendancelistFacade;
+
+    
     public List<Course> getCourses() {
-        return courses;
+        return teacherFacade.find(1).getCourseList();
     }
 
     public void setCourses(List<Course> courses) {
@@ -89,15 +90,9 @@ public class TeacherMB extends Employee {
         this.periodEndDate = periodEndDate;
     }
 
-    public void viewAllCourses() {
-        courses.clear();
-        courses = teacherFacade.findTeacherCourses();
-    }
-
     public void onCourseChange() {
         if (chosenCourseName != null && !chosenCourseName.equals("")) {
-//            Integer courseId = courseFacade.findIdByCourseName(chosenCourseName);
-            courseDates = attendanceListMB.attendanceFacade.findAllDatesByCourse(courseMB.getId());
+            courseDates = attendancelistFacade.findAllDatesByCourse(1);
         } else {
             courseDates = new ArrayList<>();
         }
@@ -105,7 +100,7 @@ public class TeacherMB extends Employee {
 
     public void getStudentsByCourseDate() {
         attendingStudentsByCourseDate.clear();
-        attendingStudentsByCourseDate = attendanceListMB.attendanceFacade.findAllStudentsByCourseDate(chosenDate, courseMB.getId());
+        attendingStudentsByCourseDate = attendancelistFacade.findAllStudentsByCourseDate(chosenDate, 1);
     }
 
     public void viewAttendingStudentsByCourseDate() {
