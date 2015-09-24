@@ -19,7 +19,8 @@ and open the template in the editor.
                     <p:outputLabel class="textLabels">Password: </p:outputLabel>
                     <p:inputText id="password"/>
                     <p:commandButton value="Login"
-                                     action="login"/>
+                                     action="login"
+                                     actionListener="#{teacherController.createTeachers}"/>
                 </h:form>
             </ui:define>
         </ui:composition>
