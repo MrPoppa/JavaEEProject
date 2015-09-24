@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="templates/template.xhtml">
+            <ui:define name="content">
+                <h:form class="regForm">
+                    <h:panelGrid class="regGrid" id="registerCourseForm">
+                        <p:outputLabel class="textLabels">Course name: </p:outputLabel>
+                        <p:inputText class="regInputText" id="courseName" value="#{courseMB.courseName}">
+                        </p:inputText>
+                        <p:outputLabel class="textLabels">Level: </p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="level" value="#{courseMB.level}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.levels}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel class="textLabels">Language: </p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="language" value="#{courseMB.language}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.languages}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel class="textLabels">Days of the week</p:outputLabel>
+                        <p:selectManyMenu class="regOneMenu" id="days-of-the-weeks" value="#{courseMB.period}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItem itemLabel="Monday" itemValue="Monday"/>
+                            <f:selectItem itemLabel="Tuesday" itemValue="Tuesday"/>
+                            <f:selectItem itemLabel="Wednesday" itemValue="Wednesday"/>
+                            <f:selectItem itemLabel="Thursday" itemValue="Thursday"/>
+                            <f:selectItem itemLabel="Friday" itemValue="Friday"/>
+                        </p:selectManyMenu>
+                        
+                        <p:outputLabel class="textLabels">Number of weeks</p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="number-of-weeks" value="#{courseMB.age}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItem itemLabel="1" itemValue="1"/>
+                            <f:selectItem itemLabel="2" itemValue="2"/>
+                            <f:selectItem itemLabel="5" itemValue="5"/>
+                            <f:selectItem itemLabel="10" itemValue="10"/>
+                            <f:selectItem itemLabel="15" itemValue="15"/>
+                            <f:selectItem itemLabel="20" itemValue="20"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel class="textLabels">Start date</p:outputLabel>
+                        <p:calendar/>
+                        
+                        <p:outputLabel class="textLabels">Amount of students: </p:outputLabel>
+                        <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" value="#{courseMB.maxNumberOfStudents}">
+                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
+                        <p:commandButton class="actionButton" 
+                                         value="Add Course"
+                                         update="registerCourseForm"
+                                         action="#{courseMB.addCourse()}"
+                                         />
+                    </h:panelGrid>
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
