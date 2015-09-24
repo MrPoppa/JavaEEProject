@@ -14,16 +14,21 @@ and open the template in the editor.
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <p:outputLabel for="date" value="Date: " />
-                    <p:calendar id="date" value="#{attendanceListMB.date}"/>
-                    
-                    <p:selectOneMenu value="#{attendanceListMB.courseName}">
-                        <f:selectItems value="#{courseMB.allCourseNames}" var="courseName"/>
-                    </p:selectOneMenu>
+                    <div class="regForm">
+                        <h:panelGrid class="regGrid">
+                            <p:outputLabel for="date" value="Date: " />
+                            <p:calendar id="date" value="#{attendanceListMB.date}"/>
 
-                    <p:commandButton class="actionButton" value="Create List" 
-                                     action="#{attendanceListMB.createAttendanceList()}">
-                    </p:commandButton>
+                            <p:outputLabel for="courseSelect" value="Course: "/>
+                            <p:selectOneMenu id="courseSelect" value="#{attendanceListMB.courseName}">
+                                <f:selectItems value="#{courseMB.allCourseNames}" var="courseName"/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton class="actionButton" value="Create List" 
+                                             action="#{attendanceListMB.createAttendanceList()}">
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </div>
                 </h:form>
             </ui:define>
         </ui:composition>

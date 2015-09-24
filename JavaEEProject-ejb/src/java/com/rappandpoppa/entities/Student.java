@@ -165,7 +165,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rappandpoppa.entities.Student[ id=" + id + " ]";
+        return firstName +  " " + lastName;
     }
 
 }

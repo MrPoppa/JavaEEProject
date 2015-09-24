@@ -43,3 +43,7 @@ body {
 #period-attendance-chart{
     float:left;
 }
+
+.autoCompleteText {
+    cursor: pointer;
+}
