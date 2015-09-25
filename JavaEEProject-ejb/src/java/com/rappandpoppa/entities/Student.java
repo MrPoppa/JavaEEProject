@@ -68,7 +68,7 @@ public class Student implements Serializable {
     private List<Course> courseList;
     @JoinColumn(name = "contact_id", referencedColumnName = "id")
     @OneToOne(cascade = CascadeType.PERSIST)
-    private Contactinformation contactInformation;
+    private ContactInformation contactInformation;
 
     public Student() {
     }
@@ -135,11 +135,11 @@ public class Student implements Serializable {
         this.courseList = courseList;
     }
 
-    public Contactinformation getContactInformation() {
+    public ContactInformation getContactInformation() {
         return contactInformation;
     }
 
-    public void setContactInformation(Contactinformation contactInformation) {
+    public void setContactInformation(ContactInformation contactInformation) {
         this.contactInformation = contactInformation;
     }
 

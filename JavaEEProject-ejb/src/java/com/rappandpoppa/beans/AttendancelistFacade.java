@@ -33,7 +33,7 @@ public class AttendancelistFacade extends AbstractFacade<Attendancelist> impleme
     }
 
     @Override
-    public List<Date> findAllDatesByCourse(long course_id) {
+    public List<Date> findAllDatesByCourse(int course_id) {
         List<Date> dates
                 = em.createNamedQuery("Attendancelist.findAllDatesByCourse")
                 .setParameter("course_id", course_id)
@@ -42,7 +42,7 @@ public class AttendancelistFacade extends AbstractFacade<Attendancelist> impleme
     }
 
     @Override
-    public List<Student> findAllStudentsByCourseDate(Date attendanceDate, long course_id) {
+    public List<Student> findAllStudentsByCourseDate(Date attendanceDate, int course_id) {
         Attendancelist attendancelist = (Attendancelist) em.createNamedQuery("Attendancelist.findByAttendanceDate")
                 .setParameter("attendanceDate", attendanceDate).getSingleResult();
         

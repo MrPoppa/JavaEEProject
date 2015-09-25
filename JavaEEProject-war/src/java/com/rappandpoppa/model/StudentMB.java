@@ -2,7 +2,7 @@ package com.rappandpoppa.model;
 
 import com.rappandpoppa.beans.ContactinformationFacadeLocal;
 import com.rappandpoppa.beans.StudentFacadeLocal;
-import com.rappandpoppa.entities.Contactinformation;
+import com.rappandpoppa.entities.ContactInformation;
 import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.model.origin.Person;
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class StudentMB extends Person {
         student.setAge(this.getAge());
         student.setLastName(this.getLastName());
         student.setGender(this.getGender());
-        Contactinformation contact = new Contactinformation();
+        ContactInformation contact = new ContactInformation();
         contact.setCity(this.getContactInformation().getCity());
         contact.setEmailAddress(this.getContactInformation().getEmailAddress());
         contact.setPhoneNumber(this.getContactInformation().getPhoneNumber());

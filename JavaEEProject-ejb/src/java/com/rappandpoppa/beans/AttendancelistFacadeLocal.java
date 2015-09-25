@@ -32,8 +32,8 @@ public interface AttendancelistFacadeLocal {
 
     int count();
     
-    List<Date> findAllDatesByCourse(long id);
+    List<Date> findAllDatesByCourse(int id);
     
-    List<Student> findAllStudentsByCourseDate(Date date, long course_id);
+    List<Student> findAllStudentsByCourseDate(Date date, int course_id);
     
 }

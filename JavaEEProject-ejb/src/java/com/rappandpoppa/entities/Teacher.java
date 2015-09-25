@@ -78,7 +78,7 @@ public class Teacher implements Serializable {
     private Date dateHired;
     @JoinColumn(name = "contact_id", referencedColumnName = "id")
     @OneToOne(cascade = CascadeType.PERSIST)
-    private Contactinformation contactInformation;
+    private ContactInformation contactInformation;
     @OneToMany(mappedBy = "teacher")
     private List<Course> courseList;
 
@@ -161,11 +161,11 @@ public class Teacher implements Serializable {
         this.dateHired = dateHired;
     }
 
-    public Contactinformation getContactInformation() {
+    public ContactInformation getContactInformation() {
         return contactInformation;
     }
 
-    public void setContactInformation(Contactinformation contactInformation) {
+    public void setContactInformation(ContactInformation contactInformation) {
         this.contactInformation = contactInformation;
     }
 

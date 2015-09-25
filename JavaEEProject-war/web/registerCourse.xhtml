@@ -20,33 +20,34 @@ and open the template in the editor.
                         </p:inputText>
                         <p:outputLabel class="textLabels">Level: </p:outputLabel>
                         <p:selectOneMenu class="regOneMenu" id="level" value="#{courseMB.level}">
-                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItem itemLabel=" "/>
                             <f:selectItems value="#{dropdownData.levels}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Language: </p:outputLabel>
                         <p:selectOneMenu class="regOneMenu" id="language" value="#{courseMB.language}">
-                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItem itemLabel=" "/>
                             <f:selectItems value="#{dropdownData.languages}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Period: </p:outputLabel>
                         <p:selectOneMenu class="regOneMenu" id="period" value="#{courseMB.period}">
-                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItem itemLabel=" "/>
                             <f:selectItems value="#{dropdownData.periods}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Amount of students: </p:outputLabel>
                         <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" 
                                          value="#{courseMB.maxNumberOfStudents}">
-                            <f:selectItem itemLabel=" " itemValue=" "/>
+                            <f:selectItem itemLabel=" "/>
                             <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
                         </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="teacherForCourse" value="#{courseMB.mainTeacher}">
-                            <f:selectItem itemLabel=" " itemValue=" "/>
-                            <f:selectItems value="#{teacherController.teachers}"/>
+                        <p:selectOneMenu class="regOneMenu" id="teacherForCourse" value="#{courseMB.teacherId}">
+                            <f:selectItem itemLabel=" "/>
+                            <f:selectItems value="#{teacherController.teachers}" var="teacher" itemValue="#{teacher.id}"/>
                         </p:selectOneMenu>
                         <p:commandButton class="actionButton" 
                                          value="Add Course"
-                                         action="#{courseMB.addCourse}"
+                                         actionListener="#{courseMB.addCourse}"
+                                         update="registerCourseForm"
                                          />
                     </h:panelGrid>
                 </h:form>

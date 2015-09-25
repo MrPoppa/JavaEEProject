@@ -17,7 +17,7 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class CourseMB {
 
-    private Long id;
+    private Integer id;
     private String courseName;
     private String courseCode;
     private String level;
@@ -28,18 +28,21 @@ public class CourseMB {
     private List<StudentMB> courseStudents = new ArrayList<>();
     private AttendanceListMB attendanceList;
     private List<Date> lectureDates = new ArrayList<>();
+    
+    private Integer teacherId;
 
     private List<CourseMB> courses = new ArrayList<>();
 
     @EJB
     CourseFacadeLocal courseFacade;
+    @EJB
     TeacherFacadeLocal teacherFacade;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -135,6 +138,14 @@ public class CourseMB {
         return courses;
     }
 
+    public Integer getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
+    }
+    
     public void addCourse() {
         Course createdCourse = new Course();
         createdCourse.setCourseName(this.courseName);
@@ -143,6 +154,7 @@ public class CourseMB {
         createdCourse.setCoursePeriod(this.period);
         createdCourse.setCourseLevel(this.level);
         createdCourse.setMaxNumberOfStudents(this.maxNumberOfStudents);
+        this.mainTeacher = teacherFacade.find(teacherId);
         createdCourse.setTeacher(this.mainTeacher);
         courseFacade.create(createdCourse);
     }
