@@ -28,14 +28,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "contactinformation")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Contactinformation.findAll", query = "SELECT c FROM ContactInformation c"),
-    @NamedQuery(name = "Contactinformation.findById", query = "SELECT c FROM ContactInformation c WHERE c.id = :id"),
-    @NamedQuery(name = "Contactinformation.findByStreetName", query = "SELECT c FROM ContactInformation c WHERE c.streetName = :streetName"),
-    @NamedQuery(name = "Contactinformation.findByZipCode", query = "SELECT c FROM ContactInformation c WHERE c.zipCode = :zipCode"),
-    @NamedQuery(name = "Contactinformation.findByCity", query = "SELECT c FROM ContactInformation c WHERE c.city = :city"),
-    @NamedQuery(name = "Contactinformation.findByPhoneNumber", query = "SELECT c FROM ContactInformation c WHERE c.phoneNumber = :phoneNumber"),
-    @NamedQuery(name = "Contactinformation.findByEmailAddress", query = "SELECT c FROM ContactInformation c WHERE c.emailAddress = :emailAddress")})
-public class ContactInformation implements Serializable {
+    @NamedQuery(name = "Contactinformation.findAll", query = "SELECT c FROM Contactinformation c"),
+    @NamedQuery(name = "Contactinformation.findById", query = "SELECT c FROM Contactinformation c WHERE c.id = :id"),
+    @NamedQuery(name = "Contactinformation.findByStreetName", query = "SELECT c FROM Contactinformation c WHERE c.streetName = :streetName"),
+    @NamedQuery(name = "Contactinformation.findByZipCode", query = "SELECT c FROM Contactinformation c WHERE c.zipCode = :zipCode"),
+    @NamedQuery(name = "Contactinformation.findByCity", query = "SELECT c FROM Contactinformation c WHERE c.city = :city"),
+    @NamedQuery(name = "Contactinformation.findByPhoneNumber", query = "SELECT c FROM Contactinformation c WHERE c.phoneNumber = :phoneNumber"),
+    @NamedQuery(name = "Contactinformation.findByEmailAddress", query = "SELECT c FROM Contactinformation c WHERE c.emailAddress = :emailAddress")})
+public class Contactinformation implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,10 +64,10 @@ public class ContactInformation implements Serializable {
     @OneToOne(mappedBy = "contactInformation")
     private Student student;
 
-    public ContactInformation() {
+    public Contactinformation() {
     }
 
-    public ContactInformation(Integer id) {
+    public Contactinformation(Integer id) {
         this.id = id;
     }
 
@@ -157,10 +157,10 @@ public class ContactInformation implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ContactInformation)) {
+        if (!(object instanceof Contactinformation)) {
             return false;
         }
-        ContactInformation other = (ContactInformation) object;
+        Contactinformation other = (Contactinformation) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

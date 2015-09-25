@@ -1,6 +1,6 @@
 package com.rappandpoppa.beans;
 
-import com.rappandpoppa.entities.ContactInformation;
+import com.rappandpoppa.entities.Contactinformation;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -11,17 +11,17 @@ import javax.ejb.Local;
 @Local
 public interface ContactinformationFacadeLocal {
 
-    void create(ContactInformation contactinformation);
+    void create(Contactinformation contactinformation);
 
-    void edit(ContactInformation contactinformation);
+    void edit(Contactinformation contactinformation);
 
-    void remove(ContactInformation contactinformation);
+    void remove(Contactinformation contactinformation);
 
-    ContactInformation find(Object id);
+    Contactinformation find(Object id);
 
-    List<ContactInformation> findAll();
+    List<Contactinformation> findAll();
 
-    List<ContactInformation> findRange(int[] range);
+    List<Contactinformation> findRange(int[] range);
 
     int count();
     

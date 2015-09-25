@@ -73,7 +73,7 @@ public class Principal implements Serializable {
     private Date dateHired;
     @JoinColumn(name = "contact_id", referencedColumnName = "id")
     @OneToOne(cascade = CascadeType.PERSIST)
-    private ContactInformation contactInformation;
+    private Contactinformation contactInformation;
 
     public Principal() {
     }
@@ -154,11 +154,11 @@ public class Principal implements Serializable {
         this.dateHired = dateHired;
     }
 
-    public ContactInformation getContactInformation() {
+    public Contactinformation getContactInformation() {
         return contactInformation;
     }
 
-    public void setContactInformation(ContactInformation contactInformation) {
+    public void setContactInformation(Contactinformation contactInformation) {
         this.contactInformation = contactInformation;
     }
 
