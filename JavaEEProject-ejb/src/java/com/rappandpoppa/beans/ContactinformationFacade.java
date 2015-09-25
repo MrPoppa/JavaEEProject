@@ -1,6 +1,6 @@
 package com.rappandpoppa.beans;
 
-import com.rappandpoppa.entities.Contactinformation;
+import com.rappandpoppa.entities.ContactInformation;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  * @author Anders
  */
 @Stateless
-public class ContactinformationFacade extends AbstractFacade<Contactinformation> implements ContactinformationFacadeLocal {
+public class ContactinformationFacade extends AbstractFacade<ContactInformation> implements ContactinformationFacadeLocal {
     @PersistenceContext(unitName = "JavaEEProject-ejbPU")
     private EntityManager em;
 
@@ -20,7 +20,7 @@ public class ContactinformationFacade extends AbstractFacade<Contactinformation>
     }
 
     public ContactinformationFacade() {
-        super(Contactinformation.class);
+        super(ContactInformation.class);
     }
     
 }
