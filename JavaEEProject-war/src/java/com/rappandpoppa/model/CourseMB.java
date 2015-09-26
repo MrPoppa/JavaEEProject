@@ -2,6 +2,7 @@ package com.rappandpoppa.model;
 
 import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
+import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Teacher;
 import java.util.ArrayList;
@@ -22,11 +23,11 @@ public class CourseMB {
     private String courseCode;
     private String level;
     private String language;
-    private String period;
     private int maxNumberOfStudents;
     private Teacher mainTeacher;
     private List<StudentMB> courseStudents = new ArrayList<>();
-    private AttendanceListMB attendanceList;
+    private Attendancelist attendanceList;
+    private List<Attendancelist> attendanceLists;
     private List<Date> lectureDates = new ArrayList<>();
     
     private Integer teacherId;
@@ -78,14 +79,6 @@ public class CourseMB {
         this.language = language;
     }
 
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
     public int getMaxNumberOfStudents() {
         return maxNumberOfStudents;
     }
@@ -110,14 +103,22 @@ public class CourseMB {
         this.courseStudents = courseStudents;
     }
 
-    public AttendanceListMB getAttendanceList() {
+    public Attendancelist getAttendanceList() {
         return attendanceList;
     }
 
-    public void setAttendanceList(AttendanceListMB attendanceList) {
+    public void setAttendanceList(Attendancelist attendanceList) {
         this.attendanceList = attendanceList;
     }
 
+    public List<Attendancelist> getAttendanceLists() {
+        return attendanceLists;
+    }
+
+    public void setAttendanceLists(List<Attendancelist> attendanceLists) {
+        this.attendanceLists = attendanceLists;
+    }
+    
     public void addLectureDate(Date lectureDate) {
         lectureDates.add(lectureDate);
     }
@@ -151,12 +152,18 @@ public class CourseMB {
         createdCourse.setCourseName(this.courseName);
         createdCourse.setCourseCode(this.courseCode);
         createdCourse.setCourseLanguage(this.language);
-        createdCourse.setCoursePeriod(this.period);
         createdCourse.setCourseLevel(this.level);
         createdCourse.setMaxNumberOfStudents(this.maxNumberOfStudents);
         this.mainTeacher = teacherFacade.find(teacherId);
         createdCourse.setTeacher(this.mainTeacher);
         courseFacade.create(createdCourse);
+    }
+    
+    public void addAttendanceList() {
+        this.attendanceLists.add(this.attendanceList);
+        Course courseToUpdate = courseFacade.find(id);
+        courseToUpdate.setAttendancelistList(attendanceLists);
+        courseFacade.edit(courseToUpdate);
     }
 
     public List<Course> viewAllCourses() {
