@@ -1,19 +1,24 @@
 package com.rappandpoppa.model;
 
 import com.rappandpoppa.beans.AttendancelistFacadeLocal;
+import com.rappandpoppa.beans.ContactinformationFacadeLocal;
 import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
 import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
+import com.rappandpoppa.entities.Teacher;
 import com.rappandpoppa.model.origin.Employee;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
@@ -30,9 +35,10 @@ public class TeacherMB extends Employee {
     private Date periodEndDate;
     private List<LocalDate> courseDates = new ArrayList<>();
     private List<Student> attendingStudentsByCourse;
-    private List<Student> attendingStudentsByCourseDate;
+    private List<Student> attendingStudentsByCourseDate = new ArrayList<>();
     private List<Attendancelist> attendancelistList = new ArrayList<>();
     int chosenCourseId;
+    private Map<Course, List<Attendancelist>> courseAttendanceLists;
 
     @EJB
     TeacherFacadeLocal teacherFacade;
@@ -42,6 +48,9 @@ public class TeacherMB extends Employee {
 
     @EJB
     CourseFacadeLocal courseFacade;
+    
+    @EJB
+    ContactinformationFacadeLocal contactinformationFacade;
 
     public List<Course> getCourses() {
 //        courses = teacherFacade.find(this.getId()).getCourseList();
@@ -63,6 +72,18 @@ public class TeacherMB extends Employee {
     }
 
     public List<Student> getAttendingStudentsByCourseDate() {
+        attendingStudentsByCourseDate.clear();
+        if (chosenCourse != null) {
+            for (Attendancelist a : attendancelistList) {
+                if (a.getAttendanceDate() == chosenDate) {
+                    attendingStudentsByCourseDate = a.getStudentList();
+                    break;
+                }
+            }
+            for (Student s : attendingStudentsByCourseDate) {
+                System.out.println(s.getFirstName() + " " + s.getLastName());
+            }
+        }
         return attendingStudentsByCourseDate;
     }
 
@@ -110,15 +131,26 @@ public class TeacherMB extends Employee {
         this.periodEndDate = periodEndDate;
     }
 
+    public List<Student> getAttendingStudentsByCourse() {
+        return attendingStudentsByCourse;
+    }
+
+    public void setAttendingStudentsByCourse(List<Student> attendingStudentsByCourse) {
+        this.attendingStudentsByCourse = attendingStudentsByCourse;
+    }
+
     public void onCourseChange() {
         if (chosenCourseName != null && !chosenCourseName.equals("")) {
-            chosenCourseId = chosenCourse.getId();
             courseDates.clear();
             attendancelistList.clear();
-            attendancelistList = courseFacade.find(chosenCourseId).getAttendancelistList();
-            attendingStudentsByCourse = chosenCourse.getStudentList();
-//            attendingStudentsByCourseDate = attendingStudentsByCourse.get
+            for (Course course : courses) {
+                if (chosenCourseName.equals(course.getCourseName())) {
+                    chosenCourse = course;
+                    break;
+                }
+            }
 
+            attendancelistList = courseAttendanceLists.get(chosenCourse);
             for (Attendancelist a : attendancelistList) {
                 LocalDate date1 = a.getAttendanceDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 courseDates.add(date1);
@@ -134,10 +166,52 @@ public class TeacherMB extends Employee {
             for (Attendancelist a : attendancelistList) {
                 if (a.getAttendanceDate() == chosenDate) {
                     attendingStudentsByCourseDate = a.getStudentList();
+                    for(Student s : attendingStudentsByCourseDate)
+                    {System.out.println(s.getFirstName());}
+                    break;
                 }
             }
         }
 //        attendingStudentsByCourseDate = attendancelistFacade.findAllStudentsByCourseDate(chosenDate, chosenCourseId);
     }
 
+    public List<String> getAllCourseNames() {
+//        Teacher teacher = teacherFacade.find(this.getId());
+        Teacher teacher = teacherFacade.find(1);
+        courses = teacher.getCourseList();
+        getAllAttendancelists();
+
+        List<String> courseNames = new ArrayList<>();
+        for (Course course : courses) {
+            courseNames.add(course.getCourseName());
+        }
+        return courseNames;
+    }
+
+    private void getAllAttendancelists() {
+        if (courseAttendanceLists == null) {
+            courseAttendanceLists = new HashMap<>();
+        } else {
+            courseAttendanceLists.clear();
+        }
+
+        for (Course course : courses) {
+            courseAttendanceLists.put(course, course.getAttendancelistList());
+        }
+    }
+
+//    public void viewAttendingStudentsByCourseDate() {
+//        attendingStudentsByCourseDate.clear();
+//        if (chosenCourse != null) {
+//            for (Attendancelist a : attendancelistList) {
+//                if (a.getAttendanceDate() == chosenDate) {
+//                    attendingStudentsByCourseDate = a.getStudentList();
+//                    break;
+//                }
+//            }
+//            for (Student s : attendingStudentsByCourseDate) {
+//                System.out.println(s.getFirstName() + " " + s.getLastName());   
+//            }
+//        }
+//    }
 }

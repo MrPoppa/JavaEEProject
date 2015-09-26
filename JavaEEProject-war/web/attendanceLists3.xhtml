@@ -12,11 +12,11 @@
     <body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <h:form>
-                    <p:tabView style="margin-top:150px; margin-left: 15%; width:70%">
+                <p:tabView style="margin-top:150px; margin-left: 15%; width:70%">
 
-                        <p:tab title="View by date">
+                    <p:tab title="View by date">
 
+                        <h:form>
                             <p:panel 
                                 header="Attendance List" 
                                 style="width:75%; 
@@ -28,41 +28,61 @@
                                     <p:outputLabel for="course-by-date" value="Course"/>
                                     <p:selectOneMenu id="course-by-date" value="#{teacherMB.chosenCourseName}" style="width:150px">
                                         <p:ajax listener="#{teacherMB.onCourseChange}" update="date"/>
-                                        <f:selectItem itemLabel="Select Course" itemValue="" noSelectionOption="true"/>
-                                        <f:selectItems value="#{teacherMB.courses}"/>
+                                        <f:selectItem 
+                                            itemLabel="Select Course" 
+                                            itemValue="" noSelectionOption="true"
+                                            />
+                                        <f:selectItems value="#{teacherMB.allCourseNames}"/>
                                     </p:selectOneMenu>
                                     <p:outputLabel for="date" value="Date"/>
                                     <p:selectOneMenu id="date" value="#{teacherMB.chosenDate}">
-                                        <p:ajax listener="#{teacherMB.onDateChange}" update="date"/>
-                                        <f:selectItem itemLabel="Select Date" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItem 
+                                            itemLabel="Select Date" 
+                                            itemValue="" 
+                                            noSelectionOption="true"
+                                            />
                                         <f:selectItems value="#{teacherMB.courseDates}"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu>
+                                        <f:selectItem 
+                                            itemLabel="Select student" 
+                                            itemValue="" 
+                                            noSelectionOption="true"
+                                            />
+                                        <f:selectItems 
+                                            value="#{teacherMB.attendingStudentsByCourseDate}"
+                                            />
                                     </p:selectOneMenu>
                                 </p:panelGrid>
                                 <p:separator/>
-                                <p:commandButton value="Send" actionListener="#{teacherMB.attendingStudentsByCourseDate}" update="attendingStudentView1"/>
+                                <p:commandButton 
+                                    value="Send" 
+                                    update="attendingStudentView1"
+                                    />
+
+                                <p:dataTable
+                                    class="viewAttendanceList" 
+                                    id="attendingStudentView1" 
+                                    value="#{teacherMB.attendingStudentsByCourseDate}" 
+                                    var="student"
+                                    style="width:75%; "
+                                    >
+                                    <p:column>
+                                        <p:outputLabel value="#{student.firstName}"/>
+                                    </p:column>
+                                    <p:column headerText="Last Name">
+                                        <p:outputLabel value="#{student.lastName}"/>
+                                    </p:column>
+                                    <p:column headerText="Attendance Rate">
+                                        <p:outputLabel value="#{studentMB.age}"/>
+                                    </p:column>
+                                </p:dataTable>
                             </p:panel>
+                        </h:form>
 
-                            <p:dataTable
-                                class="viewAttendanceList" 
-                                id="attendingStudentView1" 
-                                value="#{teacherMB.attendingStudentsByCourseDate}" 
-                                var="student"
-                                style="width:75%; "
-                                >
-                                <p:outputLabel value="#{teacherMB.chosenCourseName} + #{teacherMB.chosenDate}"/>
-                                <p:column headerText="First Name">
-                                    <p:outputLabel value="#{student.firstName}"/>
-                                </p:column>
-                                <p:column headerText="Last Name">
-                                    <p:outputLabel value="#{student.lastName}"/>
-                                </p:column>
-                                <p:column headerText="Attendance Rate">
-                                    <p:outputLabel value="#{studentMB.age}"/>
-                                </p:column>
-                            </p:dataTable>
-
-                        </p:tab>
-                        <p:tab title="View by period">
+                    </p:tab>
+                    <p:tab title="View by period">
+                        <h:form>
 
                             <p:panel 
                                 header="Attendance List" 
@@ -73,9 +93,9 @@
                                 <p:panelGrid columns="2" id="selectGrid">
                                     <p:outputLabel for="course-by-period" value="Course"/>
                                     <p:selectOneMenu id="course-by-period" value="#{teacherMB.chosenCourse}" style="width:150px">
-                                        <p:ajax listener="#{teacherMB.onCourseChange}" update="date"/>
+                                        <p:ajax listener="#{teacherMB.onCourseChange}"/>
                                         <f:selectItem itemLabel="Select Course" itemValue="" noSelectionOption="true"/>
-                                        <f:selectItems value="#{teacherMB.courses}"/>
+                                        <f:selectItems value="#{teacherMB.allCourseNames}"/>
                                     </p:selectOneMenu>
                                     <p:outputLabel for="period-start" value="Period Start"/>
                                     <p:calendar id="period-start" value="#{teacherMB.periodStartDate}"/>
@@ -83,7 +103,11 @@
                                     <p:calendar id="period-end" value="#{teacherMB.periodEndDate}"/>
                                 </p:panelGrid>
                                 <p:separator/>
-                                <p:commandButton value="Send" actionListener="#{teacherMB.viewAttendingStudentsByCourseDate()}" update="attendingStudentView2"/>
+                                <p:commandButton 
+                                    value="Send" 
+                                    actionListener="#{teacherMB.viewAttendingStudentsByCourseDate()}" 
+                                    update="attendingStudentView2"
+                                    />
                             </p:panel>
 
                             <p:panel 
@@ -124,11 +148,11 @@
                                     style="height:300px;" 
                                     />
                             </p:panel>
+                        </h:form>
 
-                        </p:tab>
-                    </p:tabView>
+                    </p:tab>
+                </p:tabView>
 
-                </h:form>
             </ui:define>
         </ui:composition>
     </body>

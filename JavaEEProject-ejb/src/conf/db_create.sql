@@ -51,7 +51,8 @@ CREATE TABLE Course_Student (
 student_id INTEGER,
 course_id INTEGER,
 CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES Student(id),
-CONSTRAINT fk_course FOREIGN KEY (course_id) REFERENCES Course(id)
+CONSTRAINT fk_course FOREIGN KEY (course_id) REFERENCES Course(id),
+UNIQUE KEY `unique_index`(`student_id`, `course_Id`)
 )
 
 CREATE TABLE Principal(
@@ -88,6 +89,8 @@ course_id INTEGER,
 attendanceDate DATE,
 PRIMARY KEY (id),
 CONSTRAINT fk_course_attendance FOREIGN KEY (course_id) REFERENCES Course(id)
+UNIQUE KEY `unique_index`(`course_id`, `attendanceDate`)
+
 )
 
 CREATE TABLE Student_Attendance (
