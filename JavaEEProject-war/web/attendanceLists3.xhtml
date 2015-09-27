@@ -25,8 +25,15 @@
                                 class="att-panel"
                                 >
                                 <p:panelGrid columns="2" id="selectGrid2">
+
+
+
                                     <p:outputLabel for="course-by-date" value="Course"/>
-                                    <p:selectOneMenu id="course-by-date" value="#{teacherMB.chosenCourseName}" style="width:150px">
+                                    <p:selectOneMenu 
+                                        id="course-by-date" 
+                                        value="#{teacherMB.chosenCourseName}" 
+                                        style="width:150px"
+                                        >
                                         <p:ajax listener="#{teacherMB.onCourseChange}" update="date"/>
                                         <f:selectItem 
                                             itemLabel="Select Course" 
@@ -34,8 +41,13 @@
                                             />
                                         <f:selectItems value="#{teacherMB.allCourseNames}"/>
                                     </p:selectOneMenu>
+
+
                                     <p:outputLabel for="date" value="Date"/>
-                                    <p:selectOneMenu id="date" value="#{teacherMB.chosenDate}">
+                                    <p:selectOneMenu 
+                                        id="date" 
+                                        value="#{teacherMB.chosenDate}"
+                                        >
                                         <p:ajax listener="#{teacherMB.onDateChange()}"/>
                                         <f:selectItem 
                                             itemLabel="Select Date" 
@@ -44,16 +56,23 @@
                                             />
                                         <f:selectItems value="#{teacherMB.courseDates}"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu>
+
+
+                                    <p:selectOneMenu 
+                                        id="listOfStudents"
+                                        value="#{teacherMB.attendingStudentsByCourseDate}"
+                                        >
                                         <f:selectItem 
                                             itemLabel="Select student" 
                                             itemValue="" 
                                             noSelectionOption="true"
                                             />
-                                        <f:selectItems 
-                                            value="#{teacherMB.attendingStudentsByCourseDate}"
+                                        <f:selectItems
                                             />
                                     </p:selectOneMenu>
+
+
+
                                 </p:panelGrid>
                                 <p:separator/>
                                 <p:commandButton 
@@ -69,14 +88,15 @@
                                     style="width:75%; "
                                     >
                                     <p:column>
-                                        <p:outputLabel value="#{student.firstName}"/>
-                                    </p:column>
-                                    <p:column headerText="Last Name">
-                                        <p:outputLabel value="#{student.lastName}"/>
-                                    </p:column>
-                                    <p:column headerText="Attendance Rate">
-                                        <p:outputLabel value="#{studentMB.age}"/>
-                                    </p:column>
+                                        <p:column headerText="First Name">
+                                            <p:outputLabel value="#{student.firstName}"/>
+                                        </p:column>
+                                        <p:column headerText="Last Name">
+                                            <p:outputLabel value="#{student.lastName}"/>
+                                        </p:column>
+                                        <p:column headerText="Attendance Rate">
+                                            <p:outputLabel value="#{studentMB.age}"/>
+                                        </p:column>
                                 </p:dataTable>
                             </p:panel>
                         </h:form>

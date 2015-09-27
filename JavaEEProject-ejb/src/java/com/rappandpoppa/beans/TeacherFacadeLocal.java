@@ -5,8 +5,11 @@
  */
 package com.rappandpoppa.beans;
 
+import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
+import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.entities.Teacher;
+import java.time.LocalDate;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,5 +33,15 @@ public interface TeacherFacadeLocal {
     List<Teacher> findRange(int[] range);
 
     int count();
+
+    List<Course> findTeacherCourses(Object id);
+
+    Course findCourseByCourseName(Object id, String courseName);
+
+    List<Attendancelist> findAttendanceListsByCourse(String courseName, Object id);
+
+    Attendancelist findAttendanceListByDate(Object id, String courseName, LocalDate chosenDate);
+
+    List<Student> findAttendingStudentsByDate(Object id, String courseName, LocalDate chosenDate);
     
 }
