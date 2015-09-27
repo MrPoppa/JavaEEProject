@@ -36,6 +36,7 @@
                                     </p:selectOneMenu>
                                     <p:outputLabel for="date" value="Date"/>
                                     <p:selectOneMenu id="date" value="#{teacherMB.chosenDate}">
+                                        <p:ajax listener="#{teacherMB.onDateChange()}"/>
                                         <f:selectItem 
                                             itemLabel="Select Date" 
                                             itemValue="" 
