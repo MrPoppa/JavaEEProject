@@ -30,10 +30,12 @@ public class CourseMB {
     private int maxNumberOfStudents;
     private Teacher mainTeacher;
     private Integer studentToBeAddedId;
-    private Attendancelist attendanceList;
     private List<Student> courseStudents = new ArrayList<>();
     private List<Attendancelist> attendanceLists;
     private List<Date> lectureDates = new ArrayList<>();
+    private Date startDate;
+    private Integer numberOfWeeks;
+    private List<String> daysOfTheWeek;
 
     private Integer teacherId;
 
@@ -120,14 +122,6 @@ public class CourseMB {
         this.courseStudents = courseStudents;
     }
 
-    public Attendancelist getAttendanceList() {
-        return attendanceList;
-    }
-
-    public void setAttendanceList(Attendancelist attendanceList) {
-        this.attendanceList = attendanceList;
-    }
-
     public List<Attendancelist> getAttendanceLists() {
         return attendanceLists;
     }
@@ -152,7 +146,6 @@ public class CourseMB {
         this.lectureDates = lectureDates;
     }
 
-
     public Integer getTeacherId() {
         return teacherId;
     }
@@ -161,8 +154,33 @@ public class CourseMB {
         this.teacherId = teacherId;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Integer getNumberOfWeeks() {
+        return numberOfWeeks;
+    }
+
+    public void setNumberOfWeeks(Integer numberOfWeeks) {
+        this.numberOfWeeks = numberOfWeeks;
+    }
+
+    public List<String> getDaysOfTheWeek() {
+        return daysOfTheWeek;
+    }
+
+    public void setDaysOfTheWeek(List<String> daysOfTheWeek) {
+        this.daysOfTheWeek = daysOfTheWeek;
+    }
+
     public void addCourse() {
         Course createdCourse = new Course();
+        int numberOfAttendanceLists = daysOfTheWeek.size() * numberOfWeeks;
         createdCourse.setCourseName(this.courseName);
         createdCourse.setCourseCode(this.courseCode);
         createdCourse.setCourseLanguage(this.language);
@@ -170,16 +188,30 @@ public class CourseMB {
         createdCourse.setMaxNumberOfStudents(this.maxNumberOfStudents);
         this.mainTeacher = teacherFacade.find(teacherId);
         createdCourse.setTeacher(this.mainTeacher);
+        for (int i = 0; i < numberOfAttendanceLists; ++i) {
+            Attendancelist attendanceList = new Attendancelist();
+            if (i == 0) {
+                attendanceList.setAttendanceDate(startDate);
+            } else {
+                for (String day : daysOfTheWeek) {
+                    switch (day) {
+                        case "Mon":
+                            attendanceList.setAttendanceDate(startDate);
+
+                    }
+                }
+            }
+
+        }
         courseFacade.create(createdCourse);
     }
 
-    public void addAttendanceList() {
-        this.attendanceLists.add(this.attendanceList);
-        Course courseToUpdate = courseFacade.find(id);
-        courseToUpdate.setAttendancelistList(attendanceLists);
-        courseFacade.edit(courseToUpdate);
-    }
-
+//    public void addAttendanceList() {
+//        this.attendanceLists.add(this.attendanceList);
+//        Course courseToUpdate = courseFacade.find(id);
+//        courseToUpdate.setAttendancelistList(attendanceLists);
+//        courseFacade.edit(courseToUpdate);
+//    }
     public List<Course> viewAllCourses() {
         return this.courseFacade.findAll();
     }
