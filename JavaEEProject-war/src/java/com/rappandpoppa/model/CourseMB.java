@@ -37,8 +37,6 @@ public class CourseMB {
 
     private Integer teacherId;
 
-    private List<CourseMB> courses = new ArrayList<>();
-
     @EJB
     CourseFacadeLocal courseFacade;
     @EJB
@@ -154,9 +152,6 @@ public class CourseMB {
         this.lectureDates = lectureDates;
     }
 
-    public List<CourseMB> getCourses() {
-        return courses;
-    }
 
     public Integer getTeacherId() {
         return teacherId;
@@ -207,26 +202,4 @@ public class CourseMB {
             courseFacade.edit(courseToBeEdited);
         }
     }
-
-//    public void saveEditCourseStudents() {
-//        Course courseToBeEdited = courseFacade.find(id);
-//        courseToBeEdited.setStudentList(courseStudents);
-//        courseFacade.edit(courseToBeEdited);
-//    }
-//    public List<CourseMB> viewAllCourses() {
-//        courses.clear();
-//        List<Course> foundCourses = courseFacade.findAll();
-//        for (Course foundCourse : foundCourses) {
-//            CourseMB courseMB = new CourseMB();
-//            courseMB.setCourseName(foundCourse.getCourseName());
-//            courseMB.setCourseCode(foundCourse.getCourseCode());
-//            courseMB.setLevel(foundCourse.getCourseLevel());
-//            courseMB.setLanguage(foundCourse.getCourseLanguage());
-//            courseMB.setPeriod(foundCourse.getCoursePeriod());
-//            courseMB.setMaxNumberOfStudents(foundCourse.getMaxNumberOfStudents());
-////            courseMB.setMainTeacher(foundCourse.getTeacher());
-//            courses.add(courseMB);
-//        }
-//        return courses;
-//    }
 }
