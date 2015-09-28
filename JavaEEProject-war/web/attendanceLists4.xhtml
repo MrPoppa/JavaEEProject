@@ -42,16 +42,17 @@
                             <p:outputLabel for="date" value="Date"/>
                             <p:selectOneMenu 
                                 id="date" 
-                                value="#{teacherMB.chosenDate}"
+                                value="#{teacherMB.chosenListId}"
                                 >
                                 <p:ajax event="change" update="attendingStudentView2"/>
                                 <f:selectItem 
                                     itemLabel="Select Date" 
                                     noSelectionOption="true"
                                     />
-                                <f:selectItems value="#{teacherMB.courseDates}"
-                                               var="date"
-                                               itemValue="#{date}"
+                                <f:selectItems value="#{teacherMB.attendanceListsByCourse}"
+                                               var="attendanceList"
+                                               itemValue="#{attendanceList.id}"
+                                               itemLabel="#{attendanceList.attendanceDate}"
                                                />
                             </p:selectOneMenu>
 
@@ -71,6 +72,9 @@
                             </p:column>
                             <p:column headerText="Last Name">
                                 <p:outputLabel value="#{student.lastName}"/>
+                            </p:column>
+                            <p:column headerText="Attendance Rate">
+                                <p:outputLabel value="#{student.age}"/>
                             </p:column>
                             <p:column headerText="Attendance Rate">
                                 <p:outputLabel value="#{student.age}"/>

@@ -1,5 +1,6 @@
 package com.rappandpoppa.model;
 
+import com.rappandpoppa.beans.AttendancelistFacadeLocal;
 import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
 import com.rappandpoppa.entities.Attendancelist;
@@ -10,7 +11,9 @@ import com.rappandpoppa.model.origin.Employee;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -35,12 +38,16 @@ public class TeacherMB extends Employee {
     private List<Student> attendingStudentsByCourseDate = new ArrayList<>();
     private List<String> courseNames;
     int chosenCourseId;
+    int chosenListId;
 
     @EJB
     TeacherFacadeLocal teacherFacade;
 
     @EJB
     CourseFacadeLocal courseFacade;
+
+    @EJB
+    AttendancelistFacadeLocal attendancelistFacade;
 
     public Teacher getTeacher() {
         return teacher;
@@ -107,7 +114,7 @@ public class TeacherMB extends Employee {
     }
 
     public List<Student> getAttendingStudentsByCourseDate() {
-        return attendingStudentsByCourseDate;
+        return attendancelistFacade.find(chosenListId).getStudentList();
     }
 
     public void setAttendingStudentsByCourseDate(List<Student> attendingStudentsByCourseDate) {
@@ -130,17 +137,12 @@ public class TeacherMB extends Employee {
         this.chosenCourseId = chosenCourseId;
     }
 
-    public void onDateChange() {
-        attendanceListsByCourse = courseFacade.find(chosenCourseId).getAttendancelistList();
-        boolean notNull = chosenCourse != null;
-        if (chosenCourse != null) {
-            for (Attendancelist a : attendanceListsByCourse) {
-                if (a.getAttendanceDate() == chosenDate) {
-                    attendingStudentsByCourseDate = a.getStudentList();
-                    break;
-                }
-            }
-        }
+    public int getChosenListId() {
+        return chosenListId;
+    }
+
+    public void setChosenListId(int chosenListId) {
+        this.chosenListId = chosenListId;
     }
 
     private void fetchTeacher() {
@@ -152,13 +154,8 @@ public class TeacherMB extends Employee {
     }
 
     public List<Student> viewStudents() {
-        if (chosenDate != null && chosenCourse != null) {
-            for (Attendancelist a : chosenCourse.getAttendancelistList()) {
-                if (a.getAttendanceDate().equals(chosenDate)) {
-                    attendingStudentsByCourseDate = a.getStudentList();
-                    break;
-                }
-            }
+        if (chosenListId != 0 && chosenCourse != null) {
+            attendingStudentsByCourseDate = getAttendingStudentsByCourseDate();
         }
         return attendingStudentsByCourseDate;
     }
@@ -182,11 +179,7 @@ public class TeacherMB extends Employee {
     private void defineAttendanceListDates() {
         attendanceListsByCourse = chosenCourse.getAttendancelistList();
         for (Attendancelist a : attendanceListsByCourse) {
-//            LocalDate date1 = convertDateToLocalDate(a.getAttendanceDate());
-//            courseDates.add(date1);
-
             courseDates.add(a.getAttendanceDate());
-
         }
     }
 
