@@ -11,9 +11,7 @@ import com.rappandpoppa.model.origin.Employee;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -39,7 +37,9 @@ public class TeacherMB extends Employee {
     private List<String> courseNames;
     int chosenCourseId;
     int chosenListId;
-
+    private Date periodStartDate;
+    private Date periodEndDate;
+    
     @EJB
     TeacherFacadeLocal teacherFacade;
 
@@ -145,12 +145,20 @@ public class TeacherMB extends Employee {
         this.chosenListId = chosenListId;
     }
 
-    private void fetchTeacher() {
-        teacher = teacherFacade.find(1);
+    public Date getPeriodStartDate() {
+        return periodStartDate;
     }
 
-    private void fetchTeacherCourses() {
-        teacherCourses = teacherFacade.findTeacherCourses(1);
+    public void setPeriodStartDate(Date periodStartDate) {
+        this.periodStartDate = periodStartDate;
+    }
+
+    public Date getPeriodEndDate() {
+        return periodEndDate;
+    }
+
+    public void setPeriodEndDate(Date periodEndDate) {
+        this.periodEndDate = periodEndDate;
     }
 
     public List<Student> viewStudents() {
