@@ -24,15 +24,19 @@
                             <p:outputLabel for="course-by-date" value="Course"/>
                             <p:selectOneMenu 
                                 id="course-by-date" 
-                                value="#{teacherMB.chosenCourseName}" 
+                                value="#{teacherMB.chosenCourseId}" 
                                 style="width:150px"
                                 >
                                 <p:ajax listener="#{teacherMB.onCourseChange}" update="date"/>
                                 <f:selectItem 
                                     itemLabel="Select Course" 
-                                    itemValue="" noSelectionOption="true"
+                                    noSelectionOption="true"
                                     />
-                                <f:selectItems value="#{teacherMB.allCourseNames}"/>
+                                <f:selectItems value="#{teacherMB.teacherCourses}" 
+                                               var="course" 
+                                               itemValue="#{course.id}"
+                                               itemLabel="#{course.courseName}"
+                                               />
                             </p:selectOneMenu>
 
                             <p:outputLabel for="date" value="Date"/>
@@ -40,30 +44,25 @@
                                 id="date" 
                                 value="#{teacherMB.chosenDate}"
                                 >
-                                <p:ajax listener="#{teacherMB.onDateChange()}"/>
+                                <p:ajax event="change" update="attendingStudentView2"/>
                                 <f:selectItem 
                                     itemLabel="Select Date" 
-                                    itemValue="" 
                                     noSelectionOption="true"
                                     />
-                                <f:selectItems value="#{teacherMB.courseDates}"/>
+                                <f:selectItems value="#{teacherMB.courseDates}"
+                                               var="date"
+                                               itemValue="#{date}"
+                                               />
                             </p:selectOneMenu>
-
 
                         </p:panelGrid>
 
-
                         <p:separator/>
-                        <p:commandButton 
-                            value="Send" 
-                            update="attendingStudentView2"
-                            />
-
 
                         <p:dataTable
                             class="viewAttendanceList" 
                             id="attendingStudentView2" 
-                            value="#{teacherMB.getStudents()}" 
+                            value="#{teacherMB.viewStudents()}" 
                             var="student"
                             style="width:100%;"
                             >

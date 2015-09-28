@@ -1,7 +1,5 @@
 package com.rappandpoppa.model;
 
-import com.rappandpoppa.beans.AttendancelistFacadeLocal;
-import com.rappandpoppa.beans.ContactinformationFacadeLocal;
 import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
 import com.rappandpoppa.entities.Attendancelist;
@@ -13,9 +11,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -30,12 +26,10 @@ public class TeacherMB extends Employee {
 
     private Teacher teacher;
     private List<Course> teacherCourses;
-    private Map<Course, List<Attendancelist>> attendanceListsByCourses;
     private Course chosenCourse;
-    private String chosenCourseName;
-    private List<Attendancelist> attendanceListsByCourse;
-    private List<LocalDate> courseDates = new ArrayList<>();
-    private LocalDate chosenDate;
+    private List<Attendancelist> attendanceListsByCourse = new ArrayList<>();
+    private List<Date> courseDates = new ArrayList<>();
+    private Date chosenDate;
     private Attendancelist chosenAttendancelistByDate;
     private List<Student> studentsByCourse;
     private List<Student> attendingStudentsByCourseDate = new ArrayList<>();
@@ -44,6 +38,9 @@ public class TeacherMB extends Employee {
 
     @EJB
     TeacherFacadeLocal teacherFacade;
+
+    @EJB
+    CourseFacadeLocal courseFacade;
 
     public Teacher getTeacher() {
         return teacher;
@@ -54,35 +51,19 @@ public class TeacherMB extends Employee {
     }
 
     public List<Course> getTeacherCourses() {
-        return teacherCourses;
+        return teacherCourses = teacherFacade.findTeacherCourses(1);
     }
 
     public void setTeacherCourses(List<Course> teacherCourses) {
         this.teacherCourses = teacherCourses;
     }
 
-    public Map<Course, List<Attendancelist>> getAttendanceListsByCourses() {
-        return attendanceListsByCourses;
-    }
-
-    public void setAttendanceListsByCourses(Map<Course, List<Attendancelist>> attendanceListsByCourses) {
-        this.attendanceListsByCourses = attendanceListsByCourses;
-    }
-
     public Course getChosenCourse() {
-        return chosenCourse;
+        return chosenCourse = courseFacade.find(chosenCourseId);
     }
 
     public void setChosenCourse(Course chosenCourse) {
         this.chosenCourse = chosenCourse;
-    }
-
-    public String getChosenCourseName() {
-        return chosenCourseName;
-    }
-
-    public void setChosenCourseName(String chosenCourseName) {
-        this.chosenCourseName = chosenCourseName;
     }
 
     public List<Attendancelist> getAttendanceListsByCourse() {
@@ -93,19 +74,19 @@ public class TeacherMB extends Employee {
         this.attendanceListsByCourse = attendanceListsByCourse;
     }
 
-    public List<LocalDate> getCourseDates() {
+    public List<Date> getCourseDates() {
         return courseDates;
     }
 
-    public void setCourseDates(List<LocalDate> courseDates) {
+    public void setCourseDates(List<Date> courseDates) {
         this.courseDates = courseDates;
     }
 
-    public LocalDate getChosenDate() {
+    public Date getChosenDate() {
         return chosenDate;
     }
 
-    public void setChosenDate(LocalDate chosenDate) {
+    public void setChosenDate(Date chosenDate) {
         this.chosenDate = chosenDate;
     }
 
@@ -149,39 +130,13 @@ public class TeacherMB extends Employee {
         this.chosenCourseId = chosenCourseId;
     }
 
-    public TeacherFacadeLocal getTeacherFacade() {
-        return teacherFacade;
-    }
-
-    public void setTeacherFacade(TeacherFacadeLocal teacherFacade) {
-        this.teacherFacade = teacherFacade;
-    }
-
-    public List<Student> viewAttendingStudentsByCourseDate() {
-        attendingStudentsByCourseDate.clear();
-        if (chosenCourse != null) {
-            for (Attendancelist a : attendanceListsByCourse) {
-                if (convertDateToLocalDate(a.getAttendanceDate()) == chosenDate) {
-                    attendingStudentsByCourseDate = a.getStudentList();
-                    break;
-                }
-            }
-        }
-        return attendingStudentsByCourseDate;
-    }
-
     public void onDateChange() {
-        attendingStudentsByCourseDate.clear();
-        Teacher teacher = teacherFacade.find(1);
-        List<Course> teacherCourse = teacher.getCourseList();
-        System.out.println(chosenDate);
+        attendanceListsByCourse = courseFacade.find(chosenCourseId).getAttendancelistList();
+        boolean notNull = chosenCourse != null;
         if (chosenCourse != null) {
             for (Attendancelist a : attendanceListsByCourse) {
-                if (convertDateToLocalDate(a.getAttendanceDate()) == chosenDate) {
+                if (a.getAttendanceDate() == chosenDate) {
                     attendingStudentsByCourseDate = a.getStudentList();
-                    for (Student s : attendingStudentsByCourseDate) {
-                        System.out.println(s.getFirstName());
-                    }
                     break;
                 }
             }
@@ -193,81 +148,45 @@ public class TeacherMB extends Employee {
     }
 
     private void fetchTeacherCourses() {
-        fetchTeacher();
         teacherCourses = teacherFacade.findTeacherCourses(1);
     }
 
-    private void fetchChosenCourse() {
-        chosenCourse = teacherFacade.findCourseByCourseName(1, chosenCourseName);
-    }
-
-    private void fetchAttendanceListsByCourse() {
-        attendanceListsByCourse = teacherFacade.findAttendanceListsByCourse(chosenCourseName, 1);
-    }
-
-    private void fetchChosenAttendanceListByDate() {
-        chosenAttendancelistByDate
-                = teacherFacade.findAttendanceListByDate(1, chosenCourseName, chosenDate);
-    }
-
-//    private void fetchStudentsByCourse() {
-//        if (chosenCourse != null) {
-//            studentsByCourse = chosenCourse.getStudentList();
-//        }
-//    }
-    private void fetchAllStudensByCourseAndDate() {
-        fetchChosenAttendanceListByDate();
-        attendingStudentsByCourseDate
-                = chosenAttendancelistByDate.getStudentList();
-    }
-
-    public List<Student> getStudents() {
-        fetchTeacher();
-        fetchTeacherCourses();
-        fetchChosenCourse();
-        fetchAttendanceListsByCourse();
-        fetchAllStudensByCourseAndDate();
-
+    public List<Student> viewStudents() {
+        if (chosenDate != null && chosenCourse != null) {
+            for (Attendancelist a : chosenCourse.getAttendancelistList()) {
+                if (a.getAttendanceDate().equals(chosenDate)) {
+                    attendingStudentsByCourseDate = a.getStudentList();
+                    break;
+                }
+            }
+        }
         return attendingStudentsByCourseDate;
     }
 
-    public List<String> getAllCourseNames() {
-        fetchTeacher();
-        fetchTeacherCourses();
-        courseNames = new ArrayList<>();
-        for (Course course : teacherCourses) {
-            String courseName = course.getCourseName();
-            courseNames.add(courseName);
-        }
-        return courseNames;
-    }
-
     public void onCourseChange() {
-        if (chosenCourseName != null && !chosenCourseName.equals("")) {
-            courseDates.clear();
-            attendanceListsByCourse.clear();
-            defineChosenCourse();
+        chosenCourse = courseFacade.find(chosenCourseId);
+        if (chosenCourse.getId() != null) {
+            if (courseDates.size() > 0) {
+                courseDates.clear();
+            }
+            if (attendanceListsByCourse.size() > 0) {
+                attendanceListsByCourse.clear();
+            }
+
             defineAttendanceListDates();
         } else {
             courseDates = new ArrayList<>();
         }
     }
 
-    private void defineChosenCourse() {
-        System.out.println(chosenCourseName);
-        for (Course course : teacherCourses) {
-            if (chosenCourseName.equals(course.getCourseName())) {
-                chosenCourse = course;
-                break;
-            }
-        }
-    }
-
     private void defineAttendanceListDates() {
         attendanceListsByCourse = chosenCourse.getAttendancelistList();
         for (Attendancelist a : attendanceListsByCourse) {
-            LocalDate date1 = a.getAttendanceDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            courseDates.add(date1);
+//            LocalDate date1 = convertDateToLocalDate(a.getAttendanceDate());
+//            courseDates.add(date1);
+
+            courseDates.add(a.getAttendanceDate());
+
         }
     }
 
