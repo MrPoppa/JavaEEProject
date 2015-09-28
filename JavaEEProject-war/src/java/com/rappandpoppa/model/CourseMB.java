@@ -190,14 +190,38 @@ public class CourseMB {
         createdCourse.setTeacher(this.mainTeacher);
         for (int i = 0; i < numberOfAttendanceLists; ++i) {
             Attendancelist attendanceList = new Attendancelist();
-            if (i == 0) {
-                attendanceList.setAttendanceDate(startDate);
-            } else {
-                for (String day : daysOfTheWeek) {
-                    switch (day) {
-                        case "Mon":
-                            attendanceList.setAttendanceDate(startDate);
-
+            attendanceLists.add(attendanceList);
+        }
+        boolean firstAttendanceList = true;
+        for (String day : daysOfTheWeek) {
+            int i = 0;
+            for (Attendancelist attendancelist : attendanceLists) {
+                while (i < (numberOfWeeks)) {
+                    if (firstAttendanceList) {
+                        attendancelist.setAttendanceDate(startDate);
+                        firstAttendanceList = false;
+                        ++i;
+                    } else {
+                        switch (day) {
+                            case "Mon":
+                                attendancelist.setAttendanceDate();
+                                ++i;
+                                break;
+                            case "Tue":
+                                ++i;
+                                break;
+                            case "Wed":
+                                ++i;
+                                break;
+                            case "Thu":
+                                ++i;
+                                break;
+                            case "Fri":
+                                ++i;
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }
