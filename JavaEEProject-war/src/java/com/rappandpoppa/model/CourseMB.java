@@ -1,5 +1,6 @@
 package com.rappandpoppa.model;
 
+import com.rappandpoppa.beans.AttendancelistFacadeLocal;
 import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.StudentFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
@@ -8,6 +9,7 @@ import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.entities.Teacher;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -31,7 +33,8 @@ public class CourseMB {
     private Teacher mainTeacher;
     private Integer studentToBeAddedId;
     private List<Student> courseStudents = new ArrayList<>();
-    private List<Attendancelist> attendanceLists;
+    private List<Attendancelist> newAttendanceLists = new ArrayList<>();
+    private List<Attendancelist> completeAttendanceLists = new ArrayList<>();
     private List<Date> lectureDates = new ArrayList<>();
     private Date startDate;
     private Integer numberOfWeeks;
@@ -45,6 +48,8 @@ public class CourseMB {
     TeacherFacadeLocal teacherFacade;
     @EJB
     StudentFacadeLocal studentFacade;
+    @EJB
+    AttendancelistFacadeLocal attendanceListFacade;
 
     public Integer getId() {
         return id;
@@ -122,12 +127,20 @@ public class CourseMB {
         this.courseStudents = courseStudents;
     }
 
-    public List<Attendancelist> getAttendanceLists() {
-        return attendanceLists;
+    public List<Attendancelist> getNewAttendanceLists() {
+        return newAttendanceLists;
     }
 
-    public void setAttendanceLists(List<Attendancelist> attendanceLists) {
-        this.attendanceLists = attendanceLists;
+    public void setNewAttendanceLists(List<Attendancelist> newAttendanceLists) {
+        this.newAttendanceLists = newAttendanceLists;
+    }
+
+    public List<Attendancelist> getCompleteAttendanceLists() {
+        return completeAttendanceLists;
+    }
+
+    public void setCompleteAttendanceLists(List<Attendancelist> completeAttendanceLists) {
+        this.completeAttendanceLists = completeAttendanceLists;
     }
 
     public void addLectureDate(Date lectureDate) {
@@ -190,43 +203,121 @@ public class CourseMB {
         createdCourse.setTeacher(this.mainTeacher);
         for (int i = 0; i < numberOfAttendanceLists; ++i) {
             Attendancelist attendanceList = new Attendancelist();
-            attendanceLists.add(attendanceList);
+            newAttendanceLists.add(attendanceList);
         }
-        boolean firstAttendanceList = true;
         for (String day : daysOfTheWeek) {
-            int i = 0;
-            for (Attendancelist attendancelist : attendanceLists) {
-                while (i < (numberOfWeeks)) {
-                    if (firstAttendanceList) {
-                        attendancelist.setAttendanceDate(startDate);
-                        firstAttendanceList = false;
-                        ++i;
-                    } else {
-                        switch (day) {
-                            case "Mon":
-                                attendancelist.setAttendanceDate();
-                                ++i;
-                                break;
-                            case "Tue":
-                                ++i;
-                                break;
-                            case "Wed":
-                                ++i;
-                                break;
-                            case "Thu":
-                                ++i;
-                                break;
-                            case "Fri":
-                                ++i;
-                                break;
-                            default:
-                                break;
+//            int i = 0;
+            Calendar cal = Calendar.getInstance();
+            boolean firstAttendanceList = true;
+//            for (Attendancelist attendancelist : newAttendanceLists) {
+            Date attendanceDate = startDate;
+            for (int i = 0; i < numberOfWeeks; ++i) {
+                Attendancelist attendanceList = newAttendanceLists.get(0);
+//                while (i < (numberOfWeeks)) {
+                switch (day) {
+                    case "Mon":
+                        if (firstAttendanceList) {
+                            attendanceList.setAttendanceDate(startDate);
+                            attendanceList.setCourse(createdCourse);
+                            completeAttendanceLists.add(attendanceList);
+                            newAttendanceLists.remove(attendanceList);
+                            firstAttendanceList = false;
+                        } else {
+                            cal.setTime(attendanceDate);
+                            cal.add(Calendar.DATE, 7);
+                            attendanceDate = cal.getTime();
+                            attendanceList.setAttendanceDate(attendanceDate);
+                            attendanceList.setCourse(createdCourse);
+                            completeAttendanceLists.add(attendanceList);
+                            newAttendanceLists.remove(attendanceList);
                         }
-                    }
+                        break;
+                    case "Tue":
+                        if (firstAttendanceList) {
+                            cal.setTime(startDate);
+                            cal.add(Calendar.DATE, 1);
+                            attendanceDate = cal.getTime();
+                            attendanceList.setAttendanceDate(attendanceDate);
+                            attendanceList.setCourse(createdCourse);
+                            completeAttendanceLists.add(attendanceList);
+                            newAttendanceLists.remove(attendanceList);
+                            firstAttendanceList = false;
+                        } else {
+                            cal.setTime(attendanceDate);
+                            cal.add(Calendar.DATE, 7);
+                            attendanceDate = cal.getTime();
+                            attendanceList.setAttendanceDate(attendanceDate);
+                            attendanceList.setCourse(createdCourse);
+                            completeAttendanceLists.add(attendanceList);
+                            newAttendanceLists.remove(attendanceList);
+                        }
+                        break;
+                    case "Wed":
+                        if (firstAttendanceList) {
+                            cal.setTime(startDate);
+                            cal.add(Calendar.DATE, 2);
+                            attendanceDate = cal.getTime();
+                            attendanceList.setAttendanceDate(attendanceDate);
+                            attendanceList.setCourse(createdCourse);
+                            completeAttendanceLists.add(attendanceList);
+                            newAttendanceLists.remove(attendanceList);
+                            firstAttendanceList = false;
+                        } else {
+                            cal.setTime(attendanceDate);
+                            cal.add(Calendar.DATE, 7);
+                            attendanceDate = cal.getTime();
+                            attendanceList.setAttendanceDate(attendanceDate);
+                            attendanceList.setCourse(createdCourse);
+                            completeAttendanceLists.add(attendanceList);
+                            newAttendanceLists.remove(attendanceList);
+                        }
+                        break;
+                    case "Thu":
+                        if (firstAttendanceList) {
+                            cal.setTime(startDate);
+                            cal.add(Calendar.DATE, 3);
+                            attendanceDate = cal.getTime();
+                            attendanceList.setAttendanceDate(attendanceDate);
+                            attendanceList.setCourse(createdCourse);
+                            completeAttendanceLists.add(attendanceList);
+                            newAttendanceLists.remove(attendanceList);
+                            firstAttendanceList = false;
+                        } else {
+                            cal.setTime(attendanceDate);
+                            cal.add(Calendar.DATE, 7);
+                            attendanceDate = cal.getTime();
+                            attendanceList.setAttendanceDate(attendanceDate);
+                            completeAttendanceLists.add(attendanceList);
+                            newAttendanceLists.remove(attendanceList);
+                        }
+                        break;
+                    case "Fri":
+                        if (firstAttendanceList) {
+                            cal.setTime(startDate);
+                            cal.add(Calendar.DATE, 4);
+                            attendanceDate = cal.getTime();
+                            attendanceList.setAttendanceDate(attendanceDate);
+                            attendanceList.setCourse(createdCourse);
+                            completeAttendanceLists.add(attendanceList);
+                            newAttendanceLists.remove(attendanceList);
+                            firstAttendanceList = false;
+                        } else {
+                            cal.setTime(attendanceDate);
+                            cal.add(Calendar.DATE, 7);
+                            attendanceDate = cal.getTime();
+                            attendanceList.setAttendanceDate(attendanceDate);
+                            attendanceList.setCourse(createdCourse);
+                            completeAttendanceLists.add(attendanceList);
+                            newAttendanceLists.remove(attendanceList);
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
-
+//            }
         }
+        createdCourse.setAttendancelistList(completeAttendanceLists);
         courseFacade.create(createdCourse);
     }
 
