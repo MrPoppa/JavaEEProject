@@ -16,51 +16,51 @@ and open the template in the editor.
                 <h:form class="regForm">
                     <h:panelGrid class="regGrid" id="registerCourseForm">
                         <p:outputLabel class="textLabels">Course name: </p:outputLabel>
-                        <p:inputText class="regInputText" id="courseName" value="#{courseMB.courseName}">
+                        <p:inputText class="regInputText" id="courseName" value="#{courseController.courseMB.courseName}">
                         </p:inputText>
 
                         <p:outputLabel class="textLabels">Level: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="level" value="#{courseMB.level}">
+                        <p:selectOneMenu class="regOneMenu" id="level" value="#{courseController.courseMB.level}">
                             <f:selectItem itemLabel=" "/>
                             <f:selectItems value="#{dropdownData.levels}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel class="textLabels">Language: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="language" value="#{courseMB.language}">
+                        <p:selectOneMenu class="regOneMenu" id="language" value="#{courseController.courseMB.language}">
                             <f:selectItem itemLabel=" "/>
                             <f:selectItems value="#{dropdownData.languages}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel class="textLabels">Amount of students: </p:outputLabel>
                         <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" 
-                                         value="#{courseMB.maxNumberOfStudents}">
+                                         value="#{courseController.courseMB.maxNumberOfStudents}">
                             <f:selectItem itemLabel=" "/>
                             <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel class="textLabels">Start date: </p:outputLabel>
-                        <p:calendar id="date" value="#{courseMB.startDate}"/>
+                        <p:calendar id="date" value="#{courseController.startDate}"/>
 
                         <p:outputLabel class="textLabels">Number of weeks: </p:outputLabel>
                         <p:selectOneMenu class="regOneMenu" id="numberOfWeeks" 
-                                         value="#{courseMB.numberOfWeeks}">
+                                         value="#{courseController.numberOfWeeks}">
                             <f:selectItem itemLabel=" "/>
                             <f:selectItems value="#{dropdownData.ageNumbers}"/>
                         </p:selectOneMenu>
                         
                         <p:outputLabel class="textLabels">Days of the week: </p:outputLabel>
-                        <p:selectManyMenu class="regManyMenu" id="daysOfTheWeek" value="#{courseMB.daysOfTheWeek}">
+                        <p:selectManyMenu class="regManyMenu" id="daysOfTheWeek" value="#{courseController.daysOfTheWeek}">
                             <f:selectItems value="#{dropdownData.daysOfTheWeek}"/>
                         </p:selectManyMenu>
 
                         <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="teacherForCourse" value="#{courseMB.teacherId}">
+                        <p:selectOneMenu class="regOneMenu" id="teacherForCourse" value="#{courseController.teacherId}">
                             <f:selectItem itemLabel=" "/>
                             <f:selectItems value="#{teacherController.teachers}" var="teacher" itemValue="#{teacher.id}"/>
                         </p:selectOneMenu>
                         <p:commandButton class="actionButton" 
                                          value="Add Course"
-                                         actionListener="#{courseMB.addCourse}"
+                                         actionListener="#{courseController.addCourse}"
                                          update="registerCourseForm"
                                          />
                     </h:panelGrid>
