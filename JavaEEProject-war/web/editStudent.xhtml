@@ -14,7 +14,7 @@ and open the template in the editor.
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
                 <h:form class="regForm">
-                    <h:panelGrid class="regGrid" id="registerStudentForm">
+                    <h:panelGrid class="regGrid" id="studentEditForm">
                         <p:outputLabel class="textLabels">First Name: </p:outputLabel>
                         <p:inputText class="regInputText" id="firstName" value="#{studentController.studentMB.firstName}" required="true">
                         </p:inputText>
@@ -48,13 +48,55 @@ and open the template in the editor.
                         <p:inputText class="regInputText" id="emailAddress" value="#{studentController.studentMB.contactInformation.emailAddress}">
                         </p:inputText>
                         <p:commandButton class="actionButton" 
-                                         value="Add Student"
-                                         update="registerStudentForm"
-                                         action="#{studentController.createStudent()}"
+                                         value="Update Student"
+                                         update="studentEditView"
+                                         action="#{studentController.updateStudent()}"
                                          />
-                    </h:panelGrid>
                 </h:form>
-            </ui:define>
-        </ui:composition>
-    </h:body>
+                </h:panelGrid>
+                <p:dataTable class="viewTable" id="studentEditView" value="#{studentController.studentToBeEdited}" var="student">
+                    <p:column headerText="First Name">
+                        <p:outputLabel value="#{student.firstName}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{student.lastName}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{student.age}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{student.gender}"/>
+                    </p:column>
+                </p:dataTable>
+                <p:dataTable>
+                    <p:column>
+                        <p:outputLabel value="#{student.contactInformation.city}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{student.contactInformation.emailAddress}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{student.contactInformation.phoneNumber}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{student.contactInformation.streetName}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{student.contactInformation.zipCode}"/>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="Edit" action="#{studentController.selectStudent(student.id)}"
+                </p:column>
+            </p:dataTable>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>>
+<head>
+    <title>TODO supply a title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+    <div>TODO write content</div>
+</body>
 </html>

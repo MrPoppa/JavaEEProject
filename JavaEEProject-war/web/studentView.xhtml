@@ -16,7 +16,7 @@ and open the template in the editor.
                 <h:form>
                     <div class="regForm">
                         <p:outputLabel value="Search:" for="students" />
-                        <p:autoComplete id="students" value="#{studentController.studentId}" completeMethod="#{studentController.completeStudent}"
+                        <p:autoComplete id="students" value="#{studentController.studentMB.id}" completeMethod="#{studentController.completeStudent}"
                                         var="student" itemLabel="#{student.toString()}" itemValue="#{student.id}" forceSelection="true">
                             <p:column class="autoCompleteText">
                                 <h:outputText value="#{student.firstName}"/>
@@ -50,19 +50,22 @@ and open the template in the editor.
                             <p:outputLabel value="#{student.gender}"/>
                         </p:column>
                         <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getCity()}"/>
+                            <p:outputLabel value="#{student.contactInformation.city}"/>
                         </p:column>
                         <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getEmailAddress()}"/>
+                            <p:outputLabel value="#{student.contactInformation.emailAddress}"/>
                         </p:column>
                         <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getPhoneNumber()}"/>
+                            <p:outputLabel value="#{student.contactInformation.phoneNumber}"/>
                         </p:column>
                         <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getStreetName()}"/>
+                            <p:outputLabel value="#{student.contactInformation.streetName}"/>
                         </p:column>
                         <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getZipCode()}"/>
+                            <p:outputLabel value="#{student.contactInformation.zipCode}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Edit" action="#{studentController.selectStudent(student.id)}"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
