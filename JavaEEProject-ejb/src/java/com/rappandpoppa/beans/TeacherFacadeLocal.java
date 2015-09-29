@@ -34,14 +34,4 @@ public interface TeacherFacadeLocal {
 
     int count();
 
-    List<Course> findTeacherCourses(Object id);
-
-    Course findCourseByCourseName(Object id, String courseName);
-
-    List<Attendancelist> findAttendanceListsByCourse(String courseName, Object id);
-
-    Attendancelist findAttendanceListByDate(Object id, String courseName, LocalDate chosenDate);
-
-    List<Student> findAttendingStudentsByDate(Object id, String courseName, LocalDate chosenDate);
-    
 }

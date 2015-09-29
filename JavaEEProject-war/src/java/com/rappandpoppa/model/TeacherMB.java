@@ -26,7 +26,6 @@ import javax.faces.bean.SessionScoped;
 public class TeacherMB extends Employee {
 
     private Teacher teacher;
-    private List<Course> teacherCourses;
     private Course chosenCourse;
     private List<Attendancelist> attendanceListsByCourse = new ArrayList<>();
     private List<Date> courseDates = new ArrayList<>();
@@ -39,7 +38,7 @@ public class TeacherMB extends Employee {
     int chosenListId;
     private Date periodStartDate;
     private Date periodEndDate;
-    
+
     @EJB
     TeacherFacadeLocal teacherFacade;
 
@@ -55,14 +54,6 @@ public class TeacherMB extends Employee {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
-    }
-
-    public List<Course> getTeacherCourses() {
-        return teacherCourses = teacherFacade.findTeacherCourses(1);
-    }
-
-    public void setTeacherCourses(List<Course> teacherCourses) {
-        this.teacherCourses = teacherCourses;
     }
 
     public Course getChosenCourse() {
