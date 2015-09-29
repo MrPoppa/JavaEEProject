@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -153,7 +154,7 @@ public class TeacherMB extends Employee {
     }
 
     public List<Student> viewStudents() {
-        if (chosenListId != 0 && chosenCourse != null) {
+        if (chosenListId != 0) {
             attendingStudentsByCourseDate = getAttendingStudentsByCourseDate();
         }
         return attendingStudentsByCourseDate;

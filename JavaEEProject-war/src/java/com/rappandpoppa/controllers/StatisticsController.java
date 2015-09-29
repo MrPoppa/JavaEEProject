@@ -1,4 +1,4 @@
-package com.rappandpoppa.controller;
+package com.rappandpoppa.controllers;
 
 import com.rappandpoppa.beans.TeacherFacadeLocal;
 import javax.annotation.PostConstruct;
