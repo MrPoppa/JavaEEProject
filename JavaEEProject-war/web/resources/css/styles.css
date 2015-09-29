@@ -33,8 +33,9 @@ body {
 }
 
 .regForm {
-    margin: auto;
-    width: 250px;
+    margin-top: 100px;
+    width: 50%;
+    margin-left: 25%
 }
 
 .viewTable {
@@ -48,8 +49,8 @@ body {
     cursor: pointer;
 }
 
-.att-panel{
-    width:75%; 
+.panels{
+    width:75%;
     margin-bottom:10px; 
     margin-top: 20px;
 }
@@ -70,8 +71,21 @@ body {
     height: 300px;        
 }
 
-#attList-tabView{
-    margin-top:150px; 
-    margin-left: 15%; 
-    width:70%
+.content-main{
+    margin-top:100px; 
+    margin-left: 25%; 
+    width:50%
+}
+
+.welcome > h1{
+    /*text-align: center;*/
+    color:chartreuse;
+}
+.welcome {
+    margin:auto;
+    text-align: center;
+}
+
+.add-stud-grid{
+    margin-bottom: 20px;
 }

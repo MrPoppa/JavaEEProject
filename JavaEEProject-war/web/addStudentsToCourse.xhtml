@@ -8,63 +8,54 @@
     <h:body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <h:form>
-                    <div class="regForm">
-                        <h:panelGrid>
-                            <p:outputLabel for="courseSelect" value="Course: "/>
-                            <p:selectOneMenu id="courseSelect" value="#{courseMB.id}">
-                                <f:selectItem itemLabel=" "/>
-                                <f:selectItems value="#{courseMB.viewAllCourses()}" var="course" itemValue="#{course.id}" itemLabel="#{course.courseName}"/>
-                                <p:ajax update="studentView" event="change"/>
-                            </p:selectOneMenu>
+                <div class="content-main">
 
-                            <p:outputLabel value="Search student:" for="studentsSearch" />
-                            <p:autoComplete id="studentsSearch" value="#{courseMB.studentToBeAddedId}" completeMethod="#{studentController.completeStudent}"
-                                            var="student" itemLabel="#{student.toString()}" itemValue="#{student.id}" forceSelection="true">
-                                <p:column class="autoCompleteText">
-                                    <h:outputText value="#{student.firstName}"/>
+                    <h:form>
+                        <p:panel
+                            header="Add student to course"
+                            id="add-stud-header"
+                            class="panels"
+                            >
+                            <div class="add-stud-grid">
+
+                                <h:panelGrid>
+                                    <p:outputLabel for="courseSelect" value="Course: "/>
+                                    <p:selectOneMenu id="courseSelect" value="#{courseMB.id}">
+                                        <f:selectItem itemLabel=" "/>
+                                        <f:selectItems value="#{courseMB.viewAllCourses()}" var="course" itemValue="#{course.id}" itemLabel="#{course.courseName}"/>
+                                        <p:ajax update="studentView" event="change"/>
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="Search student:" for="studentsSearch" />
+                                    <p:autoComplete id="studentsSearch" value="#{courseMB.studentToBeAddedId}" completeMethod="#{studentController.completeStudent}"
+                                                    var="student" itemLabel="#{student.toString()}" itemValue="#{student.id}" forceSelection="true">
+                                        <p:column class="autoCompleteText">
+                                            <h:outputText value="#{student.firstName}"/>
+                                        </p:column>
+                                        <p:column class="autoCompleteText">
+                                            <h:outputText class="autoCompleteText" value="#{student.lastName}"/>
+                                        </p:column>
+                                    </p:autoComplete>
+
+                                    <p:commandButton value="Submit" action="#{courseMB.addStudents()}" update="studentView"/>
+                                </h:panelGrid>
+                            </div>
+
+                            <p:dataTable class="viewTable" id="studentView" value="#{courseMB.courseStudents}" var="student">
+                                <p:column headerText="First Name">
+                                    <p:outputLabel value="#{student.firstName}"/>
                                 </p:column>
-                                <p:column class="autoCompleteText">
-                                    <h:outputText class="autoCompleteText" value="#{student.lastName}"/>
+                                <p:column headerText="Last Name">
+                                    <p:outputLabel value="#{student.lastName}"/>
                                 </p:column>
-                            </p:autoComplete>
+                                <p:column headerText="Id">
+                                    <p:outputLabel value="#{student.id}"/>
+                                </p:column>
+                            </p:dataTable>
 
-                            <p:commandButton value="Add student to course" action="#{courseMB.addStudents()}" update="studentView"/>
-                        </h:panelGrid>
-
-                    </div>
-                    <p:dataTable class="viewTable" id="studentView" value="#{courseMB.courseStudents}" var="student">
-                        <p:column headerText="First Name">
-                            <p:outputLabel value="#{student.firstName}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.lastName}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.age}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.gender}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getCity()}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getEmailAddress()}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getPhoneNumber()}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getStreetName()}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getZipCode()}"/>
-                        </p:column>
-                    </p:dataTable>
-
-
-                </h:form>
+                        </p:panel>
+                    </h:form>
+                </div>
             </ui:define>
         </ui:composition>
     </h:body>

@@ -13,21 +13,28 @@ and open the template in the editor.
     <body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <div class="regForm">
+                <div class="content-main">
                     <h:form>
-                        <h:panelGrid class="regGrid">
-                            <p:outputLabel for="date" value="Date: " />
-                            <p:calendar id="date" value="#{attendanceListMB.date}"/>
+                        <p:panel 
+                            id="create-att-panel"
+                            class="panels"
+                            header="Create Attendance list"
+                            >
 
-                            <p:outputLabel for="courseSelect" value="Course: "/>
-                            <p:selectOneMenu id="courseSelect" value="#{attendanceListMB.courseName}">
-                                <f:selectItems value="#{courseMB.allCourseNames}" var="courseName"/>
-                            </p:selectOneMenu>
+                            <h:panelGrid class="regGrid">
+                                <p:outputLabel for="date" value="Date: " />
+                                <p:calendar id="date" value="#{attendanceListMB.date}"/>
 
-                            <p:commandButton class="actionButton" value="Create List" 
-                                             action="#{attendanceListMB.createAttendanceList()}">
-                            </p:commandButton>
-                        </h:panelGrid>
+                                <p:outputLabel for="courseSelect" value="Course: "/>
+                                <p:selectOneMenu id="courseSelect" value="#{attendanceListMB.courseName}">
+                                    <f:selectItems value="#{courseMB.allCourseNames}" var="courseName"/>
+                                </p:selectOneMenu>
+
+                                <p:commandButton class="actionButton" value="Create List" 
+                                                 action="#{attendanceListMB.createAttendanceList()}">
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </p:panel>
                     </h:form>
                 </div>
             </ui:define>
