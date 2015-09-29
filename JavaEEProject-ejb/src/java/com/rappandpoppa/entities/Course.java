@@ -6,8 +6,10 @@
 package com.rappandpoppa.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -73,8 +75,8 @@ public class Course implements Serializable {
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     @ManyToOne
     private Teacher teacher;
-    @OneToMany(mappedBy = "course")
-    private List<Attendancelist> attendancelistList;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST)
+    private List<Attendancelist> attendancelistList = new ArrayList<>();
 
     public Course() {
     }
