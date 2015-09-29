@@ -40,7 +40,6 @@ courseName VARCHAR(32),
 courseCode VARCHAR(16),
 courseLevel VARCHAR(16),
 courseLanguage VARCHAR(16),
-coursePeriod VARCHAR(16),
 maxNumberOfStudents INTEGER,
 teacher_id INTEGER,
 PRIMARY KEY (id),
@@ -88,7 +87,7 @@ id INTEGER NOT NULL AUTO_INCREMENT,
 course_id INTEGER,
 attendanceDate DATE,
 PRIMARY KEY (id),
-CONSTRAINT fk_course_attendance FOREIGN KEY (course_id) REFERENCES Course(id)
+CONSTRAINT fk_course_attendance FOREIGN KEY (course_id) REFERENCES Course(id),
 UNIQUE KEY `unique_index`(`course_id`, `attendanceDate`)
 
 )
