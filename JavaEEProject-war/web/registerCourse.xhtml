@@ -28,11 +28,6 @@ and open the template in the editor.
                             <f:selectItem itemLabel=" "/>
                             <f:selectItems value="#{dropdownData.languages}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel class="textLabels">Period: </p:outputLabel>
-                        <p:selectOneMenu class="regOneMenu" id="period" value="#{courseMB.period}">
-                            <f:selectItem itemLabel=" "/>
-                            <f:selectItems value="#{dropdownData.periods}"/>
-                        </p:selectOneMenu>
                         <p:outputLabel class="textLabels">Amount of students: </p:outputLabel>
                         <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" 
                                          value="#{courseMB.maxNumberOfStudents}">

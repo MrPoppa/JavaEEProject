@@ -1,20 +1,25 @@
 package com.rappandpoppa.model;
 
 import com.rappandpoppa.beans.CourseFacadeLocal;
+import com.rappandpoppa.beans.StudentFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
+import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
+import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.entities.Teacher;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Anders
  */
 @ManagedBean
+@RequestScoped
 public class CourseMB {
 
     private Integer id;
@@ -22,21 +27,22 @@ public class CourseMB {
     private String courseCode;
     private String level;
     private String language;
-    private String period;
     private int maxNumberOfStudents;
     private Teacher mainTeacher;
-    private List<StudentMB> courseStudents = new ArrayList<>();
-    private AttendanceListMB attendanceList;
+    private Integer studentToBeAddedId;
+    private Attendancelist attendanceList;
+    private List<Student> courseStudents = new ArrayList<>();
+    private List<Attendancelist> attendanceLists;
     private List<Date> lectureDates = new ArrayList<>();
-    
-    private Integer teacherId;
 
-    private List<CourseMB> courses = new ArrayList<>();
+    private Integer teacherId;
 
     @EJB
     CourseFacadeLocal courseFacade;
     @EJB
     TeacherFacadeLocal teacherFacade;
+    @EJB
+    StudentFacadeLocal studentFacade;
 
     public Integer getId() {
         return id;
@@ -78,14 +84,6 @@ public class CourseMB {
         this.language = language;
     }
 
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
     public int getMaxNumberOfStudents() {
         return maxNumberOfStudents;
     }
@@ -102,20 +100,40 @@ public class CourseMB {
         this.mainTeacher = mainTeacher;
     }
 
-    public List<StudentMB> getCourseStudents() {
-        return courseStudents;
+    public Integer getStudentToBeAddedId() {
+        return studentToBeAddedId;
     }
 
-    public void setCourseStudents(List<StudentMB> courseStudents) {
+    public void setStudentToBeAddedId(Integer studentToBeAddedId) {
+        this.studentToBeAddedId = studentToBeAddedId;
+    }
+
+    public List<Student> getCourseStudents() {
+        if (id != null) {
+            return courseStudents = courseFacade.find(id).getStudentList();
+        } else {
+            return null;
+        }
+    }
+
+    public void setCourseStudents(List<Student> courseStudents) {
         this.courseStudents = courseStudents;
     }
 
-    public AttendanceListMB getAttendanceList() {
+    public Attendancelist getAttendanceList() {
         return attendanceList;
     }
 
-    public void setAttendanceList(AttendanceListMB attendanceList) {
+    public void setAttendanceList(Attendancelist attendanceList) {
         this.attendanceList = attendanceList;
+    }
+
+    public List<Attendancelist> getAttendanceLists() {
+        return attendanceLists;
+    }
+
+    public void setAttendanceLists(List<Attendancelist> attendanceLists) {
+        this.attendanceLists = attendanceLists;
     }
 
     public void addLectureDate(Date lectureDate) {
@@ -134,9 +152,6 @@ public class CourseMB {
         this.lectureDates = lectureDates;
     }
 
-    public List<CourseMB> getCourses() {
-        return courses;
-    }
 
     public Integer getTeacherId() {
         return teacherId;
@@ -145,13 +160,12 @@ public class CourseMB {
     public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
     }
-    
+
     public void addCourse() {
         Course createdCourse = new Course();
         createdCourse.setCourseName(this.courseName);
         createdCourse.setCourseCode(this.courseCode);
         createdCourse.setCourseLanguage(this.language);
-        createdCourse.setCoursePeriod(this.period);
         createdCourse.setCourseLevel(this.level);
         createdCourse.setMaxNumberOfStudents(this.maxNumberOfStudents);
         this.mainTeacher = teacherFacade.find(teacherId);
@@ -159,10 +173,17 @@ public class CourseMB {
         courseFacade.create(createdCourse);
     }
 
+    public void addAttendanceList() {
+        this.attendanceLists.add(this.attendanceList);
+        Course courseToUpdate = courseFacade.find(id);
+        courseToUpdate.setAttendancelistList(attendanceLists);
+        courseFacade.edit(courseToUpdate);
+    }
+
     public List<Course> viewAllCourses() {
         return this.courseFacade.findAll();
     }
-    
+
     public List<String> getAllCourseNames() {
         List<Course> coursesFound = courseFacade.findAll();
         List<String> courseNames = new ArrayList<>();
@@ -172,20 +193,13 @@ public class CourseMB {
         return courseNames;
     }
 
-//    public List<CourseMB> viewAllCourses() {
-//        courses.clear();
-//        List<Course> foundCourses = courseFacade.findAll();
-//        for (Course foundCourse : foundCourses) {
-//            CourseMB courseMB = new CourseMB();
-//            courseMB.setCourseName(foundCourse.getCourseName());
-//            courseMB.setCourseCode(foundCourse.getCourseCode());
-//            courseMB.setLevel(foundCourse.getCourseLevel());
-//            courseMB.setLanguage(foundCourse.getCourseLanguage());
-//            courseMB.setPeriod(foundCourse.getCoursePeriod());
-//            courseMB.setMaxNumberOfStudents(foundCourse.getMaxNumberOfStudents());
-////            courseMB.setMainTeacher(foundCourse.getTeacher());
-//            courses.add(courseMB);
-//        }
-//        return courses;
-//    }
+    public void addStudents() {
+        Course courseToBeEdited = courseFacade.find(id);
+        this.maxNumberOfStudents = courseToBeEdited.getMaxNumberOfStudents();
+        if (courseStudents.size() < maxNumberOfStudents) {
+            courseStudents.add(studentFacade.find(studentToBeAddedId));
+            courseToBeEdited.setStudentList(courseStudents);
+            courseFacade.edit(courseToBeEdited);
+        }
+    }
 }

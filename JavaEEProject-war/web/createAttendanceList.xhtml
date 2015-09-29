@@ -13,8 +13,8 @@ and open the template in the editor.
     <body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <h:form>
-                    <div class="regForm">
+                <div class="regForm">
+                    <h:form>
                         <h:panelGrid class="regGrid">
                             <p:outputLabel for="date" value="Date: " />
                             <p:calendar id="date" value="#{attendanceListMB.date}"/>
@@ -28,8 +28,8 @@ and open the template in the editor.
                                              action="#{attendanceListMB.createAttendanceList()}">
                             </p:commandButton>
                         </h:panelGrid>
-                    </div>
-                </h:form>
+                    </h:form>
+                </div>
             </ui:define>
         </ui:composition>
     </body>
