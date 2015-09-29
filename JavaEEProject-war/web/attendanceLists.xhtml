@@ -12,15 +12,13 @@
     <body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <p:tabView style="margin-top:150px; margin-left: 15%; width:70%">
+                <p:tabView id="attList-tabView">
 
                     <p:tab title="View by date">
                         <h:form>
                             <p:panel
-                                header="Attendance List" 
-                                style="width:75%; 
-                                margin-bottom:10px; 
-                                margin-top: 20px;" 
+                                header="Attendance List"
+                                id="attList-header"
                                 class="att-panel"
                                 >
                                 <p:panelGrid columns="2" id="selectGrid2">
@@ -28,7 +26,6 @@
                                     <p:selectOneMenu 
                                         id="course-by-date" 
                                         value="#{teacherMB.chosenCourseId}" 
-                                        style="width:150px"
                                         >
                                         <p:ajax listener="#{teacherMB.onCourseChange}" update="date"/>
                                         <f:selectItem 
@@ -68,7 +65,6 @@
                                     id="attendingStudentView2" 
                                     value="#{teacherMB.viewStudents()}" 
                                     var="student"
-                                    style="width:100%;"
                                     >
                                     <p:column headerText="First Name">
                                         <p:outputLabel value="#{student.firstName}"/>
@@ -83,17 +79,15 @@
                     <p:tab title="View by period">
                         <h:form>
                             <p:panel
-                                header="Attendance List" 
-                                style="width:75%; 
-                                margin-bottom:10px" 
+                                header="Attendance List"                             
                                 class="att-panel"
                                 >
                                 <p:panelGrid columns="2" id="selectGrid">
                                     <p:outputLabel for="course-by-period" value="Course"/>
                                     <p:selectOneMenu 
                                         id="course-by-period" 
+                                        class="attList-Menu"
                                         value="#{teacherMB.chosenCourseId}" 
-                                        style="width:150px"
                                         >
                                         <p:ajax event="change"/>
                                         <f:selectItem 
@@ -129,7 +123,6 @@
                                     id="overall-chart"
                                     type="line" 
                                     model="#{statisticsController.lineModel}" 
-                                    style="height:300px;" 
                                     />
                             </p:panel>
                         </h:form>

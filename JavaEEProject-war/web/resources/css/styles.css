@@ -47,3 +47,31 @@ body {
 .autoCompleteText {
     cursor: pointer;
 }
+
+.att-panel{
+    width:75%; 
+    margin-bottom:10px; 
+    margin-top: 20px;
+}
+
+#course-by-date{    
+    width:150px;
+}
+
+.attList-Menu{
+    width:150px;
+}
+
+.viewAttendanceList{
+    width: 100%;
+}
+
+#overall-chart{
+    height: 300px;        
+}
+
+#attList-tabView{
+    margin-top:150px; 
+    margin-left: 15%; 
+    width:70%
+}
