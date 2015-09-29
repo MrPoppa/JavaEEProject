@@ -35,7 +35,7 @@
                                             itemLabel="Select Course" 
                                             noSelectionOption="true"
                                             />
-                                        <f:selectItems value="#{teacherMB.teacherCourses}" 
+                                        <f:selectItems value="#{courseMB.viewAllCourses()}" 
                                                        var="course" 
                                                        itemValue="#{course.id}"
                                                        itemLabel="#{course.courseName}"
@@ -76,12 +76,6 @@
                                     <p:column headerText="Last Name">
                                         <p:outputLabel value="#{student.lastName}"/>
                                     </p:column>
-                                    <p:column headerText="Attendance Rate">
-                                        <p:outputLabel value="#{student.age}"/>
-                                    </p:column>
-                                    <p:column headerText="Attendance Rate">
-                                        <p:outputLabel value="#{student.age}"/>
-                                    </p:column>
                                 </p:dataTable>
                             </p:panel>
                         </h:form>
@@ -106,7 +100,7 @@
                                             itemLabel="Select Course" 
                                             noSelectionOption="true"
                                             />
-                                        <f:selectItems value="#{teacherMB.teacherCourses}" 
+                                        <f:selectItems value="#{courseMB.viewAllCourses()}" 
                                                        var="course" 
                                                        itemValue="#{course.id}"
                                                        itemLabel="#{course.courseName}"
