@@ -22,7 +22,9 @@ public class StudentMB extends Person {
     private List<CourseMB> courses = new ArrayList<>();
     private List<String> imageResources = new ArrayList<>();
     private List<String> fileResources = new ArrayList<>();
-    
+    private int chosenId;
+    private String attended = "x";
+    private String absent = "";
 
     @EJB
     StudentFacadeLocal studentFacade;
@@ -77,6 +79,13 @@ public class StudentMB extends Person {
         fileResources.remove(fileResource);
     }
 
+    public int getChosenId() {
+        return chosenId;
+    }
+
+    public void setChosenId(int chosenId) {
+        this.chosenId = chosenId;
+    }
 
     public void addStudent() {
         Student student = new Student();
@@ -96,6 +105,6 @@ public class StudentMB extends Person {
 
     @Override
     public String toString() {
-        return this.getFirstName() +  " " + this.getLastName();
+        return this.getFirstName() + " " + this.getLastName();
     }
 }

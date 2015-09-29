@@ -35,5 +35,7 @@ public interface AttendancelistFacadeLocal {
     List<Date> findAllDatesByCourse(int id);
     
     List<Student> findAllStudentsByCourseDate(Date date, int course_id);
+
+    List<Date> findAllDatesByStudent(Integer studentId);
     
 }

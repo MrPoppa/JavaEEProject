@@ -1,5 +1,6 @@
 package com.rappandpoppa.model;
 
+import com.rappandpoppa.beans.AttendancelistFacadeLocal;
 import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.StudentFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
@@ -34,7 +35,9 @@ public class CourseMB {
     private List<Student> courseStudents = new ArrayList<>();
     private List<Attendancelist> attendanceLists;
     private List<Date> lectureDates = new ArrayList<>();
-
+    private Course chosenCourse;
+    private Integer chosenStudentId;
+    private List<String> attendedDates;
     private Integer teacherId;
 
     @EJB
@@ -43,6 +46,8 @@ public class CourseMB {
     TeacherFacadeLocal teacherFacade;
     @EJB
     StudentFacadeLocal studentFacade;
+    @EJB
+    AttendancelistFacadeLocal attendancelistFacade;
 
     public Integer getId() {
         return id;
@@ -110,7 +115,7 @@ public class CourseMB {
 
     public List<Student> getCourseStudents() {
         if (id != null) {
-            return courseStudents = courseFacade.find(id).getStudentList();
+            return courseStudents = getChosenCourse().getStudentList();
         } else {
             return null;
         }
@@ -145,13 +150,12 @@ public class CourseMB {
     }
 
     public List<Date> getLectureDates() {
-        return lectureDates;
+        return lectureDates = attendancelistFacade.findAllDatesByCourse(id);
     }
 
     public void setLectureDates(List<Date> lectureDates) {
         this.lectureDates = lectureDates;
     }
-
 
     public Integer getTeacherId() {
         return teacherId;
@@ -159,6 +163,14 @@ public class CourseMB {
 
     public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
+    }
+
+    public Course getChosenCourse() {
+        return chosenCourse = courseFacade.find(id);
+    }
+
+    public void setChosenCourse(Course chosenCourse) {
+        this.chosenCourse = chosenCourse;
     }
 
     public void addCourse() {
@@ -201,5 +213,25 @@ public class CourseMB {
             courseToBeEdited.setStudentList(courseStudents);
             courseFacade.edit(courseToBeEdited);
         }
+    }
+
+    public void onCourseChange() {
+        getLectureDates();
+        getCourseStudents();
+
+        attendedDates = new ArrayList<>();
+        List<Date> studentDates = attendancelistFacade.findAllDatesByStudent(chosenStudentId);
+        for (Date d : lectureDates) {
+            if (lectureDates.contains(d)) {
+                attendedDates.add("X");
+            } else {
+                attendedDates.add("_");
+            }
+
+        }
+    }
+
+    public List<String> viewAttendedDates() {
+        return attendedDates;
     }
 }

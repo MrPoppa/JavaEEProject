@@ -55,4 +55,8 @@ public class AttendancelistFacade extends AbstractFacade<Attendancelist> impleme
         return attendingStudents;
     }
 
+    @Override
+    public List<Date> findAllDatesByStudent(Integer studentId) {
+        return null;
+    }
 }

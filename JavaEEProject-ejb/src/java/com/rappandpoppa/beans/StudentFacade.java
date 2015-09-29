@@ -6,6 +6,8 @@
 package com.rappandpoppa.beans;
 
 import com.rappandpoppa.entities.Student;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,5 +35,5 @@ public class StudentFacade extends AbstractFacade<Student> implements StudentFac
         return (Student) getEntityManager().createNamedQuery("Student.findByFirstName")
                 .setParameter("firstName", firstName).getSingleResult();
     }
-    
+
 }

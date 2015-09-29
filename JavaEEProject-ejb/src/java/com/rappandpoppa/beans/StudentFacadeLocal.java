@@ -6,6 +6,7 @@
 package com.rappandpoppa.beans;
 
 import com.rappandpoppa.entities.Student;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -31,5 +32,5 @@ public interface StudentFacadeLocal {
     List<Student> findRange(int[] range);
 
     int count();
-    
+
 }
