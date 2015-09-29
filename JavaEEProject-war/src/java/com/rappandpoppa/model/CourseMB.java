@@ -26,7 +26,6 @@ public class CourseMB {
 
     private Integer id;
     private String courseName;
-    private String courseCode;
     private String level;
     private String language;
     private int maxNumberOfStudents;
@@ -67,12 +66,18 @@ public class CourseMB {
         this.courseName = courseName;
     }
 
-    public String getCourseCode() {
-        return courseCode;
-    }
-
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
+    public String generateCourseCode() {
+        char[] letters = this.courseName.toCharArray();
+        StringBuilder sb1 = new StringBuilder();
+        for (char letter : letters) {
+            StringBuilder sb2 = new StringBuilder();
+            sb2.append(letter);
+            if (sb2.toString().matches("^[A-Z0-9]+$")) {
+                sb1.append(sb2.toString());
+            }
+        }
+        sb1.append("-15");
+        return sb1.toString();
     }
 
     public String getLevel() {
@@ -190,12 +195,13 @@ public class CourseMB {
     public void setDaysOfTheWeek(List<String> daysOfTheWeek) {
         this.daysOfTheWeek = daysOfTheWeek;
     }
-
+    
     public void addCourse() {
         Course createdCourse = new Course();
+        String courseCode = generateCourseCode();
         int numberOfAttendanceLists = daysOfTheWeek.size() * numberOfWeeks;
         createdCourse.setCourseName(this.courseName);
-        createdCourse.setCourseCode(this.courseCode);
+        createdCourse.setCourseCode(courseCode);
         createdCourse.setCourseLanguage(this.language);
         createdCourse.setCourseLevel(this.level);
         createdCourse.setMaxNumberOfStudents(this.maxNumberOfStudents);
@@ -206,14 +212,11 @@ public class CourseMB {
             newAttendanceLists.add(attendanceList);
         }
         for (String day : daysOfTheWeek) {
-//            int i = 0;
             Calendar cal = Calendar.getInstance();
             boolean firstAttendanceList = true;
-//            for (Attendancelist attendancelist : newAttendanceLists) {
             Date attendanceDate = startDate;
             for (int i = 0; i < numberOfWeeks; ++i) {
                 Attendancelist attendanceList = newAttendanceLists.get(0);
-//                while (i < (numberOfWeeks)) {
                 switch (day) {
                     case "Mon":
                         if (firstAttendanceList) {
@@ -287,6 +290,7 @@ public class CourseMB {
                             cal.add(Calendar.DATE, 7);
                             attendanceDate = cal.getTime();
                             attendanceList.setAttendanceDate(attendanceDate);
+                            attendanceList.setCourse(createdCourse);
                             completeAttendanceLists.add(attendanceList);
                             newAttendanceLists.remove(attendanceList);
                         }
@@ -315,18 +319,11 @@ public class CourseMB {
                         break;
                 }
             }
-//            }
         }
         createdCourse.setAttendancelistList(completeAttendanceLists);
         courseFacade.create(createdCourse);
     }
 
-//    public void addAttendanceList() {
-//        this.attendanceLists.add(this.attendanceList);
-//        Course courseToUpdate = courseFacade.find(id);
-//        courseToUpdate.setAttendancelistList(attendanceLists);
-//        courseFacade.edit(courseToUpdate);
-//    }
     public List<Course> viewAllCourses() {
         return this.courseFacade.findAll();
     }
