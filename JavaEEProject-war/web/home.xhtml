@@ -8,11 +8,16 @@
     <h:body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <div class="welcome">
-                    <h1>Welcome!</h1>
-                    <p>
-                        Use the links above to navigate.
-                    </p>
+                <div class="welcome content-main">
+                    <p:panel 
+                        header="Welcome!" 
+                        class="panels"
+                        id="welcome-panel"
+                        >
+                        <p>
+                            Use the links above to navigate.
+                        </p>
+                    </p:panel>
                 </div>
             </ui:define>
         </ui:composition>

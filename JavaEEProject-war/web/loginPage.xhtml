@@ -13,15 +13,23 @@ and open the template in the editor.
 
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <h:form class="regForm">
-                    <p:outputLabel class="textLabels">User Name: </p:outputLabel>
-                    <p:inputText/>
-                    <p:outputLabel class="textLabels">Password: </p:outputLabel>
-                    <p:inputText id="password"/>
-                    <p:commandButton value="Login"
-                                     action="login"
-                                     actionListener="#{teacherController.createTeachers}"/>
-                </h:form>
+                <div class="content-main">
+                    <p:panel 
+                        header="Login"
+                        class="panels"     
+                        id="login-panel"
+                             >
+                        <h:form class="regForm">
+                            <p:outputLabel class="textLabels">User Name: </p:outputLabel>
+                            <p:inputText/>
+                            <p:outputLabel class="textLabels">Password: </p:outputLabel>
+                            <p:inputText id="password"/>
+                            <p:commandButton value="Login"
+                                             action="login"
+                                             actionListener="#{teacherController.createTeachers}"/>
+                        </h:form>
+                    </p:panel>
+                </div>
             </ui:define>
         </ui:composition>
 

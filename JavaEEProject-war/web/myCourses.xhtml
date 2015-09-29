@@ -10,10 +10,16 @@
     <body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <div>
-                    <h1 style="text-align: center">
-                        This course is not a meal...       
-                    </h1>
+                <div class="content-main">
+                    <p:panel
+                        id="my-courses-panel"
+                        class="panels"
+                        header="My courses"
+                        >
+                        <p>
+                            This course is not a meal...       
+                        </p>
+                    </p:panel>
                 </div>
             </ui:define>
         </ui:composition>

@@ -13,47 +13,48 @@ and open the template in the editor.
     <h:body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <h:form class="regForm">
-                    <p:panel 
-                        class="panels" 
-                        id="reg-stud-panel"
-                        header="Register course"
-                        >
+                <div class="content-main">
+                    <h:form class="regForm">
+                        <p:panel 
+                            class="panels" 
+                            id="reg-course-panel"
+                            header="Register course"
+                            >
 
-                        <h:panelGrid class="regGrid" id="registerCourseForm">
-                            <p:outputLabel class="textLabels">Course name: </p:outputLabel>
-                            <p:inputText class="regInputText" id="courseName" value="#{courseMB.courseName}">
-                            </p:inputText>
-                            <p:outputLabel class="textLabels">Level: </p:outputLabel>
-                            <p:selectOneMenu class="regOneMenu" id="level" value="#{courseMB.level}">
-                                <f:selectItem itemLabel=" "/>
-                                <f:selectItems value="#{dropdownData.levels}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel class="textLabels">Language: </p:outputLabel>
-                            <p:selectOneMenu class="regOneMenu" id="language" value="#{courseMB.language}">
-                                <f:selectItem itemLabel=" "/>
-                                <f:selectItems value="#{dropdownData.languages}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel class="textLabels">Amount of students: </p:outputLabel>
-                            <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" 
-                                             value="#{courseMB.maxNumberOfStudents}">
-                                <f:selectItem itemLabel=" "/>
-                                <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
-                            <p:selectOneMenu class="regOneMenu" id="teacherForCourse" value="#{courseMB.teacherId}">
-                                <f:selectItem itemLabel=" "/>
-                                <f:selectItems value="#{teacherController.teachers}" var="teacher" itemValue="#{teacher.id}"/>
-                            </p:selectOneMenu>
-                            <p:commandButton class="actionButton" 
-                                             value="Submit"
-                                             actionListener="#{courseMB.addCourse}"
-                                             update="registerCourseForm"
-                                             />
-                        </h:panelGrid>
-                    </p:panel>
-                </h:form>
-
+                            <h:panelGrid class="regGrid" id="registerCourseForm">
+                                <p:outputLabel class="textLabels">Course name: </p:outputLabel>
+                                <p:inputText class="regInputText" id="courseName" value="#{courseMB.courseName}">
+                                </p:inputText>
+                                <p:outputLabel class="textLabels">Level: </p:outputLabel>
+                                <p:selectOneMenu class="regOneMenu" id="level" value="#{courseMB.level}">
+                                    <f:selectItem itemLabel=" "/>
+                                    <f:selectItems value="#{dropdownData.levels}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel class="textLabels">Language: </p:outputLabel>
+                                <p:selectOneMenu class="regOneMenu" id="language" value="#{courseMB.language}">
+                                    <f:selectItem itemLabel=" "/>
+                                    <f:selectItems value="#{dropdownData.languages}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel class="textLabels">Amount of students: </p:outputLabel>
+                                <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" 
+                                                 value="#{courseMB.maxNumberOfStudents}">
+                                    <f:selectItem itemLabel=" "/>
+                                    <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
+                                <p:selectOneMenu class="regOneMenu" id="teacherForCourse" value="#{courseMB.teacherId}">
+                                    <f:selectItem itemLabel=" "/>
+                                    <f:selectItems value="#{teacherController.teachers}" var="teacher" itemValue="#{teacher.id}"/>
+                                </p:selectOneMenu>
+                                <p:commandButton class="actionButton" 
+                                                 value="Submit"
+                                                 actionListener="#{courseMB.addCourse}"
+                                                 update="registerCourseForm"
+                                                 />
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:form>
+                </div>
             </ui:define>
         </ui:composition>
     </h:body>
