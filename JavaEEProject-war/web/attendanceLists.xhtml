@@ -27,9 +27,9 @@
                                         <p:outputLabel for="course-by-date" value="Course"/>
                                         <p:selectOneMenu 
                                             id="course-by-date" 
-                                            value="#{teacherMB.chosenCourseId}" 
+                                            value="#{dateStatisticsController.courseMB.id}"
                                             >
-                                            <p:ajax listener="#{teacherMB.onCourseChange}" update="date"/>
+                                            <p:ajax listener="#{dateStatisticsController.onCourseChange}" update="date"/>
                                             <f:selectItem 
                                                 itemLabel="Select Course" 
                                                 noSelectionOption="true"
@@ -44,14 +44,14 @@
                                         <p:outputLabel for="date" value="Date"/>
                                         <p:selectOneMenu 
                                             id="date" 
-                                            value="#{teacherMB.chosenListId}"
+                                            value="#{dateStatisticsController.attendanceListMB.id}"
                                             >
                                             <p:ajax event="change" update="attendingStudentView2"/>
                                             <f:selectItem 
                                                 itemLabel="Select Date" 
                                                 noSelectionOption="true"
                                                 />
-                                            <f:selectItems value="#{teacherMB.attendanceListsByCourse}"
+                                            <f:selectItems value="#{dateStatisticsController.courseMB.attendanceLists}"
                                                            var="attendanceList"
                                                            itemValue="#{attendanceList.id}"
                                                            itemLabel="#{attendanceList.attendanceDate}"
@@ -65,7 +65,7 @@
                                     <p:dataTable
                                         class="viewAttendanceList" 
                                         id="attendingStudentView2" 
-                                        value="#{teacherMB.viewStudents()}" 
+                                        value="#{dateStatisticsController.attendingStudentsByCourseDate}" 
                                         var="student"
                                         >
                                         <p:column headerText="First Name">
@@ -85,30 +85,14 @@
                                     class="att-panel"
                                     >
                                     <p:panelGrid columns="2" id="selectGrid">
-                                        <p:outputLabel for="course-by-period" value="Course"/>
-                                        <p:selectOneMenu 
-                                            id="course-by-period" 
-                                            class="attList-Menu"
-                                            value="#{teacherMB.chosenCourseId}" 
-                                            >
-                                            <p:ajax event="change"/>
-                                            <f:selectItem 
-                                                itemLabel="Select Course" 
-                                                noSelectionOption="true"
-                                                />
-                                            <f:selectItems value="#{courseMB.viewAllCourses()}" 
-                                                           var="course" 
-                                                           itemValue="#{course.id}"
-                                                           itemLabel="#{course.courseName}"
-                                                           />
-                                        </p:selectOneMenu>
+
                                         <p:outputLabel 
                                             for="period-start" 
                                             value="Period Start"
                                             />
                                         <p:calendar 
                                             id="period-start" 
-                                            value="#{teacherMB.periodStartDate}"
+                                            value="#{periodStatisticsController.periodStartDate}"
                                             />
                                         <p:outputLabel 
                                             for="period-end" 
@@ -116,7 +100,7 @@
                                             />
                                         <p:calendar 
                                             id="period-end" 
-                                            value="#{teacherMB.periodEndDate}"
+                                            value="#{periodStatisticsController.periodEndDate}"
                                             />
                                     </p:panelGrid>
                                 </p:panel>
@@ -124,75 +108,10 @@
                                     <p:chart
                                         id="overall-chart"
                                         type="line" 
-                                        model="#{statisticsController.lineModel}" 
+                                        model="#{periodStatisticsController.lineModel}" 
                                         />
                                 </p:panel>
                             </h:form>
-                        </p:tab>
-                        <p:tab title="View By Student">
-
-                            <h:form>
-                                <p:panel
-                                    header="Attendance List"
-                                    class="panels attList-header"
-                                    >
-                                    <p:panelGrid columns="2" id="selectGrid2">
-                                        <p:outputLabel for="course" value="Course"/>
-                                        <p:selectOneMenu 
-                                            id="course" 
-                                            value="#{studentMB.id}" 
-                                            >
-                                            <p:ajax listener="#{courseMB.onCourseChange}" update="student"/>
-                                            <f:selectItem 
-                                                itemLabel="Select Course" 
-                                                noSelectionOption="true"
-                                                />
-                                            <f:selectItems value="#{courseMB.viewAllCourses()}" 
-                                                           var="course" 
-                                                           itemValue="#{course.id}"
-                                                           itemLabel="#{course.courseName}"
-                                                           />
-                                        </p:selectOneMenu>
-
-                                        <p:outputLabel for="student" value="Student"/>
-                                        <p:selectOneMenu 
-                                            id="student" 
-                                            value="#{studentMB.chosenId}"
-                                            >
-                                            <p:ajax event="change" 
-                                                    update="attendedDates"
-                                                    />
-                                            <f:selectItem 
-                                                itemLabel="Select Student" 
-                                                noSelectionOption="true"
-                                                />
-                                            <f:selectItems value="#{courseMB.courseStudents}"
-                                                           var="student"
-                                                           itemValue="#{student.id}"
-                                                           itemLabel="#{student.toString()}"
-                                                           />
-                                        </p:selectOneMenu>
-
-                                    </p:panelGrid>
-
-                                    <p:separator/>
-
-                                    <p:dataTable
-                                        class="viewAttendanceList" 
-                                        id="attendedDates" 
-                                        value="#{studentMB.viewAttendedDates()}" 
-                                        var="date"
-                                        >
-                                        <p:column headerText="#{date}">
-                                            <p:outputLabel value="#{courseMB.viewAttendedDates()}"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:panel>
-                            </h:form>
-
-
-
-
                         </p:tab>
                     </p:tabView>
                 </div>

@@ -20,7 +20,7 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class AttendanceListMB {
 
-    private Integer id;
+    private int id;
     private Date date;
     private String courseName;
     private List<Student> studentsPresent = new ArrayList<>();
@@ -32,11 +32,11 @@ public class AttendanceListMB {
     @EJB
     CourseFacadeLocal courseFacade;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

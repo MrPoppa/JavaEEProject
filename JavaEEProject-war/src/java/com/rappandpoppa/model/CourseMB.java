@@ -13,14 +13,12 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Anders
  */
 @ManagedBean
-@RequestScoped
 public class CourseMB {
 
     private Integer id;

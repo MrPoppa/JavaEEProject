@@ -7,6 +7,7 @@ package com.rappandpoppa.controllers;
 
 import com.rappandpoppa.beans.StudentFacadeLocal;
 import com.rappandpoppa.entities.Student;
+import com.rappandpoppa.model.StudentMB;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -24,6 +25,8 @@ public class StudentController {
     private Integer studentId;
     private String searchTextLabel;
     private final List<Student> students = new ArrayList<>();
+    
+    StudentMB studentMB = new StudentMB();
     
     @EJB
     StudentFacadeLocal studentFacade;
@@ -62,7 +65,7 @@ public class StudentController {
     
     public void viewStudent() {
         students.clear();
-        Student foundStudent = studentFacade.find(studentId);
+        Student foundStudent = studentFacade.find(studentMB.getId());
         if (foundStudent != null) {
             students.add(foundStudent);
             searchTextLabel = foundStudent.getFirstName() +  " " + foundStudent.getLastName();
