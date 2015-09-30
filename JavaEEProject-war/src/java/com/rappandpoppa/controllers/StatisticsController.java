@@ -2,6 +2,7 @@ package com.rappandpoppa.controllers;
 
 import com.rappandpoppa.beans.AttendancelistFacadeLocal;
 import com.rappandpoppa.beans.CourseFacadeLocal;
+import com.rappandpoppa.beans.StudentFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
 import com.rappandpoppa.model.AttendanceListMB;
 import com.rappandpoppa.model.CourseMB;
@@ -28,6 +29,9 @@ public abstract class StatisticsController {
 
     @EJB
     AttendancelistFacadeLocal attendancelistFacade;
+
+    @EJB
+    StudentFacadeLocal studentFacade;
 
     public TeacherMB getTeacherMB() {
         return teacherMB;

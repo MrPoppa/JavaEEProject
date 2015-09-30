@@ -4,7 +4,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -113,6 +114,69 @@
                                 </p:panel>
                             </h:form>
                         </p:tab>
+
+                        <p:tab title="View By Student">
+
+                            <h:form>
+                                <p:panel
+                                    header="Attendance List"
+                                    class="panels attList-header"
+                                    >
+                                    <p:panelGrid columns="2" id="selectGrid2">
+                                        <p:outputLabel for="course" value="Course"/>
+                                        <p:selectOneMenu 
+                                            id="course" 
+                                            value="#{studentStatisticsController.courseMB.id}" 
+                                            >
+                                            <p:ajax listener="#{studentStatisticsController.onCourseChange}" update="student"/>
+                                            <f:selectItem 
+                                                itemLabel="Select Course" 
+                                                noSelectionOption="true"
+                                                />
+                                            <f:selectItems value="#{courseController.viewAllCourses()}" 
+                                                           var="course" 
+                                                           itemValue="#{course.id}"
+                                                           itemLabel="#{course.courseName}"
+                                                           />
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel for="student" value="Student"/>
+                                        <p:selectOneMenu 
+                                            id="student" 
+                                            value="#{studentStatisticsController.studentMB.id}"
+                                            >
+                                            <p:ajax event="change" 
+                                                    update="attendedDates"
+                                                    />
+                                            <p:ajax listener="#{studentStatisticsController.onStudentChange}" update="attendedDates"/>
+                                            <f:selectItem 
+                                                itemLabel="Select Student" 
+                                                noSelectionOption="true"
+                                                />
+                                            <f:selectItems value="#{studentStatisticsController.courseMB.studentList}"
+                                                           var="student"
+                                                           itemValue="#{student.id}"
+                                                           itemLabel="#{student.toString()}"
+                                                           />
+                                        </p:selectOneMenu>
+                                    </p:panelGrid>
+
+                                    <p:separator/>
+
+                                    <p:dataTable
+                                        class="viewAttendanceList" 
+                                        id="attendedDates" 
+                                        value="#{studentStatisticsController.courseDates}" 
+                                        var="date"
+                                        >
+                                        <p:column headerText="#{date}" >
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:panel>
+                            </h:form>
+
+                        </p:tab>
+
                     </p:tabView>
                 </div>
             </ui:define>

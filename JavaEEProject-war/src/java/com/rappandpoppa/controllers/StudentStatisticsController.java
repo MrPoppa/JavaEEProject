@@ -22,6 +22,7 @@ public class StudentStatisticsController extends StatisticsController {
     private Map<Date, Boolean> attendedDates = new HashMap<>();
     private List<Date> datesAttendedByStudent = new ArrayList<>();
     private List<Date> courseDates = new ArrayList<>();
+    private Date date;
 
     public Map<Date, Boolean> getAttendedDates() {
         return attendedDates;
@@ -47,8 +48,26 @@ public class StudentStatisticsController extends StatisticsController {
         this.courseDates = courseDates;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public void onCourseChange() {
         loadCourseMB(courseFacade.find(courseMB.getId()));
+    }
+
+    public void onStudentChange() {
+        Student student = studentFacade.find(studentMB.getId());
+        List<Attendancelist> attLists = courseMB.getAttendancelistList();
+        for (Attendancelist a : attLists) {
+            if (a.getStudentList().contains(student)) {
+                datesAttendedByStudent.add(a.getAttendanceDate());
+            }
+        }
     }
 
     public void setAttendedDatesForStudent() {
@@ -71,6 +90,18 @@ public class StudentStatisticsController extends StatisticsController {
         courseMB.setLanguage(course.getCourseLanguage());
         courseMB.setMaxNumberOfStudents(course.getMaxNumberOfStudents());
         courseMB.setStudentList(course.getStudentList());
+        courseMB.setAttendancelistList(course.getAttendancelistList());
+        if (!courseDates.isEmpty()) {
+            courseDates.clear();
+        }
+
+        List<Attendancelist> attLists = course.getAttendancelistList();
+        for (Attendancelist a : attLists) {
+            courseDates.add(a.getAttendanceDate());
+        }
     }
 
+    public boolean didAttend() {
+        return datesAttendedByStudent.contains(date);
+    }
 }
