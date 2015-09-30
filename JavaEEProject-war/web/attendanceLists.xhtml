@@ -145,9 +145,6 @@
                                             id="student" 
                                             value="#{studentStatisticsController.studentMB.id}"
                                             >
-                                            <p:ajax event="change" 
-                                                    update="attendedDates"
-                                                    />
                                             <p:ajax listener="#{studentStatisticsController.onStudentChange()}" update="attendedDates"/>
                                             <f:selectItem 
                                                 itemLabel="Select Student" 

@@ -24,6 +24,7 @@ public class StudentStatisticsController extends StatisticsController {
     private List<Date> courseDates = new ArrayList<>();
     private Date date;
     Boolean listIsEmpty;
+    Student student;
 
     public Map<Date, Boolean> getAttendedDates() {
         return attendedDates;
@@ -57,13 +58,21 @@ public class StudentStatisticsController extends StatisticsController {
         this.date = date;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+    
     public void onCourseChange() {
         loadCourseMB(courseFacade.find(courseMB.getId()));
         defineCourseDates();
     }
 
     public void onStudentChange() {
-        Student student = studentFacade.find(studentMB.getId());
+        student = studentFacade.find(studentMB.getId());
         listIsEmpty = courseMB.getAttendancelistList().isEmpty();
         for (Attendancelist a : courseMB.getAttendancelistList()) {
             if (a.getStudentList().contains(student)) {
