@@ -18,6 +18,7 @@ public class DropdownData {
     private final List<String> languages = new ArrayList<>();
     private final List<String> periods = new ArrayList<>();
     private final List<String> teachers = new ArrayList<>();
+    private final List<String> daysOfTheWeek = new ArrayList<>();
 
     public DropdownData() {
         for (int i = 0; i < 136; ++i) {
@@ -27,7 +28,7 @@ public class DropdownData {
         maxStudentNumbers.add(28);
         maxStudentNumbers.add(30);
         maxStudentNumbers.add(32);
-        
+
         teachers.add("Hamid");
         teachers.add("Martin");
         teachers.add("Johan");
@@ -48,6 +49,12 @@ public class DropdownData {
 
         periods.add("Spring");
         periods.add("Fall");
+
+        daysOfTheWeek.add("Mon");
+        daysOfTheWeek.add("Tue");
+        daysOfTheWeek.add("Wed");
+        daysOfTheWeek.add("Thu");
+        daysOfTheWeek.add("Fri");
 
     }
 
@@ -78,4 +85,9 @@ public class DropdownData {
     public List<String> getTeachers() {
         return teachers;
     }
+
+    public List<String> getDaysOfTheWeek() {
+        return daysOfTheWeek;
+    }
+
 }

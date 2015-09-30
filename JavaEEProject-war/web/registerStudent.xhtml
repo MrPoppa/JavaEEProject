@@ -14,50 +14,49 @@ and open the template in the editor.
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
                 <div class="content-main">
-                    <h:form >
+                    <h:form class="regForm">
                         <p:panel 
                             class="panels" 
                             id="reg-stud-panel"
                             header="Register student"
                             >
-
                             <h:panelGrid class="regGrid" id="registerStudentForm">
                                 <p:outputLabel class="textLabels">First Name: </p:outputLabel>
-                                <p:inputText class="regInputText" id="firstName" value="#{studentMB.firstName}" required="true">
+                                <p:inputText class="regInputText" id="firstName" value="#{studentController.studentMB.firstName}" required="true">
                                 </p:inputText>
                                 <p:outputLabel class="textLabels">Last Name: </p:outputLabel>
-                                <p:inputText class="regInputText" id="lastName" value="#{studentMB.lastName}">
+                                <p:inputText class="regInputText" id="lastName" value="#{studentController.studentMB.lastName}">
                                 </p:inputText>
                                 <p:outputLabel class="textLabels">Age: </p:outputLabel>
-                                <p:selectOneMenu id="age" value="#{studentMB.age}">
+                                <p:selectOneMenu id="age" value="#{studentController.studentMB.age}">
                                     <f:selectItems value="#{dropdownData.ageNumbers}"/>
                                 </p:selectOneMenu>
                                 <p:outputLabel class="textLabels">Gender: </p:outputLabel>
-                                <p:selectOneRadio class="regOneRadio" id="Gender" value="#{studentMB.gender}">
+                                <p:selectOneRadio class="regOneRadio" id="Gender" value="#{studentController.studentMB.gender}">
                                     <f:selectItem itemLabel="Male" itemValue="Male"/>
                                     <f:selectItem itemLabel="Female" itemValue="Female"/>
                                 </p:selectOneRadio>
                                 <p:outputLabel class="textLabels">Street Name: </p:outputLabel>
-                                <p:inputText class="regInputText" value="#{studentMB.contactInformation.streetName}">
+                                <p:inputText class="regInputText" value="#{studentController.studentMB.contactInformation.streetName}">
                                 </p:inputText>
                                 <p:outputLabel class="textLabels">Zip code: </p:outputLabel>
-                                <p:inputText class="regInputText" id="zipCode" value="#{studentMB.contactInformation.zipCode}">
+                                <p:inputText class="regInputText" id="zipCode" value="#{studentController.studentMB.contactInformation.zipCode}">
                                 </p:inputText>
                                 <p:outputLabel class="textLabels">City: </p:outputLabel>
-                                <p:selectOneMenu class="regOneMenu" id="city" value="#{studentMB.contactInformation.city}">
+                                <p:selectOneMenu class="regOneMenu" id="city" value="#{studentController.studentMB.contactInformation.city}">
                                     <f:selectItem itemLabel="" itemValue=""/>
                                     <f:selectItems value="#{dropdownData.cities}"/>
                                 </p:selectOneMenu>
                                 <p:outputLabel class="textLabels">Phone number </p:outputLabel>
-                                <p:inputText class="regInputText" id="phoneNumber" value="#{studentMB.contactInformation.phoneNumber}">
+                                <p:inputText class="regInputText" id="phoneNumber" value="#{studentController.studentMB.contactInformation.phoneNumber}">
                                 </p:inputText>
                                 <p:outputLabel class="textLabels">E-mail: </p:outputLabel>
-                                <p:inputText class="regInputText" id="emailAddress" value="#{studentMB.contactInformation.emailAddress}">
+                                <p:inputText class="regInputText" id="emailAddress" value="#{studentController.studentMB.contactInformation.emailAddress}">
                                 </p:inputText>
                                 <p:commandButton class="actionButton" 
-                                                 value="Submit"
+                                                 value="Add Student"
                                                  update="registerStudentForm"
-                                                 action="#{studentMB.addStudent()}"
+                                                 action="#{studentController.createStudent()}"
                                                  />
                             </h:panelGrid>
                         </p:panel>

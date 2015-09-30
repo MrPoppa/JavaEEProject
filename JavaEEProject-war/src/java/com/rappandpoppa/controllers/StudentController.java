@@ -6,28 +6,30 @@
 package com.rappandpoppa.controllers;
 
 import com.rappandpoppa.beans.StudentFacadeLocal;
+import com.rappandpoppa.entities.Contactinformation;
 import com.rappandpoppa.entities.Student;
+import com.rappandpoppa.model.ContactInformationMB;
 import com.rappandpoppa.model.StudentMB;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author Benjamin
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class StudentController {
-    
+
     private Integer studentId;
     private String searchTextLabel;
     private final List<Student> students = new ArrayList<>();
-    
-    StudentMB studentMB = new StudentMB();
-    
+    private StudentMB studentMB = new StudentMB();
+    private Student studentToBeEdited;
+
     @EJB
     StudentFacadeLocal studentFacade;
 
@@ -46,37 +48,120 @@ public class StudentController {
     public void setSearchTextLabel(String searchTextLabel) {
         this.searchTextLabel = searchTextLabel;
     }
-    
+
     public List<Student> getStudents() {
         return students;
+    }
+
+    public StudentMB getStudentMB() {
+        return studentMB;
+    }
+
+    public void setStudentMB(StudentMB studentMB) {
+        this.studentMB = studentMB;
+    }
+
+    public Student getStudentToBeEdited() {
+        return studentToBeEdited;
+    }
+
+    public void setStudentToBeEdited(Student studentToBeEdited) {
+        this.studentToBeEdited = studentToBeEdited;
+    }
+
+    public void createStudent() {
+        Student student = new Student();
+        student.setFirstName(studentMB.getFirstName());
+        student.setAge(studentMB.getAge());
+        student.setLastName(studentMB.getLastName());
+        student.setGender(studentMB.getGender());
+        Contactinformation contact = new Contactinformation();
+        contact.setCity(studentMB.getContactInformation().getCity());
+        contact.setEmailAddress(studentMB.getContactInformation().getEmailAddress());
+        contact.setPhoneNumber(studentMB.getContactInformation().getPhoneNumber());
+        contact.setStreetName(studentMB.getContactInformation().getStreetName());
+        contact.setZipCode(studentMB.getContactInformation().getZipCode());
+        student.setContactInformation(contact);
+        studentFacade.create(student);
     }
 
     public List<Student> completeStudent(String query) {
         List<Student> allStudents = studentFacade.findAll();
         List<Student> filteredStudents = new ArrayList<>();
-        
-        for(Student student : allStudents) {
-            if(student.getFirstName().toLowerCase().startsWith(query.toLowerCase())) {
+
+        for (Student student : allStudents) {
+            if (student.getFirstName().toLowerCase().startsWith(query.toLowerCase())) {
                 filteredStudents.add(student);
             }
         }
         return filteredStudents;
     }
-    
+
     public void viewStudent() {
         students.clear();
         Student foundStudent = studentFacade.find(studentMB.getId());
         if (foundStudent != null) {
             students.add(foundStudent);
-            searchTextLabel = foundStudent.getFirstName() +  " " + foundStudent.getLastName();
+            searchTextLabel = foundStudent.getFirstName() + " " + foundStudent.getLastName();
         }
     }
-    
-        public void viewAllStudents() {
+
+    public void viewAllStudents() {
         students.clear();
         List<Student> foundStudents = studentFacade.findAll();
         for (Student foundStudent : foundStudents) {
             students.add(foundStudent);
+        }
+    }
+
+    public void selectStudent() {
+        if (studentMB.getId() != null) {
+            studentToBeEdited = studentFacade.find(studentMB.getId());
+            studentMB.setAge(studentToBeEdited.getAge());
+            studentMB.setFirstName(studentToBeEdited.getFirstName());
+            studentMB.setLastName(studentToBeEdited.getLastName());
+            studentMB.setGender(studentToBeEdited.getGender());
+            ContactInformationMB contact = new ContactInformationMB();
+            contact.setCity(studentToBeEdited.getContactInformation().getCity());
+            contact.setEmailAddress(studentToBeEdited.getContactInformation().getEmailAddress());
+            contact.setPhoneNumber(studentToBeEdited.getContactInformation().getPhoneNumber());
+            contact.setStreetName(studentToBeEdited.getContactInformation().getStreetName());
+            contact.setZipCode(studentToBeEdited.getContactInformation().getZipCode());
+            studentMB.setContactInformation(contact);
+        }
+    }
+
+    public void updateStudent() {
+        if (studentMB.getId() != null) {
+            studentToBeEdited.setAge(studentMB.getAge());
+            studentToBeEdited.setFirstName(studentMB.getFirstName());
+            studentToBeEdited.setLastName(studentMB.getLastName());
+            studentToBeEdited.setGender(studentMB.getGender());
+            Contactinformation contactEdit = new Contactinformation();
+            contactEdit.setCity(studentMB.getContactInformation().getCity());
+            contactEdit.setEmailAddress(studentMB.getContactInformation().getEmailAddress());
+            contactEdit.setPhoneNumber(studentMB.getContactInformation().getPhoneNumber());
+            contactEdit.setStreetName(studentMB.getContactInformation().getStreetName());
+            contactEdit.setZipCode(studentMB.getContactInformation().getZipCode());
+            studentToBeEdited.setContactInformation(contactEdit);
+            studentFacade.edit(studentToBeEdited);
+        }
+    }
+    
+    public void deleteStudent() {
+        if (studentMB.getId() != null) {
+            studentToBeEdited.setAge(studentMB.getAge());
+            studentToBeEdited.setFirstName(studentMB.getFirstName());
+            studentToBeEdited.setLastName(studentMB.getLastName());
+            studentToBeEdited.setGender(studentMB.getGender());
+            Contactinformation contactEdit = new Contactinformation();
+            contactEdit.setCity(studentMB.getContactInformation().getCity());
+            contactEdit.setEmailAddress(studentMB.getContactInformation().getEmailAddress());
+            contactEdit.setPhoneNumber(studentMB.getContactInformation().getPhoneNumber());
+            contactEdit.setStreetName(studentMB.getContactInformation().getStreetName());
+            contactEdit.setZipCode(studentMB.getContactInformation().getZipCode());
+            studentToBeEdited.setContactInformation(contactEdit);
+            studentFacade.remove(studentToBeEdited);
         }
     }
 }

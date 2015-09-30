@@ -6,8 +6,10 @@
 package com.rappandpoppa.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Course.findByCourseCode", query = "SELECT c FROM Course c WHERE c.courseCode = :courseCode"),
     @NamedQuery(name = "Course.findByCourseLevel", query = "SELECT c FROM Course c WHERE c.courseLevel = :courseLevel"),
     @NamedQuery(name = "Course.findByCourseLanguage", query = "SELECT c FROM Course c WHERE c.courseLanguage = :courseLanguage"),
-    @NamedQuery(name = "Course.findByCoursePeriod", query = "SELECT c FROM Course c WHERE c.coursePeriod = :coursePeriod"),
     @NamedQuery(name = "Course.findByMaxNumberOfStudents", query = "SELECT c FROM Course c WHERE c.maxNumberOfStudents = :maxNumberOfStudents")})
 public class Course implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -60,9 +61,6 @@ public class Course implements Serializable {
     @Size(max = 16)
     @Column(name = "courseLanguage")
     private String courseLanguage;
-    @Size(max = 16)
-    @Column(name = "coursePeriod")
-    private String coursePeriod;
     @Column(name = "maxNumberOfStudents")
     private Integer maxNumberOfStudents;
     @JoinTable(name = "course_student", joinColumns = {
@@ -73,8 +71,8 @@ public class Course implements Serializable {
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     @ManyToOne
     private Teacher teacher;
-    @OneToMany(mappedBy = "course")
-    private List<Attendancelist> attendancelistList;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST)
+    private List<Attendancelist> attendancelistList = new ArrayList<>();
 
     public Course() {
     }
@@ -121,14 +119,6 @@ public class Course implements Serializable {
 
     public void setCourseLanguage(String courseLanguage) {
         this.courseLanguage = courseLanguage;
-    }
-
-    public String getCoursePeriod() {
-        return coursePeriod;
-    }
-
-    public void setCoursePeriod(String coursePeriod) {
-        this.coursePeriod = coursePeriod;
     }
 
     public Integer getMaxNumberOfStudents() {
