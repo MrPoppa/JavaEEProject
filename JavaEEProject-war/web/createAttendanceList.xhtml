@@ -17,11 +17,11 @@ and open the template in the editor.
                     <h:form>
                         <h:panelGrid class="regGrid">
                             <p:outputLabel for="date" value="Date: " />
-                            <p:calendar id="date" value="#{attendanceListMB.date}"/>
+                            <p:calendar id="date" value="#{attendanceListMB.date}" disabledWeekends="true" showWeek="true" />
 
                             <p:outputLabel for="courseSelect" value="Course: "/>
                             <p:selectOneMenu id="courseSelect" value="#{attendanceListMB.courseName}">
-                                <f:selectItems value="#{courseMB.allCourseNames}" var="courseName"/>
+                                <f:selectItems value="#{courseController.allCourseNames}" var="courseName"/>
                             </p:selectOneMenu>
 
                             <p:commandButton class="actionButton" value="Create List" 

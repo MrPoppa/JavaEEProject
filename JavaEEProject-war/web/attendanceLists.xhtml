@@ -32,7 +32,7 @@
                                             itemLabel="Select Course" 
                                             noSelectionOption="true"
                                             />
-                                        <f:selectItems value="#{courseMB.viewAllCourses()}" 
+                                        <f:selectItems value="#{courseController.viewAllCourses()}" 
                                                        var="course" 
                                                        itemValue="#{course.id}"
                                                        itemLabel="#{course.courseName}"
@@ -94,7 +94,7 @@
                                             itemLabel="Select Course" 
                                             noSelectionOption="true"
                                             />
-                                        <f:selectItems value="#{courseMB.viewAllCourses()}" 
+                                        <f:selectItems value="#{courseController.viewAllCourses()}" 
                                                        var="course" 
                                                        itemValue="#{course.id}"
                                                        itemLabel="#{course.courseName}"

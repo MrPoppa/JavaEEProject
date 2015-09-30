@@ -13,59 +13,154 @@ and open the template in the editor.
     <h:body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
-                <h:form>
-                    <div class="regForm">
-                        <p:outputLabel value="Search:" for="students" />
-                        <p:autoComplete id="students" value="#{studentController.studentId}" completeMethod="#{studentController.completeStudent}"
-                                        var="student" itemLabel="#{student.toString()}" itemValue="#{student.id}" forceSelection="true">
-                            <p:column class="autoCompleteText">
-                                <h:outputText value="#{student.firstName}"/>
-                            </p:column>
-                            <p:column class="autoCompleteText">
-                                <h:outputText class="autoCompleteText" value="#{student.lastName}"/>
-                            </p:column>
-                        </p:autoComplete>
+
+                <p:tabView style="margin-top:150px; margin-left: 15%; width:70%">
 
 
-                        <p:commandButton class="actionButton" value="Search" 
-                                         action="#{studentController.viewStudent()}"
-                                         update="studentView">
-                        </p:commandButton>
-                        <p:commandButton class="actionButton" value="View All" 
-                                         action="#{studentController.viewAllStudents()}"
-                                         update="studentView">
-                        </p:commandButton>
-                    </div>
-                    <p:dataTable class="viewTable" id="studentView" value="#{studentController.students}" var="student">
-                        <p:column headerText="First Name">
-                            <p:outputLabel value="#{student.firstName}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.lastName}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.age}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.gender}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getCity()}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getEmailAddress()}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getPhoneNumber()}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getStreetName()}"/>
-                        </p:column>
-                        <p:column>
-                            <p:outputLabel value="#{student.contactInformation.getZipCode()}"/>
-                        </p:column>
-                    </p:dataTable>
-                </h:form>
+                    <p:tab title="Student View">
+                        <p:panel
+                            header="Student View" 
+                            style="width:75%; 
+                            margin-bottom:10px; 
+                            margin-top: 20px;" 
+                            class="att-panel"
+                            >
+                            <h:form>
+                                <div class="regForm">
+                                    <p:outputLabel value="Search:" for="students" />
+                                    <p:autoComplete id="students" value="#{studentController.studentMB.id}" completeMethod="#{studentController.completeStudent}"
+                                                    var="student" itemLabel="#{student.toString()}" itemValue="#{student.id}" forceSelection="true">
+                                        <p:column class="autoCompleteText">
+                                            <h:outputText value="#{student.firstName}"/>
+                                        </p:column>
+                                        <p:column class="autoCompleteText">
+                                            <h:outputText class="autoCompleteText" value="#{student.lastName}"/>
+                                        </p:column>
+                                    </p:autoComplete>
+
+
+                                    <p:commandButton class="actionButton" value="Search" 
+                                                     action="#{studentController.viewStudent()}"
+                                                     update="studentView"
+                                                     >
+                                    </p:commandButton>
+                                    <p:commandButton class="actionButton" value="View All" 
+                                                     action="#{studentController.viewAllStudents()}"
+                                                     update="studentView">
+                                    </p:commandButton>
+                                </div>
+                                <p:dataTable class="viewTable" id="studentView" 
+                                             value="#{studentController.students}" 
+                                             var="student"
+                                             resizableColumns="true"
+                                             editable="true"
+                                             >
+                                    <p:column headerText="First Name">
+                                        <p:outputLabel value="#{student.firstName}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{student.lastName}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{student.age}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{student.gender}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{student.contactInformation.city}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{student.contactInformation.emailAddress}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{student.contactInformation.phoneNumber}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{student.contactInformation.streetName}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{student.contactInformation.zipCode}"/>
+                                    </p:column>
+                                </p:dataTable>
+
+                            </h:form>
+
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Edit Student">
+                        <p:panel
+                            header="Edit Student" 
+                            style="width:75%; 
+                            margin-bottom:10px; 
+                            margin-top: 20px;" 
+                            class="att-panel"
+                            >
+
+                            <h:form class="regForm">
+                                <p:outputLabel value="Search:" for="students" />
+                                <p:autoComplete id="students" value="#{studentController.studentMB.id}" completeMethod="#{studentController.completeStudent}"
+                                                var="student" itemLabel="#{student.toString()}" itemValue="#{student.id}" forceSelection="true">
+                                    <p:column class="autoCompleteText">
+                                        <h:outputText value="#{student.firstName}"/>
+                                    </p:column>
+                                    <p:column class="autoCompleteText">
+                                        <h:outputText class="autoCompleteText" value="#{student.lastName}"/>
+                                    </p:column>
+                                </p:autoComplete>
+
+
+                                <p:commandButton class="actionButton" value="Search" 
+                                                 action="#{studentController.selectStudent()}"
+                                                 update="studentEditForm"
+                                                 >
+                                </p:commandButton>
+                                <h:panelGrid class="regGrid" id="studentEditForm">
+                                    <p:outputLabel class="textLabels">First Name: </p:outputLabel>
+                                    <p:inputText class="regInputText" id="firstName" value="#{studentController.studentMB.firstName}">
+                                    </p:inputText>
+                                    <p:outputLabel class="textLabels">Last Name: </p:outputLabel>
+                                    <p:inputText class="regInputText" id="lastName" value="#{studentController.studentMB.lastName}">
+                                    </p:inputText>
+                                    <p:outputLabel class="textLabels">Age: </p:outputLabel>
+                                    <p:selectOneMenu id="age" value="#{studentController.studentMB.age}">
+                                        <f:selectItems value="#{dropdownData.ageNumbers}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel class="textLabels">Gender: </p:outputLabel>
+                                    <p:selectOneRadio class="regOneRadio" id="Gender" value="#{studentController.studentMB.gender}">
+                                        <f:selectItem itemLabel="Male" itemValue="Male"/>
+                                        <f:selectItem itemLabel="Female" itemValue="Female"/>
+                                    </p:selectOneRadio>
+                                    <p:outputLabel class="textLabels">Street Name: </p:outputLabel>
+                                    <p:inputText class="regInputText" value="#{studentController.studentMB.contactInformation.streetName}">
+                                    </p:inputText>
+                                    <p:outputLabel class="textLabels">Zip code: </p:outputLabel>
+                                    <p:inputText class="regInputText" id="zipCode" value="#{studentController.studentMB.contactInformation.zipCode}">
+                                    </p:inputText>
+                                    <p:outputLabel class="textLabels">City: </p:outputLabel>
+                                    <p:selectOneMenu class="regOneMenu" id="city" value="#{studentController.studentMB.contactInformation.city}">
+                                        <f:selectItem itemLabel="" itemValue=""/>
+                                        <f:selectItems value="#{dropdownData.cities}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel class="textLabels">Phone number </p:outputLabel>
+                                    <p:inputText class="regInputText" id="phoneNumber" value="#{studentController.studentMB.contactInformation.phoneNumber}">
+                                    </p:inputText>
+                                    <p:outputLabel class="textLabels">E-mail: </p:outputLabel>
+                                    <p:inputText class="regInputText" id="emailAddress" value="#{studentController.studentMB.contactInformation.emailAddress}">
+                                    </p:inputText>
+                                </h:panelGrid>
+                                <p:commandButton class="actionButton" 
+                                                 value="Update"
+                                                 action="#{studentController.updateStudent()}"
+                                                 />
+                                <p:commandButton class="actionButton" 
+                                                 value="Delete"
+                                                 action="#{studentController.deleteStudent()}"
+                                                 />
+                            </h:form>
+                        </p:panel>
+                    </p:tab>
+                </p:tabView>
             </ui:define>
         </ui:composition>
     </h:body>
