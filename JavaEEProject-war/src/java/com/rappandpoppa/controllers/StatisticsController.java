@@ -1,83 +1,64 @@
 package com.rappandpoppa.controllers;
 
+import com.rappandpoppa.beans.AttendancelistFacadeLocal;
+import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
-import javax.annotation.PostConstruct;
+import com.rappandpoppa.model.AttendanceListMB;
+import com.rappandpoppa.model.CourseMB;
+import com.rappandpoppa.model.StudentMB;
+import com.rappandpoppa.model.TeacherMB;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CategoryAxis;
-import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.LineChartModel;
 
 /**
  *
  * @author Anders
  */
-@ManagedBean
-public class StatisticsController {
+public abstract class StatisticsController {
 
-    private LineChartModel lineModel;
-    
+    TeacherMB teacherMB = new TeacherMB();
+    StudentMB studentMB = new StudentMB();
+    AttendanceListMB attendancelistMB = new AttendanceListMB();
+    CourseMB courseMB = new CourseMB();
+
     @EJB
     TeacherFacadeLocal teacherFacade;
 
-    public LineChartModel getLineModel() {
-        return lineModel;
+    @EJB
+    CourseFacadeLocal courseFacade;
+
+    @EJB
+    AttendancelistFacadeLocal attendancelistFacade;
+
+    public TeacherMB getTeacherMB() {
+        return teacherMB;
     }
 
-    public void setLineModel(LineChartModel lineModel) {
-        this.lineModel = lineModel;
+    public void setTeacherMB(TeacherMB teacherMB) {
+        this.teacherMB = teacherMB;
     }
 
-    @PostConstruct
-    public void init() {
-        createLineModels();
+    public StudentMB getStudentMB() {
+        return studentMB;
     }
 
-    private void createLineModels() {
-        lineModel = initCategoryModel();
-        lineModel.setTitle("Category chart");
-        lineModel.setLegendPosition("e");
-        lineModel.setShowPointLabels(true);
-        lineModel.getAxes().put(AxisType.X, new CategoryAxis("Years"));
-        Axis yAxis = lineModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Births");
-        yAxis.setMin(0);
-        yAxis.setMax(300);
+    public void setStudentMB(StudentMB studentMB) {
+        this.studentMB = studentMB;
     }
 
-    private LineChartModel initCategoryModel() {
-        LineChartModel model = new LineChartModel();
-        ChartSeries male = new ChartSeries();
-        male.setLabel("Male");
-        male.set("2004", 120);
-        male.set("2005", 100);
-        male.set("2006", 44);
-        male.set("2007", 150);
-        male.set("2008", 25);
+    public AttendanceListMB getAttendanceListMB() {
+        return attendancelistMB;
+    }
 
-        ChartSeries female = new ChartSeries();
-        female.setLabel("Female");
-        female.set("2004", 52);
-        female.set("2005",60);
-        female.set("2006", 110);
-        female.set("2007", 90);
-        female.set("2008", 120);
-        
-        ChartSeries overall = new ChartSeries();
-        overall.setLabel("Overall");
-        overall.set("2004", 172);
-        overall.set("2005", 160);
-        overall.set("2006", 154);
-        overall.set("2007", 240);
-        overall.set("2008", 145);
+    public void setAttendanceListMB(AttendanceListMB attendancelistMB) {
+        this.attendancelistMB = attendancelistMB;
+    }
 
-        model.addSeries(male);
-        model.addSeries(female);
-        model.addSeries(overall);
+    public CourseMB getCourseMB() {
+        return courseMB;
+    }
 
-        return model;
+    public void setCourseMB(CourseMB courseMB) {
+        this.courseMB = courseMB;
     }
 
 }
