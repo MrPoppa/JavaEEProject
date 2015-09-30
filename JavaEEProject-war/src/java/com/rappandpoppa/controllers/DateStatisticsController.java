@@ -38,6 +38,6 @@ public class DateStatisticsController extends StatisticsController {
         courseMB.setLevel(course.getCourseLevel());
         courseMB.setLanguage(course.getCourseLanguage());
         courseMB.setMaxNumberOfStudents(course.getMaxNumberOfStudents());
-        courseMB.setAttendanceLists(course.getAttendancelistList());
+        courseMB.setAttendancelistList(course.getAttendancelistList());
     }
 }

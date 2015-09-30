@@ -48,15 +48,14 @@ public class StudentStatisticsController extends StatisticsController {
     }
 
     public void onCourseChange() {
-        courseMB.setChosenCourse(courseFacade.find(courseMB.getId()));
-        courseMB.setCourseStudents(courseMB.getChosenCourse().getStudentList());
+        loadCourseMB(courseFacade.find(courseMB.getId()));
     }
 
     public void setAttendedDatesForStudent() {
-        for (Attendancelist a : courseMB.getChosenCourse().getAttendancelistList()) {
+        for (Attendancelist a : courseMB.getAttendancelistList()) {
             courseDates.add(a.getAttendanceDate());
         }
- 
+
         for (Date d : courseDates) {
             if (datesAttendedByStudent.contains(d)) {
                 attendedDates.put(d, true);
@@ -64,6 +63,14 @@ public class StudentStatisticsController extends StatisticsController {
                 attendedDates.put(d, false);
             }
         }
+    }
+
+    public void loadCourseMB(Course course) {
+        courseMB.setId(course.getId());
+        courseMB.setCourseName(course.getCourseName());
+        courseMB.setLanguage(course.getCourseLanguage());
+        courseMB.setMaxNumberOfStudents(course.getMaxNumberOfStudents());
+        courseMB.setStudentList(course.getStudentList());
     }
 
 }

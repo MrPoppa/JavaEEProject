@@ -1,5 +1,8 @@
 package com.rappandpoppa.model;
 
+import com.rappandpoppa.entities.Attendancelist;
+import com.rappandpoppa.entities.Student;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 
 /**
@@ -14,6 +17,9 @@ public class CourseMB {
     private String level;
     private String language;
     private int maxNumberOfStudents;
+    private List<Student> studentList;
+    private List<Attendancelist> attendancelistList;
+    private String courseCode;
 
     public Integer getId() {
         return id;
@@ -53,5 +59,29 @@ public class CourseMB {
 
     public void setMaxNumberOfStudents(int maxNumberOfStudents) {
         this.maxNumberOfStudents = maxNumberOfStudents;
+    }
+
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
+
+    public List<Attendancelist> getAttendancelistList() {
+        return attendancelistList;
+    }
+
+    public void setAttendancelistList(List<Attendancelist> attendancelistList) {
+        this.attendancelistList = attendancelistList;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 }
