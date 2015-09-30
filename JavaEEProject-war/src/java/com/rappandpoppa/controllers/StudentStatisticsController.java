@@ -23,6 +23,7 @@ public class StudentStatisticsController extends StatisticsController {
     private List<Date> datesAttendedByStudent = new ArrayList<>();
     private List<Date> courseDates = new ArrayList<>();
     private Date date;
+    Boolean listIsEmpty;
 
     public Map<Date, Boolean> getAttendedDates() {
         return attendedDates;
@@ -58,23 +59,21 @@ public class StudentStatisticsController extends StatisticsController {
 
     public void onCourseChange() {
         loadCourseMB(courseFacade.find(courseMB.getId()));
+        defineCourseDates();
     }
 
     public void onStudentChange() {
         Student student = studentFacade.find(studentMB.getId());
-        List<Attendancelist> attLists = courseMB.getAttendancelistList();
-        for (Attendancelist a : attLists) {
+        listIsEmpty = courseMB.getAttendancelistList().isEmpty();
+        for (Attendancelist a : courseMB.getAttendancelistList()) {
             if (a.getStudentList().contains(student)) {
                 datesAttendedByStudent.add(a.getAttendanceDate());
             }
         }
+        setAttendedDatesForStudent();
     }
 
     public void setAttendedDatesForStudent() {
-        for (Attendancelist a : courseMB.getAttendancelistList()) {
-            courseDates.add(a.getAttendanceDate());
-        }
-
         for (Date d : courseDates) {
             if (datesAttendedByStudent.contains(d)) {
                 attendedDates.put(d, true);
@@ -91,12 +90,14 @@ public class StudentStatisticsController extends StatisticsController {
         courseMB.setMaxNumberOfStudents(course.getMaxNumberOfStudents());
         courseMB.setStudentList(course.getStudentList());
         courseMB.setAttendancelistList(course.getAttendancelistList());
+    }
+
+    public void defineCourseDates() {
         if (!courseDates.isEmpty()) {
             courseDates.clear();
         }
 
-        List<Attendancelist> attLists = course.getAttendancelistList();
-        for (Attendancelist a : attLists) {
+        for (Attendancelist a : courseMB.getAttendancelistList()) {
             courseDates.add(a.getAttendanceDate());
         }
     }

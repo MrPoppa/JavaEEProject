@@ -128,7 +128,7 @@
                                             id="course" 
                                             value="#{studentStatisticsController.courseMB.id}" 
                                             >
-                                            <p:ajax listener="#{studentStatisticsController.onCourseChange}" update="student"/>
+                                            <p:ajax listener="#{studentStatisticsController.onCourseChange()}" update="student"/>
                                             <f:selectItem 
                                                 itemLabel="Select Course" 
                                                 noSelectionOption="true"
@@ -148,7 +148,7 @@
                                             <p:ajax event="change" 
                                                     update="attendedDates"
                                                     />
-                                            <p:ajax listener="#{studentStatisticsController.onStudentChange}" update="attendedDates"/>
+                                            <p:ajax listener="#{studentStatisticsController.onStudentChange()}" update="attendedDates"/>
                                             <f:selectItem 
                                                 itemLabel="Select Student" 
                                                 noSelectionOption="true"
@@ -169,14 +169,23 @@
                                         value="#{studentStatisticsController.courseDates}" 
                                         var="date"
                                         >
-                                        <p:column headerText="#{date}" >
+                                        <p:column >
+                                            <p:outputLabel value="#{date}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <c:choose>
+                                                <c:when test = "#{studentStatisticsController.attendedDates[date] == true}">
+                                                    <p:outputLabel value="X"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <p:outputLabel value="_"/>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </p:column>
                                     </p:dataTable>
                                 </p:panel>
                             </h:form>
-
                         </p:tab>
-
                     </p:tabView>
                 </div>
             </ui:define>
