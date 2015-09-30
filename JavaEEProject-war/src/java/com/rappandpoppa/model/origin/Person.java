@@ -1,7 +1,6 @@
 package com.rappandpoppa.model.origin;
 
 import com.rappandpoppa.model.ContactInformationMB;
-import javax.faces.bean.ManagedProperty;
 
 /**
  *
@@ -14,8 +13,8 @@ public abstract class Person {
     private String lastName;
     private int age;
     private String gender;
-    @ManagedProperty(value = "#{contactInformation}")  /* The point of this being? **/
-    private ContactInformationMB contactInformation;
+//    @ManagedProperty(value = "#{contactInformation}")  /* The point of this being? **/
+    private ContactInformationMB contactInformation = new ContactInformationMB();
 
     public Integer getId() {
         return id;

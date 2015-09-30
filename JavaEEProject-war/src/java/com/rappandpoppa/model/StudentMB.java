@@ -1,9 +1,6 @@
 package com.rappandpoppa.model;
 
-import com.rappandpoppa.beans.ContactinformationFacadeLocal;
 import com.rappandpoppa.beans.StudentFacadeLocal;
-import com.rappandpoppa.entities.Contactinformation;
-import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.model.origin.Person;
 import java.util.ArrayList;
 import java.util.List;
