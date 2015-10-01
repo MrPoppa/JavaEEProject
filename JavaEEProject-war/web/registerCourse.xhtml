@@ -45,7 +45,9 @@ and open the template in the editor.
                                 </p:selectOneMenu>
 
                                 <p:outputLabel class="textLabels">Start date: </p:outputLabel>
-                                <p:calendar id="date" value="#{courseController.startDate}"/>
+                                <p:calendar id="date" 
+                                            value="#{courseController.startDate}" 
+                                            beforeShowDay="disabledDays"/>
 
                                 <p:outputLabel class="textLabels">Number of weeks: </p:outputLabel>
                                 <p:selectOneMenu class="regOneMenu" id="numberOfWeeks" 
