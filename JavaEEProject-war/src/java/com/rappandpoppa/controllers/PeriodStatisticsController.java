@@ -1,6 +1,6 @@
 package com.rappandpoppa.controllers;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.model.chart.Axis;
@@ -17,8 +17,8 @@ import org.primefaces.model.chart.LineChartModel;
 public class PeriodStatisticsController extends StatisticsController {
 
     private LineChartModel lineModel;
-    private Date periodStartDate;
-    private Date periodEndDate;
+    private LocalDate periodStartDate;
+    private LocalDate periodEndDate;
 
     public LineChartModel getLineModel() {
         return lineModel;
@@ -28,19 +28,19 @@ public class PeriodStatisticsController extends StatisticsController {
         this.lineModel = lineModel;
     }
 
-    public Date getPeriodStartDate() {
+    public LocalDate getPeriodStartDate() {
         return periodStartDate;
     }
 
-    public void setPeriodStartDate(Date periodStartDate) {
+    public void setPeriodStartDate(LocalDate periodStartDate) {
         this.periodStartDate = periodStartDate;
     }
 
-    public Date getPeriodEndDate() {
+    public LocalDate getPeriodEndDate() {
         return periodEndDate;
     }
 
-    public void setPeriodEndDate(Date periodEndDate) {
+    public void setPeriodEndDate(LocalDate periodEndDate) {
         this.periodEndDate = periodEndDate;
     }
 

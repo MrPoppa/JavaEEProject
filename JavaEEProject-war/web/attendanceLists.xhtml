@@ -163,21 +163,14 @@
                                     <p:dataTable
                                         class="viewAttendanceList" 
                                         id="attendedDates" 
-                                        value="#{studentStatisticsController.courseDates}" 
+                                        value="#{studentStatisticsController.attendedDates.keySet().toArray()}" 
                                         var="date"
                                         >
-                                        <p:column >
+                                        <p:column headerText="Date">
                                             <p:outputLabel value="#{date}"/>
                                         </p:column>
-                                        <p:column>
-                                            <c:choose>
-                                                <c:when test = "#{studentStatisticsController.attendedDates[date] == true}">
-                                                    <p:outputLabel value="X"/>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <p:outputLabel value="_"/>
-                                                </c:otherwise>
-                                            </c:choose>
+                                        <p:column headerText="Present">
+                                            <p:outputLabel value="#{studentStatisticsController.attendedDates.get(date)}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </p:panel>

@@ -3,9 +3,10 @@ package com.rappandpoppa.controllers;
 import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
@@ -19,75 +20,67 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class StudentStatisticsController extends StatisticsController {
 
-    private Map<Date, Boolean> attendedDates = new HashMap<>();
-    private List<Date> datesAttendedByStudent = new ArrayList<>();
-    private List<Date> courseDates = new ArrayList<>();
-    private Date date;
-    Boolean listIsEmpty;
-    Student student;
+    private Map<LocalDate, String> attendedDates = new LinkedHashMap<>();
+    private List<LocalDate> datesAttendedByStudent = new ArrayList<>();
+    private List<LocalDate> courseDates = new ArrayList<>();
 
-    public Map<Date, Boolean> getAttendedDates() {
+    public Map<LocalDate, String> getAttendedDates() {
         return attendedDates;
     }
 
-    public void setAttendedDates(Map<Date, Boolean> attendedDates) {
+    public void setAttendedDates(Map<LocalDate, String> attendedDates) {
         this.attendedDates = attendedDates;
     }
 
-    public List<Date> getDatesAttendedByStudent() {
+    public List<LocalDate> getDatesAttendedByStudent() {
         return datesAttendedByStudent;
     }
 
-    public void setDatesAttendedByStudent(List<Date> datesAttendedByStudent) {
+    public void setDatesAttendedByStudent(List<LocalDate> datesAttendedByStudent) {
         this.datesAttendedByStudent = datesAttendedByStudent;
     }
 
-    public List<Date> getCourseDates() {
+    public List<LocalDate> getCourseDates() {
         return courseDates;
     }
 
-    public void setCourseDates(List<Date> courseDates) {
+    public void setCourseDates(List<LocalDate> courseDates) {
         this.courseDates = courseDates;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-    
     public void onCourseChange() {
+//        if (!courseMB.getStudentList().isEmpty()) {
+//            courseMB.getStudentList().clear();
+//        }
+
         loadCourseMB(courseFacade.find(courseMB.getId()));
         defineCourseDates();
     }
 
     public void onStudentChange() {
-        student = studentFacade.find(studentMB.getId());
-        listIsEmpty = courseMB.getAttendancelistList().isEmpty();
+        if (!attendedDates.isEmpty()) {
+            attendedDates.clear();
+        }
+        if (!datesAttendedByStudent.isEmpty()) {
+            datesAttendedByStudent.clear();
+        }
+
+        Student student = studentFacade.find(studentMB.getId());
         for (Attendancelist a : courseMB.getAttendancelistList()) {
             if (a.getStudentList().contains(student)) {
-                datesAttendedByStudent.add(a.getAttendanceDate());
+                datesAttendedByStudent.add(convertDateToLocalDate(a.getAttendanceDate()));
             }
         }
         setAttendedDatesForStudent();
     }
 
     public void setAttendedDatesForStudent() {
-        for (Date d : courseDates) {
-            if (datesAttendedByStudent.contains(d)) {
-                attendedDates.put(d, true);
+        Collections.sort(courseDates);
+        for (LocalDate localDate : courseDates) {
+            if (datesAttendedByStudent.contains(localDate)) {
+                attendedDates.put(localDate, " X ");
             } else {
-                attendedDates.put(d, false);
+                attendedDates.put(localDate, "");
             }
         }
     }
@@ -107,11 +100,8 @@ public class StudentStatisticsController extends StatisticsController {
         }
 
         for (Attendancelist a : courseMB.getAttendancelistList()) {
-            courseDates.add(a.getAttendanceDate());
+            courseDates.add(convertDateToLocalDate(a.getAttendanceDate()));
         }
-    }
-
-    public boolean didAttend() {
-        return datesAttendedByStudent.contains(date);
+        Collections.sort(courseDates);
     }
 }

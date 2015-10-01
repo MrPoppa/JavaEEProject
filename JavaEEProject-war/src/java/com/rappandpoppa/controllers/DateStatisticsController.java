@@ -1,7 +1,9 @@
 package com.rappandpoppa.controllers;
 
+import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
+import com.rappandpoppa.model.AttendanceListMB;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;

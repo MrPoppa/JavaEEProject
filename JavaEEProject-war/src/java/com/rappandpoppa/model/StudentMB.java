@@ -19,9 +19,6 @@ public class StudentMB extends Person {
     private List<CourseMB> courses = new ArrayList<>();
     private List<String> imageResources = new ArrayList<>();
     private List<String> fileResources = new ArrayList<>();
-    private int chosenId;
-    private String attended = "x";
-    private String absent = "";
 
     @EJB
     StudentFacadeLocal studentFacade;

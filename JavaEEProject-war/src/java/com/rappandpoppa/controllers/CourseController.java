@@ -5,7 +5,6 @@ import com.rappandpoppa.beans.StudentFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
 import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
-import static com.rappandpoppa.entities.Principal_.id;
 import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.model.CourseMB;
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 /**

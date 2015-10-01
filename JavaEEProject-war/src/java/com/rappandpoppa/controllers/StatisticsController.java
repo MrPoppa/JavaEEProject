@@ -8,6 +8,9 @@ import com.rappandpoppa.model.AttendanceListMB;
 import com.rappandpoppa.model.CourseMB;
 import com.rappandpoppa.model.StudentMB;
 import com.rappandpoppa.model.TeacherMB;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.ejb.EJB;
 
 /**
@@ -65,4 +68,7 @@ public abstract class StatisticsController {
         this.courseMB = courseMB;
     }
 
+    public LocalDate convertDateToLocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 }

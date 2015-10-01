@@ -1,12 +1,13 @@
 package com.rappandpoppa.model;
 
-import com.rappandpoppa.archive.AttendanceListArchive;
 import com.rappandpoppa.beans.AttendancelistFacadeLocal;
 import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.StudentFacadeLocal;
 import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,7 @@ import javax.faces.bean.ManagedBean;
 public class AttendanceListMB {
 
     private int id;
-    private Date date;
+    private LocalDate date;
     private String courseName;
     private List<Student> studentsPresent = new ArrayList<>();
 
@@ -40,11 +41,11 @@ public class AttendanceListMB {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -55,7 +56,7 @@ public class AttendanceListMB {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
-    
+
     public List<Student> getStudentsPresent() {
         return studentsPresent;
     }
@@ -66,14 +67,14 @@ public class AttendanceListMB {
 
     public void createAttendanceList() {
         Attendancelist attendanceList = new Attendancelist();
-        attendanceList.setAttendanceDate(this.date);
+        attendanceList.setAttendanceDate(convertFromLocalDateToDate(this.date));
         Course courseFound = courseFacade.findByCourseName(courseName);
         attendanceList.setCourse(courseFound);
         attendanceFacade.create(attendanceList);
     }
 
-    public void removeAttendanceList() {
-        AttendanceListArchive.removeAttendanceList(this);
+    public Date convertFromLocalDateToDate(LocalDate localDate) {
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
 }
