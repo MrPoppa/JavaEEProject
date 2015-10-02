@@ -4,12 +4,14 @@ import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Student;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author Anders
  */
 @ManagedBean
+@ViewScoped
 public class CourseMB {
 
     private Integer id;

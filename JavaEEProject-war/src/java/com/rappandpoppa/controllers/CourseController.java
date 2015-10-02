@@ -13,14 +13,14 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author Benjamin
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class CourseController {
 
     private Integer studentToBeAddedId;
@@ -28,11 +28,13 @@ public class CourseController {
     private List<Student> courseStudents = new ArrayList<>();
     private List<Attendancelist> newAttendanceLists = new ArrayList<>();
     private List<Attendancelist> completeAttendanceLists = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
     private Date startDate;
     private Integer numberOfWeeks;
     private List<String> daysOfTheWeek;
+    private Course courseToBeEdited = new Course();
 
-    CourseMB courseMB = new CourseMB();
+    private CourseMB courseMB = new CourseMB();
 
     @EJB
     CourseFacadeLocal courseFacade;
@@ -71,6 +73,14 @@ public class CourseController {
 
     public void setCompleteAttendanceLists(List<Attendancelist> completeAttendanceLists) {
         this.completeAttendanceLists = completeAttendanceLists;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     public Date getStartDate() {
@@ -265,8 +275,49 @@ public class CourseController {
         }
     }
 
-    public List<Course> viewAllCourses() {
-        return this.courseFacade.findAll();
+    public List<Course> completeCourse(String query) {
+        List<Course> allCourses = courseFacade.findAll();
+        List<Course> filteredCourses = new ArrayList<>();
+
+        for (Course course : allCourses) {
+            if (course.getCourseName().toLowerCase().startsWith(query.toLowerCase())) {
+                filteredCourses.add(course);
+            }
+        }
+        return filteredCourses;
+    }
+
+    public void selectCourse() {
+        if (courseMB.getId() != null) {
+            courseToBeEdited = courseFacade.find(courseMB.getId());
+            courseMB.setCourseName(courseToBeEdited.getCourseName());
+            courseMB.setCourseCode(courseToBeEdited.getCourseCode());
+            courseMB.setLanguage(courseToBeEdited.getCourseLanguage());
+            courseMB.setLevel(courseToBeEdited.getCourseLevel());
+            courseMB.setMaxNumberOfStudents(courseToBeEdited.getMaxNumberOfStudents());
+            this.teacherId = courseToBeEdited.getTeacher().getId();
+        }
+    }
+    
+    public void updateCourse() {
+        if(courseMB.getId() != null) {
+            courseToBeEdited.setCourseName(this.courseMB.getCourseName());
+            courseToBeEdited.setCourseCode(this.courseMB.getCourseCode());
+            courseToBeEdited.setCourseLanguage(this.courseMB.getLanguage());
+            courseToBeEdited.setCourseLevel(this.courseMB.getLevel());
+            courseToBeEdited.setMaxNumberOfStudents(this.courseMB.getMaxNumberOfStudents());
+            courseToBeEdited.setTeacher(teacherFacade.find(this.teacherId));
+            courseFacade.edit(courseToBeEdited);
+        }
+    }
+
+    public void getCourse() {
+        courses.clear();
+        courses.add(courseFacade.find(this.courseMB.getId()));
+    }
+
+    public void getAllCourses() {
+        this.courses = this.courseFacade.findAll();
     }
 
     public List<String> getAllCourseNames() {
@@ -277,5 +328,5 @@ public class CourseController {
         }
         return courseNames;
     }
-    
+
 }

@@ -23,7 +23,7 @@
                                     <p:outputLabel for="courseSelect" value="Course: "/>
                                     <p:selectOneMenu id="courseSelect" value="#{courseController.courseMB.id}">
                                         <f:selectItem itemLabel=" "/>
-                                        <f:selectItems value="#{courseController.viewAllCourses()}" var="course" itemValue="#{course.id}" itemLabel="#{course.courseName}"/>
+                                        <f:selectItems value="#{courseController.allCourses}" var="course" itemValue="#{course.id}" itemLabel="#{course.courseName}"/>
                                         <p:ajax update="studentView" event="change"/>
                                     </p:selectOneMenu>
 

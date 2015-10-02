@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">    
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <ui:composition template="templates/template.xhtml">
+            <ui:define name="content">
+                <div class="content-main">
+
+                    <p:tabView>
+
+                        <p:tab title="Course View">
+
+                            <p:panel
+                                id="view-courses-panel"
+                                class="panels"
+                                header="View all courses"
+                                >
+
+                                <h:form>
+                                    <div class="regForm">
+                                        <p:autoComplete id="students" value="#{courseController.courseMB.id}" completeMethod="#{courseController.completeCourse}"
+                                                        var="course" itemLabel="#{course.courseName}" itemValue="#{course.id}" forceSelection="true">
+                                            <p:column class="autoCompleteText">
+                                                <h:outputText value="#{course.courseName}"/>
+                                            </p:column>
+                                            <p:column class="autoCompleteText">
+                                                <h:outputText value="#{course.courseCode}"/>
+                                            </p:column>
+                                        </p:autoComplete>
+
+                                        <p:commandButton class="actionButton" value="Search" 
+                                                         action="#{courseController.getCourse()}"
+                                                         update="courseView">
+                                        </p:commandButton>
+                                        <p:commandButton class="actionButton" value="View All" 
+                                                         action="#{courseController.getAllCourses()}"
+                                                         update="courseView">
+                                        </p:commandButton>
+                                    </div>
+                                    <p:dataTable class="viewTable" id="courseView" value="#{courseController.courses}" var="course">
+                                        <p:column headerText="Name">
+                                            <p:outputLabel value="#{course.courseName}"/>
+                                        </p:column>
+                                        <p:column headerText="Code">
+                                            <p:outputLabel value="#{course.courseCode}"/>
+                                        </p:column>
+                                        <p:column headerText="Level">
+                                            <p:outputLabel value="#{course.courseLevel}"/>
+                                        </p:column>
+                                        <p:column headerText="Language">
+                                            <p:outputLabel value="#{course.courseLanguage}"/>
+                                        </p:column>
+                                        <p:column headerText="Max students">
+                                            <p:outputLabel value="#{course.maxNumberOfStudents}"/>
+                                        </p:column>
+                                        <p:column headerText="Main teacher">
+                                            <p:outputLabel value="#{course.teacher.toString()}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab title="Course edit">
+                            <p:panel
+                                id="edit-courses-panel"
+                                class="panels"
+                                header="View all courses"
+                                >
+                                <h:form>
+                                    <!--<p:outputLabel value="Search:" for="students" />-->
+                                    <p:autoComplete id="students" value="#{courseController.courseMB.id}" completeMethod="#{courseController.completeCourse}"
+                                                    var="course" itemLabel="#{course.courseName}" itemValue="#{course.id}" forceSelection="true">
+                                        <p:column class="autoCompleteText">
+                                            <h:outputText value="#{course.courseName}"/>
+                                        </p:column>
+                                        <p:column class="autoCompleteText">
+                                            <h:outputText value="#{course.courseCode}"/>
+                                        </p:column>
+                                    </p:autoComplete>
+
+                                    <p:commandButton class="actionButton" value="Search" 
+                                                     action="#{courseController.selectCourse()}"
+                                                     update="registerCourseForm">
+                                    </p:commandButton>
+
+                                    <h:panelGrid class="regGrid" id="registerCourseForm">
+
+                                        <p:outputLabel class="textLabels">Course name: </p:outputLabel>
+                                        <p:inputText class="regInputText" id="courseName" value="#{courseController.courseMB.courseName}">
+                                        </p:inputText>
+
+                                        <p:outputLabel class="textLabels">Level: </p:outputLabel>
+                                        <p:selectOneMenu class="regOneMenu" id="level" value="#{courseController.courseMB.level}">
+                                            <f:selectItem itemLabel=" "/>
+                                            <f:selectItems value="#{dropdownData.levels}"/>
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel class="textLabels">Language: </p:outputLabel>
+                                        <p:selectOneMenu class="regOneMenu" id="language" value="#{courseController.courseMB.language}">
+                                            <f:selectItem itemLabel=" "/>
+                                            <f:selectItems value="#{dropdownData.languages}"/>
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel class="textLabels">Amount of students: </p:outputLabel>
+                                        <p:selectOneMenu class="regOneMenu" id="maxNumberOfStudents" 
+                                                         value="#{courseController.courseMB.maxNumberOfStudents}">
+                                            <f:selectItem itemLabel=" "/>
+                                            <f:selectItems value="#{dropdownData.maxStudentNumbers}"/>
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel class="textLabels">Teacher: </p:outputLabel>
+                                        <p:selectOneMenu class="regOneMenu" id="teacherForCourse" value="#{courseController.teacherId}">
+                                            <f:selectItem itemLabel=" "/>
+                                            <f:selectItems value="#{teacherController.teachers}" var="teacher" itemValue="#{teacher.id}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+
+                                    <p:commandButton class="actionButton" 
+                                                     value="Update"
+                                                     action="#{courseController.updateCourse()}"
+                                                     />
+                                    <p:commandButton class="actionButton" 
+                                                     value="Delete"
+                                                     action="#{courseController.deleteCourse()}"
+                                                     />
+                                </h:form>
+                            </p:panel>
+                        </p:tab>
+                    </p:tabView>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

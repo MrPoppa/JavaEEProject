@@ -97,7 +97,7 @@ public class StudentController {
         return filteredStudents;
     }
 
-    public void viewStudent() {
+    public void getStudent() {
         students.clear();
         Student foundStudent = studentFacade.find(studentMB.getId());
         if (foundStudent != null) {
@@ -106,7 +106,7 @@ public class StudentController {
         }
     }
 
-    public void viewAllStudents() {
+    public void getAllStudents() {
         students.clear();
         List<Student> foundStudents = studentFacade.findAll();
         for (Student foundStudent : foundStudents) {

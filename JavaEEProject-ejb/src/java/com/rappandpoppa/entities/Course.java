@@ -177,7 +177,7 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "com.rappandpoppa.entities.Course[ id=" + id + " ]";
+        return this.courseName + " " + this.courseCode;
     }
     
 }

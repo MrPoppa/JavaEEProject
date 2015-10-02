@@ -72,6 +72,25 @@
         </navigation-case>
     </navigation-rule>
     
+        <navigation-rule>
+        <description>
+            navigation
+        </description>
+        <from-view-id>
+            *
+        </from-view-id>
+        <navigation-case>
+            <from-action>
+                viewCourse
+            </from-action>
+            <redirect>
+            </redirect>
+            <to-view-id>
+                /courseView.xhtml
+            </to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
     <navigation-rule>
         <description>
             navigation
