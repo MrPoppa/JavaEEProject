@@ -50,7 +50,7 @@ body {
 }
 
 .panels{
-    width:75%;
+    width:65%;
     margin-bottom:10px; 
     margin-top: 20px;
 }
@@ -73,8 +73,8 @@ body {
 
 .content-main{
     margin-top:100px; 
-    margin-left: 25%;
-    width:50%
+    margin-left: 15%;
+    width:70%
 }
 
 .welcome > h1{
@@ -88,4 +88,14 @@ body {
 
 .add-stud-grid{
     margin-bottom: 20px;
+}
+
+.add-remove{
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+
+.button-addremove{
+    display:inline-block;
+    margin-top: 5px;
 }

@@ -38,4 +38,5 @@ public interface AttendancelistFacadeLocal {
 
     List<Date> findAllDatesByStudent(Integer studentId);
     
+    List<Attendancelist> findPeriod(Date startDate, Date endDate);
 }

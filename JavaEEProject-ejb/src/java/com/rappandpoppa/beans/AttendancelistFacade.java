@@ -45,7 +45,7 @@ public class AttendancelistFacade extends AbstractFacade<Attendancelist> impleme
     public List<Student> findAllStudentsByCourseDate(Date attendanceDate, int course_id) {
         Attendancelist attendancelist = (Attendancelist) em.createNamedQuery("Attendancelist.findByAttendanceDate")
                 .setParameter("attendanceDate", attendanceDate).getSingleResult();
-        
+
         List<Student> attendingStudents
                 = em.createNamedQuery("Student.findAllStudentsByCourseDate")
                 .setParameter("course_id", course_id)
@@ -58,5 +58,13 @@ public class AttendancelistFacade extends AbstractFacade<Attendancelist> impleme
     @Override
     public List<Date> findAllDatesByStudent(Integer studentId) {
         return null;
+    }
+
+    @Override
+    public List<Attendancelist> findPeriod(Date startDate, Date endDate) {
+        List<Attendancelist> attendancelistsInPeriod = em.createNamedQuery("Attendancelist.findListsInPeriod")
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate).getResultList();
+        return attendancelistsInPeriod;
     }
 }

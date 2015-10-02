@@ -3,18 +3,17 @@ package com.rappandpoppa.controllers;
 import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
-import com.rappandpoppa.model.AttendanceListMB;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author Anders
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class DateStatisticsController extends StatisticsController {
 
     private List<Student> attendingStudentsByCourseDate = new ArrayList<>();
@@ -41,5 +40,43 @@ public class DateStatisticsController extends StatisticsController {
         courseMB.setLanguage(course.getCourseLanguage());
         courseMB.setMaxNumberOfStudents(course.getMaxNumberOfStudents());
         courseMB.setAttendancelistList(course.getAttendancelistList());
+        courseMB.setStudentList(course.getStudentList());
     }
+
+    public void addStudentToAttendancelist() {
+        Attendancelist currentAttendancelist = attendancelistFacade.find(attendancelistMB.getId());
+        List<Student> attendedStudents = currentAttendancelist.getStudentList();
+        Student student = studentFacade.find(studentMB.getId());
+        if (!attendedStudents.contains(student)) {
+            attendedStudents.add(student);
+            currentAttendancelist.setStudentList(attendedStudents);
+            attendancelistFacade.edit(currentAttendancelist);
+        }
+    }
+
+    public void removeStudentFromAttendancelist() {
+        Attendancelist currentAttendancelist = attendancelistFacade.find(attendancelistMB.getId());
+        List<Student> attendedStudents = currentAttendancelist.getStudentList();
+        Student student = studentFacade.find(studentMB.getId());
+        if (attendedStudents.contains(student)) {
+            attendedStudents.remove(student);
+            currentAttendancelist.setStudentList(attendedStudents);
+            attendancelistFacade.edit(currentAttendancelist);
+        }
+    }
+
+    public List<Student> completeStudent(String query) {
+        List<Student> filteredStudents = new ArrayList<>();
+        if (courseMB.getId() != null) {
+            List<Student> allStudents = courseMB.getStudentList();
+
+            for (Student student : allStudents) {
+                if (student.getFirstName().toLowerCase().startsWith(query.toLowerCase())) {
+                    filteredStudents.add(student);
+                }
+            }
+        }
+        return filteredStudents;
+    }
+
 }

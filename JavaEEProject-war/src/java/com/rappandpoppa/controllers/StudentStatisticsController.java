@@ -49,10 +49,6 @@ public class StudentStatisticsController extends StatisticsController {
     }
 
     public void onCourseChange() {
-//        if (!courseMB.getStudentList().isEmpty()) {
-//            courseMB.getStudentList().clear();
-//        }
-
         loadCourseMB(courseFacade.find(courseMB.getId()));
         defineCourseDates();
     }
@@ -104,4 +100,13 @@ public class StudentStatisticsController extends StatisticsController {
         }
         Collections.sort(courseDates);
     }
+//
+//    public void attDateToStudentAttendance() {
+//        Student student = studentFacade.find(studentMB.getId());
+//        List<Attendancelist> attLists = courseMB.getAttendancelistList();
+//        List<Student> currentStudents = courseMB.getStudentList();
+//        for (Attendancelist attendancelist : attLists) {
+//            
+//        }
+//    }
 }
