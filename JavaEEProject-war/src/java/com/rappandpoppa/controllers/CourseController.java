@@ -8,6 +8,7 @@ import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.model.CourseMB;
+import com.rappandpoppa.model.StudentMB;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,7 +25,6 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class CourseController {
 
-    private Integer studentToBeAddedId;
     private Integer teacherId;
     private List<Student> courseStudents = new ArrayList<>();
     private List<Attendancelist> newAttendanceLists = new ArrayList<>();
@@ -35,6 +35,7 @@ public class CourseController {
     private List<String> daysOfTheWeek;
     private Course courseToBeEdited = new Course();
 
+    private StudentMB studentMB = new StudentMB();
     private CourseMB courseMB = new CourseMB();
 
     @EJB
@@ -45,14 +46,6 @@ public class CourseController {
     TeacherFacadeLocal teacherFacade;
     @EJB
     AttendancelistFacadeLocal attendancelistFacade;
-
-    public Integer getStudentToBeAddedId() {
-        return studentToBeAddedId;
-    }
-
-    public void setStudentToBeAddedId(Integer studentToBeAddedId) {
-        this.studentToBeAddedId = studentToBeAddedId;
-    }
 
     public Integer getTeacherId() {
         return teacherId;
@@ -110,6 +103,14 @@ public class CourseController {
         this.daysOfTheWeek = daysOfTheWeek;
     }
 
+    public StudentMB getStudentMB() {
+        return studentMB;
+    }
+
+    public void setStudentMB(StudentMB studentMB) {
+        this.studentMB = studentMB;
+    }
+    
     public CourseMB getCourseMB() {
         return courseMB;
     }
@@ -272,7 +273,7 @@ public class CourseController {
         courseToBeEdited = courseFacade.find(courseMB.getId());
         courseMB.setMaxNumberOfStudents(courseToBeEdited.getMaxNumberOfStudents());
         if (courseStudents.size() < courseMB.getMaxNumberOfStudents()) {
-            courseStudents.add(studentFacade.find(studentToBeAddedId));
+            courseStudents.add(studentFacade.find(studentMB.getId()));
             courseToBeEdited.setStudentList(courseStudents);
             courseFacade.edit(courseToBeEdited);
         }
