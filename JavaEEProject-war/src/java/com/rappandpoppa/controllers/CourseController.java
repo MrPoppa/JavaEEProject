@@ -1,5 +1,6 @@
 package com.rappandpoppa.controllers;
 
+import com.rappandpoppa.beans.AttendancelistFacadeLocal;
 import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.StudentFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
@@ -42,6 +43,8 @@ public class CourseController {
     StudentFacadeLocal studentFacade;
     @EJB
     TeacherFacadeLocal teacherFacade;
+    @EJB
+    AttendancelistFacadeLocal attendancelistFacade;
 
     public Integer getStudentToBeAddedId() {
         return studentToBeAddedId;
@@ -266,7 +269,7 @@ public class CourseController {
     }
 
     public void addStudents() {
-        Course courseToBeEdited = courseFacade.find(courseMB.getId());
+        courseToBeEdited = courseFacade.find(courseMB.getId());
         courseMB.setMaxNumberOfStudents(courseToBeEdited.getMaxNumberOfStudents());
         if (courseStudents.size() < courseMB.getMaxNumberOfStudents()) {
             courseStudents.add(studentFacade.find(studentToBeAddedId));
@@ -298,9 +301,9 @@ public class CourseController {
             this.teacherId = courseToBeEdited.getTeacher().getId();
         }
     }
-    
+
     public void updateCourse() {
-        if(courseMB.getId() != null) {
+        if (courseMB.getId() != null) {
             courseToBeEdited.setCourseName(this.courseMB.getCourseName());
             courseToBeEdited.setCourseCode(this.courseMB.getCourseCode());
             courseToBeEdited.setCourseLanguage(this.courseMB.getLanguage());
@@ -311,13 +314,28 @@ public class CourseController {
         }
     }
 
-    public void getCourse() {
-        courses.clear();
-        courses.add(courseFacade.find(this.courseMB.getId()));
+    public void deleteCourse() {
+        if (courseMB.getId() != null) {
+            courseToBeEdited = courseFacade.find(this.courseMB.getId());
+            for (Attendancelist alist : courseToBeEdited.getAttendancelistList()) {
+                attendancelistFacade.remove(alist);
+            }
+//            courseToBeEdited.getAttendancelistList().clear();
+            courseFacade.edit(courseToBeEdited);
+            courseFacade.remove(courseToBeEdited);
+        }
     }
 
-    public void getAllCourses() {
+    public Course getCourse() {
+        courses.clear();
+        Course course = courseFacade.find(this.courseMB.getId());
+        courses.add(course);
+        return course;
+    }
+
+    public List<Course> getAllCourses() {
         this.courses = this.courseFacade.findAll();
+        return this.courses;
     }
 
     public List<String> getAllCourseNames() {
