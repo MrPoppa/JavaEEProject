@@ -110,7 +110,7 @@ public class CourseController {
     public void setStudentMB(StudentMB studentMB) {
         this.studentMB = studentMB;
     }
-    
+
     public CourseMB getCourseMB() {
         return courseMB;
     }
@@ -274,6 +274,15 @@ public class CourseController {
         courseMB.setMaxNumberOfStudents(courseToBeEdited.getMaxNumberOfStudents());
         if (courseStudents.size() < courseMB.getMaxNumberOfStudents()) {
             courseStudents.add(studentFacade.find(studentMB.getId()));
+            courseToBeEdited.setStudentList(courseStudents);
+            courseFacade.edit(courseToBeEdited);
+        }
+    }
+
+    public void removeStudent() {
+        if (courseMB.getId() != null) {
+            courseToBeEdited = courseFacade.find(courseMB.getId());
+            courseStudents.remove(studentFacade.find(studentMB.getId()));
             courseToBeEdited.setStudentList(courseStudents);
             courseFacade.edit(courseToBeEdited);
         }

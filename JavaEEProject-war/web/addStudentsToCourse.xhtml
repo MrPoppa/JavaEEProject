@@ -18,7 +18,6 @@
                             class="panels"
                             >
                             <div class="add-stud-grid">
-
                                 <h:panelGrid>
                                     <p:outputLabel for="courseSelect" value="Course: "/>
                                     <p:selectOneMenu id="courseSelect" value="#{courseController.courseMB.id}">
@@ -27,8 +26,7 @@
                                         <p:ajax update="studentView" event="change"/>
                                     </p:selectOneMenu>
 
-                                    <p:outputLabel value="Search student:" for="studentsSearch" />
-                                    <p:autoComplete id="studentsSearch" value="#{courseController.studentMB.id}" completeMethod="#{studentController.completeStudent}"
+                                    <p:autoComplete placeholder="Search student" id="studentsSearch" value="#{courseController.studentMB.id}" completeMethod="#{studentController.completeStudent}"
                                                     var="student" itemLabel="#{student.toString()}" itemValue="#{student.id}" forceSelection="true">
                                         <p:column class="autoCompleteText">
                                             <h:outputText value="#{student.firstName}"/>
@@ -37,9 +35,10 @@
                                             <h:outputText class="autoCompleteText" value="#{student.lastName}"/>
                                         </p:column>
                                     </p:autoComplete>
-
-                                    <p:commandButton value="Add student to course" action="#{courseController.addStudents()}" update="studentView"/>
                                 </h:panelGrid>
+
+                                <p:commandButton value="Add" action="#{courseController.addStudents()}" update="studentView"/>
+                                <p:commandButton value="Remove" action="#{courseController.removeStudent()}" update="studentView"/>
                             </div>
                             <p:panel 
                                 header="Students in course"
