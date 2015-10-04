@@ -30,7 +30,7 @@
                                                  update="studentView">
                                 </p:commandButton>
                             </div>
-                            <p:dataTable class="viewTable" id="studentView" value="#{courseMB.courses}" var="course">
+                            <p:dataTable class="viewTable" id="studentView" value="#{courseController.courses}" var="course">
                                 <p:column headerText="Name">
                                     <p:outputLabel value="#{course.courseName}"/>
                                 </p:column>

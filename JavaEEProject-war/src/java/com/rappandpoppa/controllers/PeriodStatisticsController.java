@@ -2,17 +2,12 @@ package com.rappandpoppa.controllers;
 
 import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
-import com.rappandpoppa.entities.Student;
-import java.math.BigDecimal;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -20,6 +15,7 @@ import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
 
 /**
@@ -31,16 +27,15 @@ import org.primefaces.model.chart.LineChartModel;
 public class PeriodStatisticsController extends StatisticsController {
 
     private LineChartModel lineModel;
-    private List<Attendancelist> attendanceLists = new ArrayList<>();
-    private List<Date> attendanceListsDates = new ArrayList<>();
+    private List<Attendancelist> allAttendanceLists = new ArrayList<>();
     private List<Attendancelist> attendancelistsInPeriod = new ArrayList<>();
     private Date periodStartDate;
     private Date periodEndDate;
     private Map<Course, Map<Date, Integer>> attendanceRatesByCourseAndDate = new HashMap<>();
-    private Set<Course> mapKeys = new HashSet<>();
-    private Map<Date, Integer> attendancebyDate = new HashMap<>();
+    private Map<Date, Integer> attendanceRateByDate;
 
     public LineChartModel getLineModel() {
+        init();
         return lineModel;
     }
 
@@ -69,108 +64,80 @@ public class PeriodStatisticsController extends StatisticsController {
         createLineModels();
     }
 
-    private void createLineModels() {
-        Date today = new Date(System.currentTimeMillis());
-
-        attendanceLists = attendancelistFacade.findAll();
-        if (!attendanceListsDates.isEmpty()) {
-            attendanceListsDates.clear();
-        }
-
-        if (!attendanceLists.isEmpty()) {
-            for (Attendancelist attendancelist : attendanceLists) {
-                attendanceListsDates.add(attendancelist.getAttendanceDate());
-            }
-            Collections.sort(attendanceListsDates);
-        }
-
-        if (periodStartDate == null && !attendanceListsDates.isEmpty()) {
-            periodStartDate = attendanceListsDates.get(0);
-        }
-        if (periodStartDate.getTime() > today.getTime()) {
-//            periodStartDate = today.getTime() - 
-        }
-
-        if (periodEndDate == null && !attendanceListsDates.isEmpty()) {
-            periodEndDate = attendanceListsDates.get(attendanceListsDates.size() - 1);
-        }
-        Period p = Period.between(convertDateToLocalDate(periodStartDate), convertDateToLocalDate(periodEndDate));
-        if (!p.isNegative()) {
-            attendancelistsInPeriod = attendancelistFacade.findPeriod(periodStartDate, periodEndDate);
-        }
+    public void createLineModels() {
+        loadAttendanceLists();
+        loadAttendanceRates();
 
         lineModel = initCategoryModel();
         String genericTitle = "Course attendance between ";
-        String and = " and ";
-        lineModel.setTitle(genericTitle + convertDateToLocalDate(periodStartDate) + and + convertDateToLocalDate(periodEndDate));
+        lineModel.setTitle(genericTitle + convertDateToLocalDate(periodStartDate) + " and " + convertDateToLocalDate(periodEndDate));
         lineModel.setLegendPosition("e");
         lineModel.setShowPointLabels(true);
-        lineModel.getAxes().put(AxisType.X, new CategoryAxis("Month"));
+        DateAxis xAxis = new DateAxis("Date");
+
+        xAxis.setMin(convertDateToLocalDate(periodStartDate).toString());
+        xAxis.setMax(convertDateToLocalDate(periodEndDate).toString());
+        xAxis.setTickAngle(-90);
+        xAxis.setTickCount(lineModel.getLegendCols());
+        lineModel.getAxes().put(AxisType.X, xAxis);
         Axis yAxis = lineModel.getAxis(AxisType.Y);
         yAxis.setLabel("%");
         yAxis.setMin(0);
         yAxis.setMax(100);
+        yAxis.setTickCount(11);
     }
 
     private LineChartModel initCategoryModel() {
         LineChartModel model = new LineChartModel();
-        setMapKeys();
-        ChartSeries chartSeries = new ChartSeries();
-        
-        for (Attendancelist attendancelist : attendancelistsInPeriod) {
-            attendancebyDate.put(attendancelist.getAttendanceDate(), calculateAttendance(attendancelist));
-        }
-        
-        for (Course course : mapKeys) {
-            attendanceRatesByCourseAndDate.put(course, attendancebyDate);
-            chartSeries.setLabel(course.getCourseName());
-        }
 
-        for (Date date : attendancebyDate.keySet()) {
-            chartSeries.set(convertDateToLocalDate(date), attendancebyDate.get(date));
+        for (Course course : attendanceRatesByCourseAndDate.keySet()) {
+            ChartSeries chartSeries = new ChartSeries();
+            String courseName = course.getCourseName();
+            chartSeries.setLabel(courseName);
+            attendanceRateByDate = attendanceRatesByCourseAndDate.get(course);
+            for (Date date : attendanceRateByDate.keySet()) {
+                chartSeries.set(convertDateToLocalDate(date), attendanceRateByDate.get(date));
+            }
+            model.addSeries(chartSeries);
         }
-        model.addSeries(chartSeries);
-
         return model;
     }
 
-    public void setMapKeys() {
+    private int calculateAttendance(Attendancelist attendancelist) {
+        double some = attendancelist.getStudentList().size();
+        double all = attendancelist.getCourse().getStudentList().size();
+        int rate = (int) (some / all) * 100;
+        return rate;
+    }
+
+    private void loadAttendanceRates() {
         for (Attendancelist attendancelist : attendancelistsInPeriod) {
-            mapKeys.add(attendancelist.getCourse());
+            attendanceRateByDate = new HashMap<>();
+            Course course = attendancelist.getCourse();
+            Date attendedDate = attendancelist.getAttendanceDate();
+            if (attendanceRatesByCourseAndDate.containsKey(course)) {
+                attendanceRateByDate = attendanceRatesByCourseAndDate.get(course);
+                attendanceRateByDate.put(attendedDate, calculateAttendance(attendancelist));
+                attendanceRatesByCourseAndDate.put(course, attendanceRateByDate);
+            } else {
+                attendanceRateByDate.put(attendedDate, calculateAttendance(attendancelist));
+                attendanceRatesByCourseAndDate.put(course, attendanceRateByDate);
+            }
         }
     }
 
-    public int calculateAttendance(Attendancelist attendancelist) {
-//        List<Student> attendendedCourseStudents = attendancelist.getStudentList();
-        return (attendancelist.getStudentList().size() * 100) / (attendancelist.getCourse().getStudentList().size() * 100);
+    private void loadAttendanceLists() {
+        if (periodStartDate != null && periodEndDate != null) {
+            Period p = Period.between(convertDateToLocalDate(periodStartDate), convertDateToLocalDate(periodEndDate));
+            if (!p.isNegative()) {
+                attendancelistsInPeriod = attendancelistFacade.findPeriod(periodStartDate, periodEndDate);
+            } else {
+                attendancelistsInPeriod = attendancelistFacade.findAll();
+            }
+        } else {
+            attendancelistsInPeriod = attendancelistFacade.findAll();
+            periodStartDate = attendancelistsInPeriod.get(0).getAttendanceDate();
+            periodEndDate = attendancelistsInPeriod.get(attendancelistsInPeriod.size() - 1).getAttendanceDate();
+        }
     }
-
 }
-
-//ChartSeries male = new ChartSeries();
-//        male.setLabel("Male");
-//        male.set("2004", 120);
-//        male.set("2005", 100);
-//        male.set("2006", 44);
-//        male.set("2007", 150);
-//        male.set("2008", 25);
-//
-//        ChartSeries female = new ChartSeries();
-//        female.setLabel("Female");
-//        female.set("2004", 52);
-//        female.set("2005", 60);
-//        female.set("2006", 110);
-//        female.set("2007", 90);
-//        female.set("2008", 120);
-//
-//        ChartSeries overall = new ChartSeries();
-//        overall.setLabel("Overall");
-//        overall.set("2004", 172);
-//        overall.set("2005", 160);
-//        overall.set("2006", 154);
-//        overall.set("2007", 240);
-//        overall.set("2008", 145);
-//
-//        model.addSeries(male);
-//        model.addSeries(female);
-//        model.addSeries(overall);

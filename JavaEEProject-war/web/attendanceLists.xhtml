@@ -55,8 +55,8 @@
                                             <f:selectItem 
                                                 itemLabel="Select Date" 
                                                 noSelectionOption="true"
-                                                />
 
+                                                />
                                             <f:selectItems 
                                                 id="selectDates"
                                                 value="#{dateStatisticsController.courseMB.attendancelistList}"
@@ -121,7 +121,9 @@
                                         <p:calendar 
                                             id="period-start" 
                                             value="#{periodStatisticsController.periodStartDate}"
-                                            />
+                                            pattern="yyyy-MM-dd"
+                                            >
+                                        </p:calendar>
                                         <p:outputLabel 
                                             for="period-end" 
                                             value="Period End"
@@ -129,8 +131,16 @@
                                         <p:calendar 
                                             id="period-end" 
                                             value="#{periodStatisticsController.periodEndDate}"
-                                            />
+                                            pattern="yyyy-MM-dd"
+                                            >
+                                        </p:calendar>
                                     </p:panelGrid>
+                                    <p:commandButton 
+                                        value="Update" 
+                                        id="setGraph"
+                                        action="#{periodStatisticsController.createLineModels()}" 
+                                        update="overall-chart"
+                                        />
                                 </p:panel>
                                 <p:panel id="period-attendance-chart">
                                     <p:chart

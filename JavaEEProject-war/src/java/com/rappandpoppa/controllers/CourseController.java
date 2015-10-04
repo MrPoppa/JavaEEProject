@@ -31,6 +31,9 @@ public class CourseController {
     private Date startDate;
     private Integer numberOfWeeks;
     private List<String> daysOfTheWeek;
+    private String searchTextLabel;
+    private final List<Course> courses = new ArrayList<>();
+    private Course courseToBeEdited;
 
     CourseMB courseMB = new CourseMB();
 
@@ -95,6 +98,26 @@ public class CourseController {
 
     public void setDaysOfTheWeek(List<String> daysOfTheWeek) {
         this.daysOfTheWeek = daysOfTheWeek;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public String getSearchTextLabel() {
+        return searchTextLabel;
+    }
+
+    public void setSearchTextLabel(String searchTextLabel) {
+        this.searchTextLabel = searchTextLabel;
+    }
+
+    public Course getCourseToBeEdited() {
+        return courseToBeEdited;
+    }
+
+    public void setCourseToBeEdited(Course courseToBeEdited) {
+        this.courseToBeEdited = courseToBeEdited;
     }
 
     public CourseMB getCourseMB() {
@@ -277,5 +300,79 @@ public class CourseController {
         }
         return courseNames;
     }
-    
+
+    public List<Course> completeCourse(String query) {
+        List<Course> allCourses = courseFacade.findAll();
+        List<Course> filteredCourses = new ArrayList<>();
+
+        for (Course course : allCourses) {
+            if (course.getCourseName().toLowerCase().startsWith(query.toLowerCase())) {
+                filteredCourses.add(course);
+            }
+        }
+        return filteredCourses;
+    }
+
+    public void viewStudent() {
+        courses.clear();
+        Course foundCourse = courseFacade.find(courseMB.getId());
+        if (foundCourse != null) {
+            courses.add(foundCourse);
+            searchTextLabel = foundCourse.getCourseName();
+        }
+    }
+
+    public void viewAllStudents() {
+        courses.clear();
+        List<Course> foundCourses = courseFacade.findAll();
+        for (Course foundCourse : foundCourses) {
+            courses.add(foundCourse);
+        }
+    }
+
+    public void selectStudent() {
+        if (courseMB.getId() != null) {
+            courseToBeEdited = courseFacade.find(courseMB.getId());
+            courseMB.setCourseName(courseToBeEdited.getCourseName());
+            courseMB.setCourseCode(courseToBeEdited.getCourseCode());
+            courseMB.setId(courseToBeEdited.getId());
+            courseMB.setLanguage(courseToBeEdited.getCourseLanguage());
+            courseMB.setLevel(courseToBeEdited.getCourseLevel());
+            courseMB.setMaxNumberOfStudents(courseToBeEdited.getMaxNumberOfStudents());
+            courseMB.setStudentList(courseToBeEdited.getStudentList());
+            courseMB.setAttendancelistList(courseToBeEdited.getAttendancelistList());
+
+        }
+    }
+
+    public void updateCourse() {
+        if (courseMB.getId() != null) {
+            courseToBeEdited.setCourseName(courseMB.getCourseName());
+            courseToBeEdited.setCourseCode(courseMB.getCourseCode());
+            courseToBeEdited.setId(courseMB.getId());
+            courseToBeEdited.setCourseLanguage(courseMB.getLanguage());
+            courseToBeEdited.setCourseLevel(courseMB.getLevel());
+            courseToBeEdited.setMaxNumberOfStudents(courseMB.getMaxNumberOfStudents());
+            courseToBeEdited.setStudentList(courseMB.getStudentList());
+            courseToBeEdited.setAttendancelistList(courseMB.getAttendancelistList());
+
+            courseFacade.edit(courseToBeEdited);
+        }
+    }
+
+    public void deleteStudent() {
+        if (courseMB.getId() != null) {
+            courseToBeEdited.setCourseName(courseMB.getCourseName());
+            courseToBeEdited.setCourseCode(courseMB.getCourseCode());
+            courseToBeEdited.setId(courseMB.getId());
+            courseToBeEdited.setCourseLanguage(courseMB.getLanguage());
+            courseToBeEdited.setCourseLevel(courseMB.getLevel());
+            courseToBeEdited.setMaxNumberOfStudents(courseMB.getMaxNumberOfStudents());
+            courseToBeEdited.setStudentList(courseMB.getStudentList());
+            courseToBeEdited.setAttendancelistList(courseMB.getAttendancelistList());
+
+            courseFacade.edit(courseToBeEdited);
+        }
+    }
+
 }
