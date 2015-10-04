@@ -22,48 +22,60 @@ and open the template in the editor.
                                 >
                                 <h:form>
                                     <div>
-                                        <p:outputLabel value="Search:" for="students" />
-                                        <p:autoComplete id="students" value="#{studentController.studentMB.id}" completeMethod="#{studentController.completeStudent}"
+                                        <p:autoComplete placeholder="Student name" id="students" value="#{studentController.studentMB.id}" completeMethod="#{studentController.completeStudent}"
                                                         var="student" itemLabel="#{student.toString()}" itemValue="#{student.id}" forceSelection="true">
-                                            <p:column class="autoCompleteText">
-                                                <h:outputText value="#{student.firstName}"/>
-                                            </p:column>
-                                            <p:column class="autoCompleteText">
-                                                <h:outputText class="autoCompleteText" value="#{student.lastName}"/>
-                                            </p:column>
                                         </p:autoComplete>
 
 
                                         <p:commandButton class="actionButton" value="Search" 
-                                                         action="#{studentController.viewStudent()}"
+                                                         action="#{studentController.getStudent()}"
                                                          update="studentView"
                                                          >
                                         </p:commandButton>
                                         <p:commandButton class="actionButton" value="View All" 
-                                                         action="#{studentController.viewAllStudents()}"
+                                                         action="#{studentController.getAllStudents()}"
                                                          update="studentView">
                                         </p:commandButton>
                                     </div>
                                     <p:dataTable class="viewTable" id="studentView" 
                                                  value="#{studentController.students}" 
                                                  var="student"
-                                                 resizableColumns="true"
                                                  editable="true"
                                                  >
+                                        <p:column style="width:16px">
+                                            <p:rowToggler />
+                                        </p:column>
                                         <p:column headerText="First Name">
                                             <p:outputLabel value="#{student.firstName}"/>
                                         </p:column>
                                         <p:column headerText="Last Name">
                                             <p:outputLabel value="#{student.lastName}"/>
                                         </p:column>
-                                        <p:column headerText="Id">
+                                        <p:column headerText="Id" style="width: 16px">
                                             <p:outputLabel value="#{student.id}"/>
                                         </p:column>
                                         <p:column headerText="Gender">
                                             <p:outputLabel value="#{student.gender}"/>
                                         </p:column>
-                                    </p:dataTable>
+                                        <p:rowExpansion>
+                                            <p:panelGrid  columns="2" columnClasses="contactLabel,contactValue">
+                                                <h:outputText value="Phone number"/>
+                                                <h:outputText value="#{student.contactInformation.phoneNumber}" />
 
+                                                <h:outputText value="Street Name" />
+                                                <h:outputText value="#{student.contactInformation.streetName}" />
+
+                                                <h:outputText value="Zip Code" />
+                                                <h:outputText value="#{student.contactInformation.zipCode}"/>
+
+                                                <h:outputText value="City" />
+                                                <h:outputText value="#{student.contactInformation.city}" />
+
+                                                <h:outputText value="Email Address"/>
+                                                <h:outputText value="#{student.contactInformation.emailAddress}"/>
+                                            </p:panelGrid>
+                                        </p:rowExpansion>
+                                    </p:dataTable>
                                 </h:form>
 
                             </p:panel>
@@ -92,6 +104,7 @@ and open the template in the editor.
                                                      update="studentEditForm"
                                                      >
                                     </p:commandButton>
+
                                     <h:panelGrid class="regGrid" id="studentEditForm">
                                         <p:outputLabel class="textLabels">First Name: </p:outputLabel>
                                         <p:inputText class="regInputText" id="firstName" value="#{studentController.studentMB.firstName}">

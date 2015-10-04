@@ -5,8 +5,10 @@
  */
 package com.rappandpoppa.controllers;
 
+import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.StudentFacadeLocal;
 import com.rappandpoppa.entities.Contactinformation;
+import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.model.ContactInformationMB;
 import com.rappandpoppa.model.StudentMB;
@@ -32,6 +34,8 @@ public class StudentController {
 
     @EJB
     StudentFacadeLocal studentFacade;
+    @EJB
+    CourseFacadeLocal courseFacade;
 
     public Integer getStudentId() {
         return studentId;
@@ -97,7 +101,7 @@ public class StudentController {
         return filteredStudents;
     }
 
-    public void viewStudent() {
+    public void getStudent() {
         students.clear();
         Student foundStudent = studentFacade.find(studentMB.getId());
         if (foundStudent != null) {
@@ -106,7 +110,7 @@ public class StudentController {
         }
     }
 
-    public void viewAllStudents() {
+    public void getAllStudents() {
         students.clear();
         List<Student> foundStudents = studentFacade.findAll();
         for (Student foundStudent : foundStudents) {
@@ -131,6 +135,21 @@ public class StudentController {
         }
     }
 
+    public void selectStudent(Integer studentId) {
+        studentToBeEdited = studentFacade.find(studentMB.getId());
+        studentMB.setAge(studentToBeEdited.getAge());
+        studentMB.setFirstName(studentToBeEdited.getFirstName());
+        studentMB.setLastName(studentToBeEdited.getLastName());
+        studentMB.setGender(studentToBeEdited.getGender());
+        ContactInformationMB contact = new ContactInformationMB();
+        contact.setCity(studentToBeEdited.getContactInformation().getCity());
+        contact.setEmailAddress(studentToBeEdited.getContactInformation().getEmailAddress());
+        contact.setPhoneNumber(studentToBeEdited.getContactInformation().getPhoneNumber());
+        contact.setStreetName(studentToBeEdited.getContactInformation().getStreetName());
+        contact.setZipCode(studentToBeEdited.getContactInformation().getZipCode());
+        studentMB.setContactInformation(contact);
+    }
+
     public void updateStudent() {
         if (studentMB.getId() != null) {
             studentToBeEdited.setAge(studentMB.getAge());
@@ -147,20 +166,16 @@ public class StudentController {
             studentFacade.edit(studentToBeEdited);
         }
     }
-    
+
     public void deleteStudent() {
         if (studentMB.getId() != null) {
-            studentToBeEdited.setAge(studentMB.getAge());
-            studentToBeEdited.setFirstName(studentMB.getFirstName());
-            studentToBeEdited.setLastName(studentMB.getLastName());
-            studentToBeEdited.setGender(studentMB.getGender());
-            Contactinformation contactEdit = new Contactinformation();
-            contactEdit.setCity(studentMB.getContactInformation().getCity());
-            contactEdit.setEmailAddress(studentMB.getContactInformation().getEmailAddress());
-            contactEdit.setPhoneNumber(studentMB.getContactInformation().getPhoneNumber());
-            contactEdit.setStreetName(studentMB.getContactInformation().getStreetName());
-            contactEdit.setZipCode(studentMB.getContactInformation().getZipCode());
-            studentToBeEdited.setContactInformation(contactEdit);
+            studentToBeEdited = studentFacade.find(this.studentMB.getId());
+
+            for (Course course : studentToBeEdited.getCourseList()) {
+                course.getStudentList().remove(studentToBeEdited);
+                courseFacade.edit(course);
+            }
+            studentFacade.edit(studentToBeEdited);
             studentFacade.remove(studentToBeEdited);
         }
     }

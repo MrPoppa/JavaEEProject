@@ -1,5 +1,6 @@
 package com.rappandpoppa.controllers;
 
+import com.rappandpoppa.beans.AttendancelistFacadeLocal;
 import com.rappandpoppa.beans.CourseFacadeLocal;
 import com.rappandpoppa.beans.StudentFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
@@ -7,35 +8,36 @@ import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.model.CourseMB;
+import com.rappandpoppa.model.StudentMB;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author Benjamin
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class CourseController {
 
-    private Integer studentToBeAddedId;
     private Integer teacherId;
     private List<Student> courseStudents = new ArrayList<>();
     private List<Attendancelist> newAttendanceLists = new ArrayList<>();
     private List<Attendancelist> completeAttendanceLists = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
     private Date startDate;
     private Integer numberOfWeeks;
     private List<String> daysOfTheWeek;
     private String searchTextLabel;
-    private final List<Course> courses = new ArrayList<>();
-    private Course courseToBeEdited;
+    private Course courseToBeEdited = new Course();
 
-    CourseMB courseMB = new CourseMB();
+    private StudentMB studentMB = new StudentMB();
+    private CourseMB courseMB = new CourseMB();
 
     @EJB
     CourseFacadeLocal courseFacade;
@@ -43,14 +45,8 @@ public class CourseController {
     StudentFacadeLocal studentFacade;
     @EJB
     TeacherFacadeLocal teacherFacade;
-
-    public Integer getStudentToBeAddedId() {
-        return studentToBeAddedId;
-    }
-
-    public void setStudentToBeAddedId(Integer studentToBeAddedId) {
-        this.studentToBeAddedId = studentToBeAddedId;
-    }
+    @EJB
+    AttendancelistFacadeLocal attendancelistFacade;
 
     public Integer getTeacherId() {
         return teacherId;
@@ -74,6 +70,14 @@ public class CourseController {
 
     public void setCompleteAttendanceLists(List<Attendancelist> completeAttendanceLists) {
         this.completeAttendanceLists = completeAttendanceLists;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     public Date getStartDate() {
@@ -100,24 +104,13 @@ public class CourseController {
         this.daysOfTheWeek = daysOfTheWeek;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+
+    public StudentMB getStudentMB() {
+        return studentMB;
     }
 
-    public String getSearchTextLabel() {
-        return searchTextLabel;
-    }
-
-    public void setSearchTextLabel(String searchTextLabel) {
-        this.searchTextLabel = searchTextLabel;
-    }
-
-    public Course getCourseToBeEdited() {
-        return courseToBeEdited;
-    }
-
-    public void setCourseToBeEdited(Course courseToBeEdited) {
-        this.courseToBeEdited = courseToBeEdited;
+    public void setStudentMB(StudentMB studentMB) {
+        this.studentMB = studentMB;
     }
 
     public CourseMB getCourseMB() {
@@ -279,26 +272,22 @@ public class CourseController {
     }
 
     public void addStudents() {
-        Course courseToBeEdited = courseFacade.find(courseMB.getId());
+        courseToBeEdited = courseFacade.find(courseMB.getId());
         courseMB.setMaxNumberOfStudents(courseToBeEdited.getMaxNumberOfStudents());
         if (courseStudents.size() < courseMB.getMaxNumberOfStudents()) {
-            courseStudents.add(studentFacade.find(studentToBeAddedId));
+            courseStudents.add(studentFacade.find(studentMB.getId()));
             courseToBeEdited.setStudentList(courseStudents);
             courseFacade.edit(courseToBeEdited);
         }
     }
 
-    public List<Course> viewAllCourses() {
-        return this.courseFacade.findAll();
-    }
-
-    public List<String> getAllCourseNames() {
-        List<Course> coursesFound = courseFacade.findAll();
-        List<String> courseNames = new ArrayList<>();
-        for (Course course : coursesFound) {
-            courseNames.add(course.getCourseName());
+    public void removeStudent() {
+        if (courseMB.getId() != null) {
+            courseToBeEdited = courseFacade.find(courseMB.getId());
+            courseStudents.remove(studentFacade.find(studentMB.getId()));
+            courseToBeEdited.setStudentList(courseStudents);
+            courseFacade.edit(courseToBeEdited);
         }
-        return courseNames;
     }
 
     public List<Course> completeCourse(String query) {
@@ -311,6 +300,63 @@ public class CourseController {
             }
         }
         return filteredCourses;
+    }
+
+    public void selectCourse() {
+        if (courseMB.getId() != null) {
+            courseToBeEdited = courseFacade.find(courseMB.getId());
+            courseMB.setCourseName(courseToBeEdited.getCourseName());
+            courseMB.setCourseCode(courseToBeEdited.getCourseCode());
+            courseMB.setLanguage(courseToBeEdited.getCourseLanguage());
+            courseMB.setLevel(courseToBeEdited.getCourseLevel());
+            courseMB.setMaxNumberOfStudents(courseToBeEdited.getMaxNumberOfStudents());
+            this.teacherId = courseToBeEdited.getTeacher().getId();
+        }
+    }
+
+    public void updateCourse() {
+        if (courseMB.getId() != null) {
+            courseToBeEdited.setCourseName(this.courseMB.getCourseName());
+            courseToBeEdited.setCourseCode(this.courseMB.getCourseCode());
+            courseToBeEdited.setCourseLanguage(this.courseMB.getLanguage());
+            courseToBeEdited.setCourseLevel(this.courseMB.getLevel());
+            courseToBeEdited.setMaxNumberOfStudents(this.courseMB.getMaxNumberOfStudents());
+            courseToBeEdited.setTeacher(teacherFacade.find(this.teacherId));
+            courseFacade.edit(courseToBeEdited);
+        }
+    }
+
+    public void deleteCourse() {
+        if (courseMB.getId() != null) {
+            courseToBeEdited = courseFacade.find(this.courseMB.getId());
+            for (Attendancelist alist : courseToBeEdited.getAttendancelistList()) {
+                attendancelistFacade.remove(alist);
+            }
+//            courseToBeEdited.getAttendancelistList().clear();
+            courseFacade.edit(courseToBeEdited);
+            courseFacade.remove(courseToBeEdited);
+        }
+    }
+
+    public Course getCourse() {
+        courses.clear();
+        Course course = courseFacade.find(this.courseMB.getId());
+        courses.add(course);
+        return course;
+    }
+
+    public List<Course> getAllCourses() {
+        this.courses = this.courseFacade.findAll();
+        return this.courses;
+    }
+
+    public List<String> getAllCourseNames() {
+        List<Course> coursesFound = courseFacade.findAll();
+        List<String> courseNames = new ArrayList<>();
+        for (Course course : coursesFound) {
+            courseNames.add(course.getCourseName());
+        }
+        return courseNames;
     }
 
     public void viewStudent() {
@@ -345,21 +391,6 @@ public class CourseController {
         }
     }
 
-    public void updateCourse() {
-        if (courseMB.getId() != null) {
-            courseToBeEdited.setCourseName(courseMB.getCourseName());
-            courseToBeEdited.setCourseCode(courseMB.getCourseCode());
-            courseToBeEdited.setId(courseMB.getId());
-            courseToBeEdited.setCourseLanguage(courseMB.getLanguage());
-            courseToBeEdited.setCourseLevel(courseMB.getLevel());
-            courseToBeEdited.setMaxNumberOfStudents(courseMB.getMaxNumberOfStudents());
-            courseToBeEdited.setStudentList(courseMB.getStudentList());
-            courseToBeEdited.setAttendancelistList(courseMB.getAttendancelistList());
-
-            courseFacade.edit(courseToBeEdited);
-        }
-    }
-
     public void deleteStudent() {
         if (courseMB.getId() != null) {
             courseToBeEdited.setCourseName(courseMB.getCourseName());
@@ -374,5 +405,4 @@ public class CourseController {
             courseFacade.edit(courseToBeEdited);
         }
     }
-
 }

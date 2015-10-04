@@ -38,12 +38,11 @@
                                                 itemLabel="Select Course" 
                                                 noSelectionOption="true"
                                                 />
-                                            <f:selectItems 
-                                                value="#{courseController.viewAllCourses()}" 
-                                                var="course" 
-                                                itemValue="#{course.id}"
-                                                itemLabel="#{course.courseName}"
-                                                />
+                                            <f:selectItems value="#{courseController.allCourses}" 
+                                                           var="course" 
+                                                           itemValue="#{course.id}"
+                                                           itemLabel="#{course.courseName}"
+                                                           />
                                         </p:selectOneMenu>
 
                                         <p:outputLabel for="date" value="Date"/>
@@ -170,7 +169,7 @@
                                                 itemLabel="Select Course" 
                                                 noSelectionOption="true"
                                                 />
-                                            <f:selectItems value="#{courseController.viewAllCourses()}" 
+                                            <f:selectItems value="#{courseController.allCourses}" 
                                                            var="course" 
                                                            itemValue="#{course.id}"
                                                            itemLabel="#{course.courseName}"

@@ -99,3 +99,7 @@ body {
     display:inline-block;
     margin-top: 5px;
 }
+
+.contactLabel {
+    width: 20%;
+}

@@ -1,78 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:body>
+
+      xmlns:f="http://xmlns.jcp.org/jsf/core">    
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
         <ui:composition template="templates/template.xhtml">
             <ui:define name="content">
                 <div class="content-main">
+
                     <p:tabView>
-                        <p:tab title="Student View">
+
+                        <p:tab title="Course View">
+
                             <p:panel
-                                header="Student View" 
+                                id="view-courses-panel"
                                 class="panels"
+                                header="View all courses"
                                 >
+
                                 <h:form>
-                                    <div>
-                                        <p:outputLabel value="Search:" for="courses" />
-                                        <p:autoComplete id="courses" value="#{courseController.courseMB.id}" completeMethod="#{courseController.completeCourse}"
-                                                        var="student" itemLabel="#{course.toString()}" itemValue="#{course.id}" forceSelection="true">
+                                    <div class="regForm">
+                                        <p:autoComplete id="students" value="#{courseController.courseMB.id}" completeMethod="#{courseController.completeCourse}"
+                                                        var="course" itemLabel="#{course.courseName}" itemValue="#{course.id}" forceSelection="true">
+                                            <p:column class="autoCompleteText">
+                                                <h:outputText value="#{course.courseName}"/>
+                                            </p:column>
+                                            <p:column class="autoCompleteText">
+                                                <h:outputText value="#{course.courseCode}"/>
+                                            </p:column>
                                         </p:autoComplete>
+
                                         <p:commandButton class="actionButton" value="Search" 
-                                                         action="#{courseController.viewCourse()}"
-                                                         update="studentView"
-                                                         >
+                                                         action="#{courseController.getCourse()}"
+                                                         update="courseView">
                                         </p:commandButton>
                                         <p:commandButton class="actionButton" value="View All" 
-                                                         action="#{courseController.viewAllCourses()}"
-                                                         update="studentView">
+                                                         action="#{courseController.getAllCourses()}"
+                                                         update="courseView">
                                         </p:commandButton>
                                     </div>
-                                    <p:dataTable class="viewTable" id="studentView" 
-                                                 value="#{courseController.courses}" 
-                                                 var="course"
-                                                 resizableColumns="true"
-                                                 editable="true"
-                                                 >
-                                        <p:column headerText="Course Name">
+                                    <p:dataTable class="viewTable" id="courseView" value="#{courseController.courses}" var="course">
+                                        <p:column headerText="Name">
                                             <p:outputLabel value="#{course.courseName}"/>
                                         </p:column>
-                                        <p:column headerText="Course Name">
+                                        <p:column headerText="Code">
                                             <p:outputLabel value="#{course.courseCode}"/>
                                         </p:column>
-                                        <p:column headerText="Student count">
-                                            <p:outputLabel value="#{course.studentList.size()}"/>
+                                        <p:column headerText="Level">
+                                            <p:outputLabel value="#{course.courseLevel}"/>
                                         </p:column>
-                                        <p:column headerText="Max student count">
+                                        <p:column headerText="Language">
+                                            <p:outputLabel value="#{course.courseLanguage}"/>
+                                        </p:column>
+                                        <p:column headerText="Max students">
                                             <p:outputLabel value="#{course.maxNumberOfStudents}"/>
                                         </p:column>
+                                        <p:column headerText="Main teacher">
+                                            <p:outputLabel value="#{course.teacher.toString()}"/>
+                                        </p:column>
                                     </p:dataTable>
-
                                 </h:form>
-
                             </p:panel>
                         </p:tab>
-                        <p:tab title="Edit Student">
+                        <p:tab title="Course edit">
                             <p:panel
-                                header="Edit Student" 
+                                id="edit-courses-panel"
                                 class="panels"
+                                header="View all courses"
                                 >
-
                                 <h:form>
                                     <!--<p:outputLabel value="Search:" for="students" />-->
-                                    <p:autoComplete id="students" value="#{courseController.courseMB.id}" completeMethod="#{studentController.completeStudent}"
-                                                    var="student" itemLabel="#{course.toString()}" itemValue="#{student.id}" forceSelection="true">
+                                    <p:autoComplete id="students" value="#{courseController.courseMB.id}" completeMethod="#{courseController.completeCourse}"
+                                                    var="course" itemLabel="#{course.courseName}" itemValue="#{course.id}" forceSelection="true">
+                                        <p:column class="autoCompleteText">
+                                            <h:outputText value="#{course.courseName}"/>
+                                        </p:column>
+                                        <p:column class="autoCompleteText">
+                                            <h:outputText value="#{course.courseCode}"/>
+                                        </p:column>
+
                                     </p:autoComplete>
 
                                     <p:commandButton class="actionButton" value="Search" 
                                                      action="#{courseController.selectCourse()}"
-                                                     update="studentEditForm"
-                                                     >
+                                                     update="registerCourseForm">
                                     </p:commandButton>
-                                    <h:panelGrid class="regGrid" id="studentEditForm">
+
+                                    <h:panelGrid class="regGrid" id="registerCourseForm">
+
                                         <p:outputLabel class="textLabels">Course name: </p:outputLabel>
                                         <p:inputText class="regInputText" id="courseName" value="#{courseController.courseMB.courseName}">
                                         </p:inputText>
@@ -118,12 +139,8 @@
                                             <f:selectItem itemLabel=" "/>
                                             <f:selectItems value="#{teacherController.teachers}" var="teacher" itemValue="#{teacher.id}"/>
                                         </p:selectOneMenu>
-                                        <p:commandButton class="actionButton" 
-                                                         value="Add Course"
-                                                         actionListener="#{courseController.addCourse}"
-                                                         update="registerCourseForm"
-                                                         />
                                     </h:panelGrid>
+
                                     <p:commandButton class="actionButton" 
                                                      value="Update"
                                                      action="#{courseController.updateCourse()}"
@@ -139,5 +156,5 @@
                 </div>
             </ui:define>
         </ui:composition>
-    </h:body>
+    </body>
 </html>
