@@ -39,12 +39,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Attendancelist.findById", query = "SELECT a FROM Attendancelist a WHERE a.id = :id"),
     @NamedQuery(name = "Attendancelist.findByAttendanceDate", query = "SELECT a FROM Attendancelist a WHERE a.attendanceDate = :attendanceDate"),
     @NamedQuery(name = "Attendancelist.findAllDatesByCourse", query = "SELECT a.attendanceDate FROM Attendancelist a WHERE a.course = :course_id"),
-    @NamedQuery(name = "Attendancelist.findListsInPeriod",
+    @NamedQuery(name = "Attendancelist.findAllListsInPeriod",
             query = "SELECT a FROM Attendancelist a "
             + "WHERE a.attendanceDate >= :startDate "
             + "AND a.attendanceDate <= :endDate "
+            + "GROUP BY a.attendanceDate"),
+    @NamedQuery(name = "Attendancelist.findCourseListsInPeriod",
+            query = "SELECT a FROM Attendancelist a "
+            + "WHERE a.attendanceDate >= :startDate "
+            + "AND a.attendanceDate <= :endDate "
+            + "AND a.course = :course_id "
             + "GROUP BY a.attendanceDate")
-
 })
 public class Attendancelist implements Serializable {
 

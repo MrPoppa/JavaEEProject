@@ -8,12 +8,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
@@ -33,6 +33,8 @@ public class PeriodStatisticsController extends StatisticsController {
     private Date periodEndDate;
     private Map<Course, Map<Date, Integer>> attendanceRatesByCourseAndDate = new HashMap<>();
     private Map<Date, Integer> attendanceRateByDate;
+    private List<Date> courseDates;
+    private Course course;
 
     public LineChartModel getLineModel() {
         init();
@@ -59,13 +61,29 @@ public class PeriodStatisticsController extends StatisticsController {
         this.periodEndDate = periodEndDate;
     }
 
-    @PostConstruct
+    public Map<Date, Integer> getAttendanceRateByDate() {
+        return attendanceRateByDate;
+    }
+
+    public void setAttendanceRateByDate(Map<Date, Integer> attendanceRateByDate) {
+        this.attendanceRateByDate = attendanceRateByDate;
+    }
+
+    public List<Date> getCourseDates() {
+        return courseDates;
+    }
+
+    public void setCourseDates(List<Date> courseDates) {
+        this.courseDates = courseDates;
+    }
+
+//    @PostConstruct
     public void init() {
         createLineModels();
     }
 
     public void createLineModels() {
-        loadAttendanceLists();
+        loadAllAttendanceLists();
         loadAttendanceRates();
 
         lineModel = initCategoryModel();
@@ -103,30 +121,7 @@ public class PeriodStatisticsController extends StatisticsController {
         return model;
     }
 
-    private int calculateAttendance(Attendancelist attendancelist) {
-        double some = attendancelist.getStudentList().size();
-        double all = attendancelist.getCourse().getStudentList().size();
-        int rate = (int) (some / all) * 100;
-        return rate;
-    }
-
-    private void loadAttendanceRates() {
-        for (Attendancelist attendancelist : attendancelistsInPeriod) {
-            attendanceRateByDate = new HashMap<>();
-            Course course = attendancelist.getCourse();
-            Date attendedDate = attendancelist.getAttendanceDate();
-            if (attendanceRatesByCourseAndDate.containsKey(course)) {
-                attendanceRateByDate = attendanceRatesByCourseAndDate.get(course);
-                attendanceRateByDate.put(attendedDate, calculateAttendance(attendancelist));
-                attendanceRatesByCourseAndDate.put(course, attendanceRateByDate);
-            } else {
-                attendanceRateByDate.put(attendedDate, calculateAttendance(attendancelist));
-                attendanceRatesByCourseAndDate.put(course, attendanceRateByDate);
-            }
-        }
-    }
-
-    private void loadAttendanceLists() {
+    private void loadAllAttendanceLists() {
         if (periodStartDate != null && periodEndDate != null) {
             Period p = Period.between(convertDateToLocalDate(periodStartDate), convertDateToLocalDate(periodEndDate));
             if (!p.isNegative()) {
@@ -140,4 +135,56 @@ public class PeriodStatisticsController extends StatisticsController {
             periodEndDate = attendancelistsInPeriod.get(attendancelistsInPeriod.size() - 1).getAttendanceDate();
         }
     }
+
+    public void onCourseChange() {
+        loadAttendanceListByCourse();
+//        loadAttendanceRates2();
+    }
+
+    private void loadAttendanceListByCourse() {
+        if (periodStartDate != null && periodEndDate != null) {
+            Period p = Period.between(convertDateToLocalDate(periodStartDate), convertDateToLocalDate(periodEndDate));
+            if (!p.isNegative()) {
+                attendancelistsInPeriod = attendancelistFacade.findCoursePeriod(courseMB.getId(), periodStartDate, periodEndDate);
+            }
+        } else {
+            attendancelistsInPeriod = courseFacade.find(courseMB.getId()).getAttendancelistList();
+        }
+    }
+
+    public void loadAttendanceRates2() {
+        attendanceRateByDate = new TreeMap<>();
+        for (Attendancelist attendancelist : attendancelistsInPeriod) {
+            Date attendedDate = attendancelist.getAttendanceDate();
+            attendanceRateByDate.put(attendedDate, calculateAttendance(attendancelist));
+
+            courseDates = new ArrayList<>(attendanceRateByDate.keySet());
+            periodStartDate = courseDates.get(0);
+            periodEndDate = courseDates.get(courseDates.size() - 1);
+        }
+    }
+
+    private void loadAttendanceRates() {
+        for (Attendancelist attendancelist : attendancelistsInPeriod) {
+            attendanceRateByDate = new TreeMap<>();
+            course = attendancelist.getCourse();
+            Date attendedDate = attendancelist.getAttendanceDate();
+            if (attendanceRatesByCourseAndDate.containsKey(course)) {
+                attendanceRateByDate = attendanceRatesByCourseAndDate.get(course);
+                attendanceRateByDate.put(attendedDate, calculateAttendance(attendancelist));
+                attendanceRatesByCourseAndDate.put(course, attendanceRateByDate);
+            } else {
+                attendanceRateByDate.put(attendedDate, calculateAttendance(attendancelist));
+                attendanceRatesByCourseAndDate.put(course, attendanceRateByDate);
+            }
+        }
+    }
+
+    private int calculateAttendance(Attendancelist attendancelist) {
+        double some = attendancelist.getStudentList().size();
+        double all = attendancelist.getCourse().getStudentList().size();
+        int rate = (int) (some / all) * 100;
+        return rate;
+    }
+
 }

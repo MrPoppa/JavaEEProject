@@ -24,7 +24,7 @@
                                     id="attList-header"
                                     class="panels"
                                     >
-                                    <p:panelGrid columns="2" id="selectGrid2">
+                                    <p:panelGrid columns="2" id="selectGrid1">
                                         <p:outputLabel for="course-by-date" value="Course"/>
                                         <p:selectOneMenu 
                                             id="course-by-date" 
@@ -111,7 +111,7 @@
                                     header="Attendance List"                             
                                     class="att-panel"
                                     >
-                                    <p:panelGrid columns="2" id="selectGrid">
+                                    <p:panelGrid columns="2" id="selectGrid2">
 
                                         <p:outputLabel 
                                             for="period-start" 
@@ -158,7 +158,7 @@
                                     header="Attendance List"
                                     class="panels attList-header"
                                     >
-                                    <p:panelGrid columns="2" id="selectGrid2">
+                                    <p:panelGrid columns="2" id="selectGrid3">
                                         <p:outputLabel for="course" value="Course"/>
                                         <p:selectOneMenu 
                                             id="course" 
@@ -238,6 +238,83 @@
                                         <p:column headerText="Present">
                                             <p:outputLabel value="#{studentStatisticsController.attendedDates.get(date)}"/>
                                         </p:column>
+                                    </p:dataTable>
+                                </p:panel>
+                            </h:form>
+                        </p:tab>
+                        <p:tab title="View by period2">
+                            <h:form>
+                                <p:panel
+                                    header="Attendance List"                             
+                                    class="att-panel"
+                                    >
+                                    <h:panelGrid id="selectGrid4">
+                                        <p:outputLabel for="course-by-period2" value="Course"/>
+                                        <p:selectOneMenu 
+                                            id="course-by-period2" 
+                                            value="#{periodStatisticsController.courseMB.id}"
+                                            >
+                                            <p:ajax 
+                                                listener="#{periodStatisticsController.onCourseChange}" 
+                                                />
+                                            <f:selectItem 
+                                                itemLabel="Select Course" 
+                                                noSelectionOption="true"
+                                                />
+                                            <f:selectItems value="#{courseController.allCourses}" 
+                                                           var="course" 
+                                                           itemValue="#{course.id}"
+                                                           itemLabel="#{course.courseName}"
+                                                           />
+                                        </p:selectOneMenu>
+                                        <p:panelGrid columns="2" id="selectGrid5">
+
+                                            <p:outputLabel 
+                                                for="period-start2" 
+                                                value="Period Start"
+                                                />
+                                            <p:calendar 
+                                                id="period-start2" 
+                                                value="#{periodStatisticsController.periodStartDate}"
+                                                pattern="yyyy-MM-dd"
+                                                >
+                                            </p:calendar>
+                                            <p:outputLabel 
+                                                for="period-end2" 
+                                                value="Period End"
+                                                />
+                                            <p:calendar 
+                                                id="period-end2" 
+                                                value="#{periodStatisticsController.periodEndDate}"
+                                                pattern="yyyy-MM-dd"
+                                                >
+                                            </p:calendar>
+                                        </p:panelGrid>
+
+                                    </h:panelGrid>
+                                    <p:commandButton 
+                                        value="Update" 
+                                        id="setGraph"
+                                        action="#{periodStatisticsController.loadAttendanceRates2()}"
+                                        update="attendance-rates" 
+                                        />
+                                </p:panel>
+                                <p:panel id="period-attendance-table">
+                                    <p:dataTable
+                                        id="attendance-rates"
+                                        value="#{periodStatisticsController.attendanceRateByDate.entrySet().toArray()}"
+                                        var="rate"
+                                        >
+                                        <p:column headerText="Date">
+                                            <p:outputLabel 
+                                                value="#{rate.key}"
+                                                />
+                                        </p:column>
+                                        <p:column headerText="Rate">
+                                            <p:outputLabel 
+                                                value="#{rate.value}"
+                                                />
+                                        </p:column>                                        
                                     </p:dataTable>
                                 </p:panel>
                             </h:form>
