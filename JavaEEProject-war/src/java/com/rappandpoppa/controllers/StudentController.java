@@ -135,6 +135,21 @@ public class StudentController {
         }
     }
 
+    public void selectStudent(Integer studentId) {
+        studentToBeEdited = studentFacade.find(studentMB.getId());
+        studentMB.setAge(studentToBeEdited.getAge());
+        studentMB.setFirstName(studentToBeEdited.getFirstName());
+        studentMB.setLastName(studentToBeEdited.getLastName());
+        studentMB.setGender(studentToBeEdited.getGender());
+        ContactInformationMB contact = new ContactInformationMB();
+        contact.setCity(studentToBeEdited.getContactInformation().getCity());
+        contact.setEmailAddress(studentToBeEdited.getContactInformation().getEmailAddress());
+        contact.setPhoneNumber(studentToBeEdited.getContactInformation().getPhoneNumber());
+        contact.setStreetName(studentToBeEdited.getContactInformation().getStreetName());
+        contact.setZipCode(studentToBeEdited.getContactInformation().getZipCode());
+        studentMB.setContactInformation(contact);
+    }
+
     public void updateStudent() {
         if (studentMB.getId() != null) {
             studentToBeEdited.setAge(studentMB.getAge());
