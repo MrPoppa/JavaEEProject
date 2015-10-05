@@ -5,31 +5,23 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
     <navigation-rule>
-        <description>login navigation</description>
-        <from-view-id>/loginPage.xhtml</from-view-id>
-        <navigation-case>
-            <from-action>login</from-action>
-            <redirect>
-            </redirect>
-            <to-view-id>/registerStudent.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
         <description>
             navigation
         </description>
         <from-view-id>
-            *
+            /content/*
         </from-view-id>
         <navigation-case>
+            <if>
+                #{loginStatusController.isLoggedIn()}
+            </if>
             <from-action>
                 registerCourse
             </from-action>
             <redirect>
             </redirect>
             <to-view-id>
-                /registerCourse.xhtml
+                /content/registerCourse.xhtml
             </to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -39,16 +31,19 @@
             navigation
         </description>
         <from-view-id>
-            *
+            /content/*
         </from-view-id>
         <navigation-case>
+            <if>
+                #{loginStatusController.isLoggedIn()}
+            </if>
             <from-action>
                 registerStudent
             </from-action>
             <redirect>
             </redirect>
             <to-view-id>
-                /registerStudent.xhtml
+                /content/registerStudent.xhtml
             </to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -58,35 +53,41 @@
             navigation
         </description>
         <from-view-id>
-            *
+            /content/*
         </from-view-id>
         <navigation-case>
+            <if>
+                #{loginStatusController.isLoggedIn()}
+            </if>
             <from-action>
                 viewStudent
             </from-action>
             <redirect>
             </redirect>
             <to-view-id>
-                /studentView.xhtml
+                /content/studentView.xhtml
             </to-view-id>
         </navigation-case>
     </navigation-rule>
     
-        <navigation-rule>
+    <navigation-rule>
         <description>
             navigation
         </description>
         <from-view-id>
-            *
+            /content/*
         </from-view-id>
         <navigation-case>
+            <if>
+                #{loginStatusController.isLoggedIn()}
+            </if>
             <from-action>
                 viewCourse
             </from-action>
             <redirect>
             </redirect>
             <to-view-id>
-                /courseView.xhtml
+                /content/courseView.xhtml
             </to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -96,16 +97,19 @@
             navigation
         </description>
         <from-view-id>
-            *
+            /content/*
         </from-view-id>
         <navigation-case>
+            <if>
+                #{loginStatusController.isLoggedIn()}
+            </if>
             <from-action>
                 attendanceLists
             </from-action>
             <redirect>
             </redirect>
             <to-view-id>
-                /attendanceLists.xhtml
+                /content/attendanceLists.xhtml
             </to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -115,16 +119,19 @@
             navigation
         </description>
         <from-view-id>
-            *
+            /content/*
         </from-view-id>
         <navigation-case>
+            <if>
+                #{loginStatusController.isLoggedIn()}
+            </if>
             <from-action>
                 createAttendanceList
             </from-action>
             <redirect>
             </redirect>
             <to-view-id>
-                /createAttendanceList.xhtml
+                /content/createAttendanceList.xhtml
             </to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -134,17 +141,62 @@
             navigation
         </description>
         <from-view-id>
-            *
+            /content/*
         </from-view-id>
         <navigation-case>
+            <if>
+                #{loginStatusController.isLoggedIn()}
+            </if>
             <from-action>
                 addStudents
             </from-action>
             <redirect>
             </redirect>
             <to-view-id>
-                /addStudentsToCourse.xhtml
+                /content/addStudentsToCourse.xhtml
             </to-view-id>
         </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>
+            login
+        </description>
+        <from-view-id>
+            /login/loginPage.xhtml
+        </from-view-id>
+        <navigation-case>
+            <from-action>
+                #{loginController.login()}
+            </from-action>
+            <from-outcome>
+                success
+            </from-outcome>
+            <redirect>
+            </redirect>
+            <to-view-id>
+                /content/home.xhtml
+            </to-view-id>
+        </navigation-case>
+    </navigation-rule>
+        
+    <navigation-rule>
+        <description>
+            loginCheck
+        </description>
+        <from-view-id>
+            /content/*
+        </from-view-id>
+        <navigation-case>
+            <if>
+                !#{loginStatusController.isLoggedIn()}
+            </if>
+            <redirect>
+            </redirect>
+            <to-view-id>
+                /login/loginPage.xhtml
+            </to-view-id>
+        </navigation-case>
+            
     </navigation-rule>
 </faces-config>
