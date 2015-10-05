@@ -26,8 +26,7 @@ and open the template in the editor.
                             <p:outputLabel class="textLabels">Password: </p:outputLabel>
                             <p:password id="password" value="#{loginController.password}"/>
                             <p:commandButton value="Login"
-                                             action="#{loginController.login()}"
-                                             actionListener="#{teacherController.createTeachers}"/>
+                                             action="#{loginController.login()}"/>
                         </h:form>
                     </p:panel>
                 </div>

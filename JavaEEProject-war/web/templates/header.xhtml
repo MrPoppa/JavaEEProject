@@ -11,23 +11,19 @@
                     <p:menuitem value="Home" icon="ui-icon-document"/>
                     <p:submenu label="Courses" icon="ui-icon-document">
                         <p:menuitem value="Register" action="registerCourse"/>
-                        <p:menuitem value="List/Search" action="viewCourses"/>
+                        <p:menuitem value="List/Search" action="viewCourse"/>
                         <p:menuitem value="Add Students" action="addStudents"/>
                     </p:submenu>
                     <p:submenu label="Student" icon="ui-icon-document">
                         <p:menuitem value="Register" action="registerStudent"/>
                         <p:menuitem value="List/Search" action="viewStudent"/>
                     </p:submenu>
-                    <p:submenu label="Profile">
-                        <p:menuitem value="Me" action="myProfile"/>
-                        <p:menuitem value="My courses" action="myCourses"/>
-                    </p:submenu>
                     <p:submenu label="Attendance">
                         <p:menuitem value="Create list" action="createAttendanceList"/>
                         <p:menuitem value="Lists" action="attendanceLists"/>
-                        <p:menuitem value="Statistics" action="statistics"/>
                     </p:submenu>
                     <p:menuitem value="Logout" action="#{loginController.logout()}"/>
+                    <p:menuitem value="Dummy" action="#{teacherController.createTeachers}"/>
                 </p:menubar>
             </h:form>
         </ui:composition>

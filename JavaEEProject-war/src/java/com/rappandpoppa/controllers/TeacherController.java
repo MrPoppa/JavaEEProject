@@ -10,6 +10,7 @@ import com.rappandpoppa.beans.TeacherFacadeLocal;
 import com.rappandpoppa.entities.Administrator;
 import com.rappandpoppa.entities.Contactinformation;
 import com.rappandpoppa.entities.Teacher;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,7 @@ import javax.faces.bean.ManagedBean;
  * @author Benjamin
  */
 @ManagedBean
-public class TeacherController {
+public class TeacherController implements Serializable {
 
     @EJB
     TeacherFacadeLocal teacherFacade;

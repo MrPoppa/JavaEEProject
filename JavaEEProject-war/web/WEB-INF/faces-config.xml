@@ -13,7 +13,7 @@
         </from-view-id>
         <navigation-case>
             <if>
-                #{loginStatusController.isLoggedIn()}
+                #{loginController.isLoggedIn()}
             </if>
             <from-action>
                 registerCourse
@@ -35,7 +35,7 @@
         </from-view-id>
         <navigation-case>
             <if>
-                #{loginStatusController.isLoggedIn()}
+                #{loginController.isLoggedIn()}
             </if>
             <from-action>
                 registerStudent
@@ -57,7 +57,7 @@
         </from-view-id>
         <navigation-case>
             <if>
-                #{loginStatusController.isLoggedIn()}
+                #{loginController.isLoggedIn()}
             </if>
             <from-action>
                 viewStudent
@@ -79,7 +79,7 @@
         </from-view-id>
         <navigation-case>
             <if>
-                #{loginStatusController.isLoggedIn()}
+                #{loginController.isLoggedIn()}
             </if>
             <from-action>
                 viewCourse
@@ -101,7 +101,7 @@
         </from-view-id>
         <navigation-case>
             <if>
-                #{loginStatusController.isLoggedIn()}
+                #{loginController.isLoggedIn()}
             </if>
             <from-action>
                 attendanceLists
@@ -123,7 +123,7 @@
         </from-view-id>
         <navigation-case>
             <if>
-                #{loginStatusController.isLoggedIn()}
+                #{loginController.isLoggedIn()}
             </if>
             <from-action>
                 createAttendanceList
@@ -145,7 +145,7 @@
         </from-view-id>
         <navigation-case>
             <if>
-                #{loginStatusController.isLoggedIn()}
+                #{loginController.isLoggedIn()}
             </if>
             <from-action>
                 addStudents
@@ -158,27 +158,6 @@
         </navigation-case>
     </navigation-rule>
     
-    <navigation-rule>
-        <description>
-            login
-        </description>
-        <from-view-id>
-            /login/loginPage.xhtml
-        </from-view-id>
-        <navigation-case>
-            <from-action>
-                #{loginController.login()}
-            </from-action>
-            <from-outcome>
-                success
-            </from-outcome>
-            <redirect>
-            </redirect>
-            <to-view-id>
-                /content/home.xhtml
-            </to-view-id>
-        </navigation-case>
-    </navigation-rule>
         
     <navigation-rule>
         <description>
@@ -189,7 +168,7 @@
         </from-view-id>
         <navigation-case>
             <if>
-                !#{loginStatusController.isLoggedIn()}
+                !#{loginController.isLoggedIn()}
             </if>
             <redirect>
             </redirect>
@@ -218,4 +197,49 @@
             </to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    <navigation-rule>
+        <description>
+            login
+        </description>
+        <from-view-id>
+            /login/loginPage.xhtml
+        </from-view-id>
+        <navigation-case>
+            <from-action>
+                #{loginController.login()}
+            </from-action>
+            <from-outcome>
+                success
+            </from-outcome>
+            <redirect>
+            </redirect>
+            <to-view-id>
+                /content/home.xhtml
+            </to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>
+            logout
+        </description>
+        <from-view-id>
+            /content/*
+        </from-view-id>
+        <navigation-case>
+            <from-action>
+                #{loginController.logout()}
+            </from-action>
+            <from-outcome>
+                false
+            </from-outcome>
+            <redirect>
+            </redirect>
+            <to-view-id>
+                /login/loginPage.xhtml
+            </to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
 </faces-config>

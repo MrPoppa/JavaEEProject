@@ -5,8 +5,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
@@ -15,17 +14,23 @@ import org.primefaces.context.RequestContext;
  * @author Benjamin
  */
 @ManagedBean
-@RequestScoped
-public class LoginController implements Serializable{
+@SessionScoped
+public class LoginController implements Serializable {
 
+    private boolean loggedIn;
     private String userName;
     private String password;
-    
-    @ManagedProperty(value = "#{loginStatusController}")
-    private LoginStatusController loginStatus;
 
     @EJB
     AdministratorFacadeLocal adminFacade;
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
 
     public String getUserName() {
         return userName;
@@ -43,19 +48,14 @@ public class LoginController implements Serializable{
         this.password = password;
     }
 
-    public LoginStatusController getLoginStatus() {
-        return loginStatus;
-    }
-
-    public void setLoginStatus(LoginStatusController loginStatus) {
-        this.loginStatus = loginStatus;
-    }
-    
     public String login() {
         if (adminFacade.loginControl(userName, password)
                 && password != null
                 && userName != null) {
-            loginStatus.setLoggedIn(true);
+//            loginStatus.setLoggedIn(true);
+            this.password = null;
+            this.userName = null;
+            this.loggedIn = true;
             return "success";
         }
         RequestContext.getCurrentInstance().update("growl");
@@ -64,9 +64,10 @@ public class LoginController implements Serializable{
         return "";
     }
 
-    public void logout() {
-        if (loginStatus.isLoggedIn()) {
-            loginStatus.setLoggedIn(false);
+    public boolean logout() {
+        if(loggedIn) {
+            loggedIn = false;
         }
+        return loggedIn;
     }
 }

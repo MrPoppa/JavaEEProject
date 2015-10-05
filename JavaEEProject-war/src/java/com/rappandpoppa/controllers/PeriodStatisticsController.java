@@ -2,6 +2,7 @@ package com.rappandpoppa.controllers;
 
 import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
+import java.io.Serializable;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +20,7 @@ import org.primefaces.model.chart.LineChartModel;
  */
 @ManagedBean
 @ViewScoped
-public class PeriodStatisticsController extends StatisticsController {
+public class PeriodStatisticsController extends StatisticsController implements Serializable {
 
     private LineChartModel lineModel;
     private List<Attendancelist> allAttendanceLists = new ArrayList<>();

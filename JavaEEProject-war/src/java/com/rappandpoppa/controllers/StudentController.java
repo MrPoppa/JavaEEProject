@@ -12,6 +12,7 @@ import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.model.ContactInformationMB;
 import com.rappandpoppa.model.StudentMB;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -24,7 +25,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class StudentController {
+public class StudentController implements Serializable {
 
     private Integer studentId;
     private String searchTextLabel;

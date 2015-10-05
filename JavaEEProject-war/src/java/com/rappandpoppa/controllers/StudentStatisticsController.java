@@ -3,6 +3,7 @@ package com.rappandpoppa.controllers;
 import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +19,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class StudentStatisticsController extends StatisticsController {
+public class StudentStatisticsController extends StatisticsController implements Serializable {
 
     private Map<LocalDate, String> attendedDates = new LinkedHashMap<>();
     private List<LocalDate> datesAttendedByStudent = new ArrayList<>();

@@ -9,6 +9,7 @@ import com.rappandpoppa.entities.Course;
 import com.rappandpoppa.entities.Student;
 import com.rappandpoppa.model.CourseMB;
 import com.rappandpoppa.model.StudentMB;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,7 +24,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class CourseController {
+public class CourseController implements Serializable {
 
     private Integer teacherId;
     private List<Student> courseStudents = new ArrayList<>();

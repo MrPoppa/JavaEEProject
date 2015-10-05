@@ -8,6 +8,7 @@ import com.rappandpoppa.model.AttendanceListMB;
 import com.rappandpoppa.model.CourseMB;
 import com.rappandpoppa.model.StudentMB;
 import com.rappandpoppa.model.TeacherMB;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -17,7 +18,7 @@ import javax.ejb.EJB;
  *
  * @author Anders
  */
-public abstract class StatisticsController {
+public abstract class StatisticsController implements Serializable {
 
     TeacherMB teacherMB = new TeacherMB();
     StudentMB studentMB = new StudentMB();
