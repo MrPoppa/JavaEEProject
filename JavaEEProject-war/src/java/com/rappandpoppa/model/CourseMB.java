@@ -2,6 +2,7 @@ package com.rappandpoppa.model;
 
 import com.rappandpoppa.entities.Attendancelist;
 import com.rappandpoppa.entities.Student;
+import java.util.Collections;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;

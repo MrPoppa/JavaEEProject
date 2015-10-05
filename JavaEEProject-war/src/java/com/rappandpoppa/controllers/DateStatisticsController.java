@@ -48,13 +48,16 @@ public class DateStatisticsController extends StatisticsController implements Se
     }
 
     public void addStudentToAttendancelist() {
+
         Attendancelist currentAttendancelist = attendancelistFacade.find(attendancelistMB.getId());
         List<Student> attendedStudents = currentAttendancelist.getStudentList();
         Student student = studentFacade.find(studentMB.getId());
-        if (!attendedStudents.contains(student)) {
-            attendedStudents.add(student);
-            currentAttendancelist.setStudentList(attendedStudents);
-            attendancelistFacade.edit(currentAttendancelist);
+        if (courseMB.getStudentList().contains(student)) {
+            if (!attendedStudents.contains(student)) {
+                attendedStudents.add(student);
+                currentAttendancelist.setStudentList(attendedStudents);
+                attendancelistFacade.edit(currentAttendancelist);
+            }
         }
     }
 
