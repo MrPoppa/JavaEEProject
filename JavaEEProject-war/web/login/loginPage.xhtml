@@ -11,21 +11,22 @@ and open the template in the editor.
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:body>
 
-        <ui:composition template="templates/template.xhtml">
+        <ui:composition template="../templates/template.xhtml">
             <ui:define name="content">
                 <div class="content-main">
                     <p:panel 
                         header="Login"
                         class="panels"     
                         id="login-panel"
-                             >
+                        >
+                        <p:growl id="growl" sticky="true" showDetail="true"/>
                         <h:form class="regForm">
                             <p:outputLabel class="textLabels">User Name: </p:outputLabel>
-                            <p:inputText/>
+                            <p:inputText value="#{loginController.userName}"/>
                             <p:outputLabel class="textLabels">Password: </p:outputLabel>
-                            <p:inputText id="password"/>
+                            <p:password id="password" value="#{loginController.password}"/>
                             <p:commandButton value="Login"
-                                             action="login"
+                                             action="#{loginController.login()}"
                                              actionListener="#{teacherController.createTeachers}"/>
                         </h:form>
                     </p:panel>

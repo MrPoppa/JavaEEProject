@@ -30,4 +30,6 @@ public interface AdministratorFacadeLocal {
 
     int count();
     
+    boolean loginControl(String userName, String password);
+    
 }

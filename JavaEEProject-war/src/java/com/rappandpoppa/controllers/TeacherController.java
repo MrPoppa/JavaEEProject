@@ -5,7 +5,9 @@
  */
 package com.rappandpoppa.controllers;
 
+import com.rappandpoppa.beans.AdministratorFacadeLocal;
 import com.rappandpoppa.beans.TeacherFacadeLocal;
+import com.rappandpoppa.entities.Administrator;
 import com.rappandpoppa.entities.Contactinformation;
 import com.rappandpoppa.entities.Teacher;
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ public class TeacherController {
 
     @EJB
     TeacherFacadeLocal teacherFacade;
+
+    @EJB
+    AdministratorFacadeLocal adminFacade;
 
     public void createTeachers() {
         if (teacherFacade.findAll().isEmpty()) {
@@ -81,6 +86,11 @@ public class TeacherController {
             teacherFacade.create(teacher2);
             teacherFacade.create(teacher3);
 
+
+            Administrator admin = new Administrator();
+            admin.setUserName("user");
+            admin.setPassword("password");
+            adminFacade.create(admin);
         }
     }
 
