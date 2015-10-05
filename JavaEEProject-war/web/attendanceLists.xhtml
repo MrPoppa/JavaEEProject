@@ -105,51 +105,7 @@
                                 </p:panel>
                             </h:form>
                         </p:tab>
-                        <p:tab title="View by period">
-                            <h:form>
-                                <p:panel
-                                    header="Attendance List"                             
-                                    class="att-panel"
-                                    >
-                                    <p:panelGrid columns="2" id="selectGrid2">
 
-                                        <p:outputLabel 
-                                            for="period-start" 
-                                            value="Period Start"
-                                            />
-                                        <p:calendar 
-                                            id="period-start" 
-                                            value="#{periodStatisticsController.periodStartDate}"
-                                            pattern="yyyy-MM-dd"
-                                            >
-                                        </p:calendar>
-                                        <p:outputLabel 
-                                            for="period-end" 
-                                            value="Period End"
-                                            />
-                                        <p:calendar 
-                                            id="period-end" 
-                                            value="#{periodStatisticsController.periodEndDate}"
-                                            pattern="yyyy-MM-dd"
-                                            >
-                                        </p:calendar>
-                                    </p:panelGrid>
-                                    <p:commandButton 
-                                        value="Update" 
-                                        id="setGraph"
-                                        action="#{periodStatisticsController.createLineModels()}" 
-                                        update="overall-chart"
-                                        />
-                                </p:panel>
-                                <p:panel id="period-attendance-chart">
-                                    <p:chart
-                                        id="overall-chart"
-                                        type="line" 
-                                        model="#{periodStatisticsController.lineModel}" 
-                                        />
-                                </p:panel>
-                            </h:form>
-                        </p:tab>
 
                         <p:tab title="View By Student">
 
@@ -255,7 +211,7 @@
                                             value="#{periodStatisticsController.courseMB.id}"
                                             >
                                             <p:ajax 
-                                                listener="#{periodStatisticsController.onCourseChange}" 
+                                                listener="#{periodStatisticsController.onCourseChange()}" 
                                                 />
                                             <f:selectItem 
                                                 itemLabel="Select Course" 
@@ -314,7 +270,7 @@
                                             <p:outputLabel 
                                                 value="#{rate.value}"
                                                 />
-                                        </p:column>                                        
+                                        </p:column>
                                     </p:dataTable>
                                 </p:panel>
                             </h:form>

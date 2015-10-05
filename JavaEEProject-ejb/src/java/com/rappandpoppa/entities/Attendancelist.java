@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
             query = "SELECT a FROM Attendancelist a "
             + "WHERE a.attendanceDate >= :startDate "
             + "AND a.attendanceDate <= :endDate "
-            + "AND a.course = :course_id "
+            + "AND a.course.id = :course_id "
             + "GROUP BY a.attendanceDate")
 })
 public class Attendancelist implements Serializable {
