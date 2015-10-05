@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "administrator")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Administrator.loginControl", query = "SELECT a FROM Administrator a WHERE a.userName = :userName AND a.password = :password"),
     @NamedQuery(name = "Administrator.findAll", query = "SELECT a FROM Administrator a"),
     @NamedQuery(name = "Administrator.findById", query = "SELECT a FROM Administrator a WHERE a.id = :id"),
     @NamedQuery(name = "Administrator.findByFirstName", query = "SELECT a FROM Administrator a WHERE a.firstName = :firstName"),
