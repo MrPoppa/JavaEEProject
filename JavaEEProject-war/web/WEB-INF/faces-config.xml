@@ -168,7 +168,7 @@
         </from-view-id>
         <navigation-case>
             <if>
-                !#{loginController.isLoggedIn()}
+                #{!loginController.isLoggedIn()}
             </if>
             <redirect>
             </redirect>
@@ -176,7 +176,6 @@
                 /login/loginPage.xhtml
             </to-view-id>
         </navigation-case>
-            
     </navigation-rule>
     
     <navigation-rule>
@@ -184,16 +183,19 @@
             navigation
         </description>
         <from-view-id>
-            *
+            /content/*
         </from-view-id>
         <navigation-case>
+            <if>
+                #{loginController.isLoggedIn()}
+            </if>
             <from-action>
-                viewCourses
+                viewCourse
             </from-action>
             <redirect>
             </redirect>
             <to-view-id>
-                /viewCourses.xhtml
+                /content/courseView.xhtml
             </to-view-id>
         </navigation-case>
     </navigation-rule>
