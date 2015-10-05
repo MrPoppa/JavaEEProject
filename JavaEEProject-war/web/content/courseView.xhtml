@@ -5,11 +5,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
 
       xmlns:f="http://xmlns.jcp.org/jsf/core">    
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
+    <h:body>
         <ui:composition template="../templates/template.xhtml">
             <ui:define name="content">
                 <div class="content-main">
@@ -38,14 +34,14 @@
 
                                         <p:commandButton class="actionButton" value="Search" 
                                                          action="#{courseController.getCourse()}"
-                                                         update="courseView">
+                                                         update="courseViewTable">
                                         </p:commandButton>
                                         <p:commandButton class="actionButton" value="View All" 
                                                          action="#{courseController.getAllCourses()}"
-                                                         update="courseView">
+                                                         update="courseViewTable">
                                         </p:commandButton>
                                     </div>
-                                    <p:dataTable class="viewTable" id="courseView" value="#{courseController.courses}" var="course">
+                                    <p:dataTable class="viewTable" id="courseViewTable" value="#{courseController.courses}" var="course">
                                         <p:column headerText="Name">
                                             <p:outputLabel value="#{course.courseName}"/>
                                         </p:column>
@@ -70,12 +66,10 @@
                         </p:tab>
                         <p:tab title="Course edit">
                             <p:panel
-                                id="edit-courses-panel"
                                 class="panels"
-                                header="View all courses"
+                                header="Edit Course"
                                 >
                                 <h:form>
-                                    <!--<p:outputLabel value="Search:" for="students" />-->
                                     <p:autoComplete id="students" value="#{courseController.courseMB.id}" completeMethod="#{courseController.completeCourse}"
                                                     var="course" itemLabel="#{course.courseName}" itemValue="#{course.id}" forceSelection="true">
                                         <p:column class="autoCompleteText">
@@ -156,5 +150,5 @@
                 </div>
             </ui:define>
         </ui:composition>
-    </body>
+    </h:body>
 </html>
