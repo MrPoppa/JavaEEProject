@@ -24,35 +24,45 @@ and open the template in the editor.
                                 <p:outputLabel class="textLabels">First Name: </p:outputLabel>
                                 <p:inputText class="regInputText" id="firstName" value="#{studentController.studentMB.firstName}" required="true">
                                 </p:inputText>
+                                <p:message for="firstName" display="icon"/>
                                 <p:outputLabel class="textLabels">Last Name: </p:outputLabel>
-                                <p:inputText class="regInputText" id="lastName" value="#{studentController.studentMB.lastName}">
+                                <p:inputText class="regInputText" id="lastName" value="#{studentController.studentMB.lastName}" required="true">
                                 </p:inputText>
+                                <p:message for="lastName" display="icon"/>
                                 <p:outputLabel class="textLabels">Age: </p:outputLabel>
-                                <p:selectOneMenu id="age" value="#{studentController.studentMB.age}">
+                                <p:selectOneMenu id="age" value="#{studentController.studentMB.age}" required="true">
                                     <f:selectItems value="#{dropdownData.ageNumbers}"/>
                                 </p:selectOneMenu>
+                                <p:message for="age" display="icon"/>
                                 <p:outputLabel class="textLabels">Gender: </p:outputLabel>
-                                <p:selectOneRadio class="regOneRadio" id="Gender" value="#{studentController.studentMB.gender}">
+                                <p:selectOneRadio class="regOneRadio" id="Gender" value="#{studentController.studentMB.gender}" required="true">
                                     <f:selectItem itemLabel="Male" itemValue="Male"/>
                                     <f:selectItem itemLabel="Female" itemValue="Female"/>
                                 </p:selectOneRadio>
+                                <p:message for="Gender" display="icon"/>
                                 <p:outputLabel class="textLabels">Street Name: </p:outputLabel>
-                                <p:inputText class="regInputText" value="#{studentController.studentMB.contactInformation.streetName}">
+                                <p:inputText class="regInputText" id="streetName" value="#{studentController.studentMB.contactInformation.streetName}" required="true">
                                 </p:inputText>
+                                <p:message for="streetName" display="icon"/>
                                 <p:outputLabel class="textLabels">Zip code: </p:outputLabel>
-                                <p:inputText class="regInputText" id="zipCode" value="#{studentController.studentMB.contactInformation.zipCode}">
+                                <p:inputText class="regInputText" id="zipCode" value="#{studentController.studentMB.contactInformation.zipCode}" required="true">
                                 </p:inputText>
+                                <p:message for="zipCode" display="icon"/>
                                 <p:outputLabel class="textLabels">City: </p:outputLabel>
-                                <p:selectOneMenu class="regOneMenu" id="city" value="#{studentController.studentMB.contactInformation.city}">
+                                <p:selectOneMenu class="regOneMenu" id="city" value="#{studentController.studentMB.contactInformation.city}" required="true">
                                     <f:selectItem itemLabel="" itemValue=""/>
                                     <f:selectItems value="#{dropdownData.cities}"/>
                                 </p:selectOneMenu>
+                                <p:message for="city" display="icon"/>
                                 <p:outputLabel class="textLabels">Phone number </p:outputLabel>
-                                <p:inputText class="regInputText" id="phoneNumber" value="#{studentController.studentMB.contactInformation.phoneNumber}">
+                                <p:inputText class="regInputText" id="phoneNumber" value="#{studentController.studentMB.contactInformation.phoneNumber}" required="true">
                                 </p:inputText>
+                                <p:message for="phoneNumber" display="icon"/>
                                 <p:outputLabel class="textLabels">E-mail: </p:outputLabel>
-                                <p:inputText class="regInputText" id="emailAddress" value="#{studentController.studentMB.contactInformation.emailAddress}">
+                                <p:inputText class="regInputText" id="emailAddress" value="#{studentController.studentMB.contactInformation.emailAddress}" immediate="true">
+                                    <f:validator validatorId="emailValidator"/>
                                 </p:inputText>
+                                <p:message for="emailAddress" />
                                 <p:commandButton class="actionButton" 
                                                  value="Add Student"
                                                  update="registerStudentForm"

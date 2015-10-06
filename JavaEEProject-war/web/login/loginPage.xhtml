@@ -21,12 +21,14 @@ and open the template in the editor.
                         >
                         <p:growl id="growl" sticky="true" showDetail="true"/>
                         <h:form class="regForm">
-                            <p:outputLabel class="textLabels">User Name: </p:outputLabel>
-                            <p:inputText value="#{loginController.userName}"/>
-                            <p:outputLabel class="textLabels">Password: </p:outputLabel>
-                            <p:password id="password" value="#{loginController.password}"/>
-                            <p:commandButton value="Login"
-                                             action="#{loginController.login()}"/>
+                            <h:panelGrid>
+                                <p:outputLabel class="textLabels">User Name: </p:outputLabel>
+                                <p:inputText value="#{loginController.userName}"/>
+                                <p:outputLabel class="textLabels">Password: </p:outputLabel>
+                                <p:password id="password" value="#{loginController.password}"/>
+                                <p:commandButton value="Login"
+                                                 action="#{loginController.login()}"/>
+                            </h:panelGrid>
                         </h:form>
                     </p:panel>
                 </div>
