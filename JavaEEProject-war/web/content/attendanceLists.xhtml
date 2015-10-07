@@ -139,7 +139,7 @@
                                             >
                                             <p:ajax 
                                                 listener="#{studentStatisticsController.onStudentChange()}" 
-                                                update="attendedDates date-menu"
+                                                update="attendedDates"
                                                 />
                                             <f:selectItem 
                                                 itemLabel="Select Student" 
@@ -152,36 +152,6 @@
                                                            />
                                         </p:selectOneMenu>
                                     </p:panelGrid>
-                                    <div class="add-remove">
-                                        <p:selectOneMenu 
-                                            id="date-menu"                                
-                                            value="#{studentStatisticsController.attendanceListMB.id}"
-                                            >
-                                            <f:selectItem 
-                                                itemLabel="Select Date" 
-                                                noSelectionOption="true"
-                                                />
-                                            <f:selectItems value="#{studentStatisticsController.courseMB.attendancelistList}"
-                                                           var="attendanceList"
-                                                           itemValue="#{attendanceList.id}"
-                                                           itemLabel="#{attendanceList.attendanceDate}"
-                                                           />
-                                        </p:selectOneMenu>
-                                        <div>
-                                            <p:commandButton
-                                                class="button-addremove"
-                                                value="Add" 
-                                                action="#{dateStatisticsController.addStudentToAttendancelist()}" 
-                                                update="attendedDates"
-                                                />
-                                            <p:commandButton 
-                                                class="button-addremove"
-                                                value="Remove" 
-                                                action="#{dateStatisticsController.removeStudentFromAttendancelist()}" 
-                                                update="attendedDates"
-                                                />
-                                        </div>
-                                    </div>
                                     <p:dataTable
                                         class="viewAttendanceList" 
                                         id="attendedDates" 
