@@ -14,28 +14,67 @@ and open the template in the editor.
         <ui:composition template="../templates/template.xhtml">
             <ui:define name="content">
                 <div class="content-main">
-                    <h:form>
-                        <p:panel 
-                            id="create-att-panel"
-                            class="panels"
-                            header="Create Attendance list"
-                            >
+                    <p:panel 
+                        id="create-att-panel"
+                        class="panels"
+                        header="Create Attendance list"
+                        >
+                        <p:tabView>
+                            <p:tab title="Create">
+                                <h:form>
+                                    <h:panelGrid class="regGrid">
+                                        <p:outputLabel for="date" value="Date: " />
+                                        <p:calendar id="date" value="#{attendanceListMB.date}" disabledWeekends="true" showWeek="true" />
 
-                            <h:panelGrid class="regGrid">
-                                <p:outputLabel for="date" value="Date: " />
-                                <p:calendar id="date" value="#{attendanceListMB.date}" disabledWeekends="true" showWeek="true" />
+                                        <p:outputLabel for="courseSelect" value="Course: "/>
+                                        <p:selectOneMenu id="courseSelect" value="#{attendanceListMB.courseMB.id}">
+                                            <f:selectItem itemLabel=" "/>
+                                            <f:selectItems 
+                                                value="#{courseController.allCourses}" 
+                                                var="course"
+                                                itemValue="#{course.id}" 
+                                                itemLabel="#{course.courseName}"
+                                                />
+                                        </p:selectOneMenu>
 
-                                <p:outputLabel for="courseSelect" value="Course: "/>
-                                <p:selectOneMenu id="courseSelect" value="#{attendanceListMB.courseName}">
-                                    <f:selectItems value="#{courseController.allCourseNames}" var="courseName"/>
-                                </p:selectOneMenu>
+                                        <p:commandButton class="actionButton" value="Create List" 
+                                                         action="#{attendanceListMB.createAttendanceList()}">
+                                        </p:commandButton>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Delete">
+                                <h:form>
+                                    <h:panelGrid columns="2" class="regGrid">
+                                        <p:outputLabel for="courseSelect" value="Course: "/>
 
-                                <p:commandButton class="actionButton" value="Create List" 
-                                                 action="#{attendanceListMB.createAttendanceList()}">
-                                </p:commandButton>
-                            </h:panelGrid>
-                        </p:panel>
-                    </h:form>
+                                        <p:selectOneMenu id="courseSelect" value="#{attendanceListMB.courseMB.id}">
+                                            <f:selectItem itemLabel=" "/>
+                                            <f:selectItems 
+                                                value="#{courseController.allCourses}" 
+                                                var="course"
+                                                itemValue="#{course.id}" 
+                                                itemLabel="#{course.courseName}" 
+                                                />
+                                            <p:ajax event="change" update="datePicker" listener="#{attendanceListMB.setCourseAttendanceLists()}"/> 
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel for="datePicker" value="Date: "/>
+                                        <p:selectOneMenu id="datePicker" value="#{attendanceListMB.id}">
+                                            <f:selectItems 
+                                                value="#{attendanceListMB.attendanceLists}" 
+                                                var="attendanceList" 
+                                                itemValue="#{attendanceList.id}"
+                                                itemLabel="#{attendanceList.attendanceDate}"
+                                                />
+                                        </p:selectOneMenu>
+                                        <p:commandButton value="Delete" action="#{attendanceListMB.removeAttendanceList()}" update="datePicker">
+                                        </p:commandButton>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                        </p:tabView>
+                    </p:panel>
                 </div>
             </ui:define>
         </ui:composition>
