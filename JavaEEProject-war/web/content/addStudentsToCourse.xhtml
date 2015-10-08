@@ -28,12 +28,6 @@
 
                                     <p:autoComplete placeholder="Search student" id="studentsSearch" value="#{courseController.studentMB.id}" completeMethod="#{studentController.completeStudent}"
                                                     var="student" itemLabel="#{student.toString()}" itemValue="#{student.id}" forceSelection="true">
-                                        <p:column class="autoCompleteText">
-                                            <h:outputText value="#{student.firstName}"/>
-                                        </p:column>
-                                        <p:column class="autoCompleteText">
-                                            <h:outputText class="autoCompleteText" value="#{student.lastName}"/>
-                                        </p:column>
                                     </p:autoComplete>
                                 </h:panelGrid>
 

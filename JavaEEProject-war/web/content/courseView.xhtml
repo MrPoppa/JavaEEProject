@@ -24,12 +24,6 @@
                                     <div class="regForm">
                                         <p:autoComplete id="students" value="#{courseController.courseMB.id}" completeMethod="#{courseController.completeCourse}"
                                                         var="course" itemLabel="#{course.courseName}" itemValue="#{course.id}" forceSelection="true">
-                                            <p:column class="autoCompleteText">
-                                                <h:outputText value="#{course.courseName}"/>
-                                            </p:column>
-                                            <p:column class="autoCompleteText">
-                                                <h:outputText value="#{course.courseCode}"/>
-                                            </p:column>
                                         </p:autoComplete>
 
                                         <p:commandButton class="actionButton" value="Search" 

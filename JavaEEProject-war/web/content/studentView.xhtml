@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -90,12 +85,6 @@ and open the template in the editor.
                                     <!--<p:outputLabel value="Search:" for="students" />-->
                                     <p:autoComplete id="students" value="#{studentController.studentMB.id}" completeMethod="#{studentController.completeStudent}"
                                                     var="student" itemLabel="#{student.toString()}" itemValue="#{student.id}" forceSelection="true">
-                                        <p:column class="autoCompleteText">
-                                            <h:outputText value="#{student.firstName}"/>
-                                        </p:column>
-                                        <p:column class="autoCompleteText">
-                                            <h:outputText class="autoCompleteText" value="#{student.lastName}"/>
-                                        </p:column>
                                     </p:autoComplete>
 
 

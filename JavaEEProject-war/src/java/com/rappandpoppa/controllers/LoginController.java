@@ -52,7 +52,6 @@ public class LoginController implements Serializable {
         if (adminFacade.loginControl(userName, password)
                 && password != null
                 && userName != null) {
-//            loginStatus.setLoggedIn(true);
             this.password = null;
             this.userName = null;
             this.loggedIn = true;

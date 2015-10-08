@@ -101,13 +101,4 @@ public class StudentStatisticsController extends StatisticsController implements
         }
         Collections.sort(courseDates);
     }
-//
-//    public void attDateToStudentAttendance() {
-//        Student student = studentFacade.find(studentMB.getId());
-//        List<Attendancelist> attLists = courseMB.getAttendancelistList();
-//        List<Student> currentStudents = courseMB.getStudentList();
-//        for (Attendancelist attendancelist : attLists) {
-//            
-//        }
-//    }
 }

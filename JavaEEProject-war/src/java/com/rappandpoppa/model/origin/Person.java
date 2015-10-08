@@ -13,7 +13,6 @@ public abstract class Person {
     private String lastName;
     private int age;
     private String gender;
-//    @ManagedProperty(value = "#{contactInformation}")  /* The point of this being? **/
     private ContactInformationMB contactInformation = new ContactInformationMB();
 
     public Integer getId() {
