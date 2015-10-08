@@ -253,4 +253,26 @@
         </navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <description>
+            home
+        </description>
+        <from-view-id>
+            /content/*
+        </from-view-id>
+        <navigation-case>
+            <if>
+                #{loginController.isLoggedIn()}
+            </if>
+            <from-action>
+                home
+            </from-action>
+            <redirect>
+            </redirect>
+            <to-view-id>
+                /content/home.xhtml
+            </to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
 </faces-config>
