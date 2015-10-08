@@ -80,12 +80,16 @@ public class AttendanceListMB implements Serializable {
     public List<Attendancelist> getAttendanceLists() {
         return attendanceLists;
     }
-    
+
     public void setCourseAttendanceLists() {
         attendanceLists.clear();
         if (courseMB.getId() != null) {
             Course course = courseFacade.find(courseMB.getId());
-            attendanceLists = course.getAttendancelistList();
+            for (Attendancelist alist : course.getAttendancelistList()) {
+                if (alist.getStudentList().isEmpty()) {
+                    attendanceLists.add(alist);
+                }
+            }
         }
     }
 
